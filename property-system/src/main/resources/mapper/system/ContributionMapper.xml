@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyjk.system.mapper.ContributionMapper">
+    
+    <resultMap type="Contribution" id="ContributionResult">
+        <result property="id"    column="id"    />
+        <result property="infoId"    column="info_id"    />
+        <result property="investorName"    column="investor_name"    />
+        <result property="investorCode"    column="investor_code"    />
+        <result property="identificationCode"    column="identification_code"    />
+        <result property="category"    column="category"    />
+        <result property="capitalPaid"    column="capital_paid"    />
+        <result property="capitalSubscribed"    column="capital_subscribed"    />
+        <result property="equityRatio"    column="equity_ratio"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+    </resultMap>
+
+    <sql id="selectContributionVo">
+        select id, info_id, investor_name, investor_code, identification_code, category, capital_paid, capital_subscribed, equity_ratio, create_time, create_id from contribution
+    </sql>
+
+    <select id="selectContributionList" parameterType="Contribution" resultMap="ContributionResult">
+        <include refid="selectContributionVo"/>
+        <where>  
+            <if test="infoId != null "> and info_id = #{infoId}</if>
+            <if test="investorName != null  and investorName != ''"> and investor_name like concat('%', #{investorName}, '%')</if>
+            <if test="investorCode != null  and investorCode != ''"> and investor_code = #{investorCode}</if>
+            <if test="identificationCode != null  and identificationCode != ''"> and identification_code = #{identificationCode}</if>
+            <if test="category != null  and category != ''"> and category = #{category}</if>
+            <if test="capitalPaid != null "> and capital_paid = #{capitalPaid}</if>
+            <if test="capitalSubscribed != null "> and capital_subscribed = #{capitalSubscribed}</if>
+            <if test="equityRatio != null "> and equity_ratio = #{equityRatio}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+        </where>
+    </select>
+    
+    <select id="selectContributionById" parameterType="Long" resultMap="ContributionResult">
+        <include refid="selectContributionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertContribution" parameterType="Contribution" useGeneratedKeys="true" keyProperty="id">
+        insert into contribution
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">info_id,</if>
+            <if test="investorName != null and investorName != ''">investor_name,</if>
+            <if test="investorCode != null and investorCode != ''">investor_code,</if>
+            <if test="identificationCode != null and identificationCode != ''">identification_code,</if>
+            <if test="category != null and category != ''">category,</if>
+            <if test="capitalPaid != null">capital_paid,</if>
+            <if test="capitalSubscribed != null">capital_subscribed,</if>
+            <if test="equityRatio != null">equity_ratio,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">#{infoId},</if>
+            <if test="investorName != null and investorName != ''">#{investorName},</if>
+            <if test="investorCode != null and investorCode != ''">#{investorCode},</if>
+            <if test="identificationCode != null and identificationCode != ''">#{identificationCode},</if>
+            <if test="category != null and category != ''">#{category},</if>
+            <if test="capitalPaid != null">#{capitalPaid},</if>
+            <if test="capitalSubscribed != null">#{capitalSubscribed},</if>
+            <if test="equityRatio != null">#{equityRatio},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateContribution" parameterType="Contribution">
+        update contribution
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="infoId != null">info_id = #{infoId},</if>
+            <if test="investorName != null and investorName != ''">investor_name = #{investorName},</if>
+            <if test="investorCode != null and investorCode != ''">investor_code = #{investorCode},</if>
+            <if test="identificationCode != null and identificationCode != ''">identification_code = #{identificationCode},</if>
+            <if test="category != null and category != ''">category = #{category},</if>
+            <if test="capitalPaid != null">capital_paid = #{capitalPaid},</if>
+            <if test="capitalSubscribed != null">capital_subscribed = #{capitalSubscribed},</if>
+            <if test="equityRatio != null">equity_ratio = #{equityRatio},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteContributionById" parameterType="Long">
+        delete from contribution where id = #{id}
+    </delete>
+
+    <delete id="deleteContributionByIds" parameterType="String">
+        delete from contribution where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
