@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyjk.system.mapper.EquityMortgageMapper">
+    
+    <resultMap type="EquityMortgage" id="EquityMortgageResult">
+        <result property="id"    column="id"    />
+        <result property="infoId"    column="info_id"    />
+        <result property="organizationName"    column="organization_name"    />
+        <result property="equityRatio"    column="equity_ratio"    />
+        <result property="mortgagor"    column="mortgagor"    />
+        <result property="bookValue"    column="book_value"    />
+        <result property="evaluationValue"    column="evaluation_value"    />
+        <result property="mortgageRatio"    column="mortgage_ratio"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+    </resultMap>
+
+    <sql id="selectEquityMortgageVo">
+        select id, info_id, organization_name, equity_ratio, mortgagor, book_value, evaluation_value, mortgage_ratio, remarks, create_time, create_id from equity_mortgage
+    </sql>
+
+    <select id="selectEquityMortgageList" parameterType="EquityMortgage" resultMap="EquityMortgageResult">
+        <include refid="selectEquityMortgageVo"/>
+        <where>  
+            <if test="infoId != null "> and info_id = #{infoId}</if>
+            <if test="organizationName != null  and organizationName != ''"> and organization_name like concat('%', #{organizationName}, '%')</if>
+            <if test="equityRatio != null "> and equity_ratio = #{equityRatio}</if>
+            <if test="mortgagor != null  and mortgagor != ''"> and mortgagor = #{mortgagor}</if>
+            <if test="bookValue != null "> and book_value = #{bookValue}</if>
+            <if test="evaluationValue != null "> and evaluation_value = #{evaluationValue}</if>
+            <if test="mortgageRatio != null "> and mortgage_ratio = #{mortgageRatio}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquityMortgageById" parameterType="Long" resultMap="EquityMortgageResult">
+        <include refid="selectEquityMortgageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEquityMortgage" parameterType="EquityMortgage" useGeneratedKeys="true" keyProperty="id">
+        insert into equity_mortgage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">info_id,</if>
+            <if test="organizationName != null and organizationName != ''">organization_name,</if>
+            <if test="equityRatio != null">equity_ratio,</if>
+            <if test="mortgagor != null and mortgagor != ''">mortgagor,</if>
+            <if test="bookValue != null">book_value,</if>
+            <if test="evaluationValue != null">evaluation_value,</if>
+            <if test="mortgageRatio != null">mortgage_ratio,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">#{infoId},</if>
+            <if test="organizationName != null and organizationName != ''">#{organizationName},</if>
+            <if test="equityRatio != null">#{equityRatio},</if>
+            <if test="mortgagor != null and mortgagor != ''">#{mortgagor},</if>
+            <if test="bookValue != null">#{bookValue},</if>
+            <if test="evaluationValue != null">#{evaluationValue},</if>
+            <if test="mortgageRatio != null">#{mortgageRatio},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquityMortgage" parameterType="EquityMortgage">
+        update equity_mortgage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="infoId != null">info_id = #{infoId},</if>
+            <if test="organizationName != null and organizationName != ''">organization_name = #{organizationName},</if>
+            <if test="equityRatio != null">equity_ratio = #{equityRatio},</if>
+            <if test="mortgagor != null and mortgagor != ''">mortgagor = #{mortgagor},</if>
+            <if test="bookValue != null">book_value = #{bookValue},</if>
+            <if test="evaluationValue != null">evaluation_value = #{evaluationValue},</if>
+            <if test="mortgageRatio != null">mortgage_ratio = #{mortgageRatio},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEquityMortgageById" parameterType="Long">
+        delete from equity_mortgage where id = #{id}
+    </delete>
+
+    <delete id="deleteEquityMortgageByIds" parameterType="String">
+        delete from equity_mortgage where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
