@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyjk.system.mapper.CatalogMapper">
+    
+    <resultMap type="Catalog" id="CatalogResult">
+        <result property="id"    column="id"    />
+        <result property="infoId"    column="info_id"    />
+        <result property="economicBehaviorDate"    column="economic_behavior_date"    />
+        <result property="economicBehaviorName"    column="economic_behavior_name"    />
+        <result property="policyDecisionDate"    column="policy_decision_date"    />
+        <result property="policyDecisionFile"    column="policy_decision_file"    />
+        <result property="registrationAuthorityCode"    column="registration_authority_code"    />
+        <result property="propertyRightRegistration"    column="property_right_registration"    />
+        <result property="ownedAssetsName"    column="owned_assets_name"    />
+        <result property="ownedAssetsFileName"    column="owned_assets_file_name"    />
+        <result property="ownedAssetsFileCode"    column="owned_assets_file_code"    />
+        <result property="ownedAssetsDescription"    column="owned_assets_description"    />
+        <result property="industryName"    column="industry_name"    />
+        <result property="industryFileName"    column="industry_file_name"    />
+        <result property="industryFileCode"    column="industry_file_code"    />
+        <result property="industryDescription"    column="industry_description"    />
+        <result property="orgName"    column="org_name"    />
+        <result property="orgFileName"    column="org_file_name"    />
+        <result property="orgFileCode"    column="org_file_code"    />
+        <result property="orgDescription"    column="org_description"    />
+        <result property="contributionContent"    column="contribution_content"    />
+        <result property="contributionDescription"    column="contribution_description"    />
+        <result property="receiptContent"    column="receipt_content"    />
+        <result property="receiptDescription"    column="receipt_description"    />
+        <result property="agreementContent"    column="agreement_content"    />
+        <result property="agreementDescription"    column="agreement_description"    />
+        <result property="agencyName"    column="agency_name"    />
+        <result property="reportNo"    column="report_no"    />
+        <result property="approvalName"    column="approval_name"    />
+        <result property="approvalNo"    column="approval_no"    />
+        <result property="approvalDescription"    column="approval_description"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+    </resultMap>
+
+    <sql id="selectCatalogVo">
+        select id, info_id, economic_behavior_date, economic_behavior_name, policy_decision_date, policy_decision_file, registration_authority_code, property_right_registration, owned_assets_name, owned_assets_file_name, owned_assets_file_code, owned_assets_description, industry_name, industry_file_name, industry_file_code, industry_description, org_name, org_file_name, org_file_code, org_description, contribution_content, contribution_description, receipt_content, receipt_description, agreement_content, agreement_description, agency_name, report_no, approval_name, approval_no, approval_description, create_time, create_id from catalog
+    </sql>
+
+    <select id="selectCatalogList" parameterType="Catalog" resultMap="CatalogResult">
+        <include refid="selectCatalogVo"/>
+        <where>  
+            <if test="infoId != null "> and info_id = #{infoId}</if>
+            <if test="economicBehaviorDate != null "> and economic_behavior_date = #{economicBehaviorDate}</if>
+            <if test="economicBehaviorName != null  and economicBehaviorName != ''"> and economic_behavior_name like concat('%', #{economicBehaviorName}, '%')</if>
+            <if test="policyDecisionDate != null "> and policy_decision_date = #{policyDecisionDate}</if>
+            <if test="policyDecisionFile != null  and policyDecisionFile != ''"> and policy_decision_file = #{policyDecisionFile}</if>
+            <if test="registrationAuthorityCode != null  and registrationAuthorityCode != ''"> and registration_authority_code = #{registrationAuthorityCode}</if>
+            <if test="propertyRightRegistration != null  and propertyRightRegistration != ''"> and property_right_registration = #{propertyRightRegistration}</if>
+            <if test="ownedAssetsName != null  and ownedAssetsName != ''"> and owned_assets_name like concat('%', #{ownedAssetsName}, '%')</if>
+            <if test="ownedAssetsFileName != null  and ownedAssetsFileName != ''"> and owned_assets_file_name like concat('%', #{ownedAssetsFileName}, '%')</if>
+            <if test="ownedAssetsFileCode != null  and ownedAssetsFileCode != ''"> and owned_assets_file_code = #{ownedAssetsFileCode}</if>
+            <if test="ownedAssetsDescription != null  and ownedAssetsDescription != ''"> and owned_assets_description = #{ownedAssetsDescription}</if>
+            <if test="industryName != null  and industryName != ''"> and industry_name like concat('%', #{industryName}, '%')</if>
+            <if test="industryFileName != null  and industryFileName != ''"> and industry_file_name like concat('%', #{industryFileName}, '%')</if>
+            <if test="industryFileCode != null  and industryFileCode != ''"> and industry_file_code = #{industryFileCode}</if>
+            <if test="industryDescription != null  and industryDescription != ''"> and industry_description = #{industryDescription}</if>
+            <if test="orgName != null  and orgName != ''"> and org_name like concat('%', #{orgName}, '%')</if>
+            <if test="orgFileName != null  and orgFileName != ''"> and org_file_name like concat('%', #{orgFileName}, '%')</if>
+            <if test="orgFileCode != null  and orgFileCode != ''"> and org_file_code = #{orgFileCode}</if>
+            <if test="orgDescription != null  and orgDescription != ''"> and org_description = #{orgDescription}</if>
+            <if test="contributionContent != null  and contributionContent != ''"> and contribution_content = #{contributionContent}</if>
+            <if test="contributionDescription != null  and contributionDescription != ''"> and contribution_description = #{contributionDescription}</if>
+            <if test="receiptContent != null  and receiptContent != ''"> and receipt_content = #{receiptContent}</if>
+            <if test="receiptDescription != null  and receiptDescription != ''"> and receipt_description = #{receiptDescription}</if>
+            <if test="agreementContent != null  and agreementContent != ''"> and agreement_content = #{agreementContent}</if>
+            <if test="agreementDescription != null  and agreementDescription != ''"> and agreement_description = #{agreementDescription}</if>
+            <if test="agencyName != null  and agencyName != ''"> and agency_name like concat('%', #{agencyName}, '%')</if>
+            <if test="reportNo != null  and reportNo != ''"> and report_no = #{reportNo}</if>
+            <if test="approvalName != null  and approvalName != ''"> and approval_name like concat('%', #{approvalName}, '%')</if>
+            <if test="approvalNo != null  and approvalNo != ''"> and approval_no = #{approvalNo}</if>
+            <if test="approvalDescription != null  and approvalDescription != ''"> and approval_description = #{approvalDescription}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+        </where>
+    </select>
+    
+    <select id="selectCatalogById" parameterType="Long" resultMap="CatalogResult">
+        <include refid="selectCatalogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCatalog" parameterType="Catalog" useGeneratedKeys="true" keyProperty="id">
+        insert into catalog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">info_id,</if>
+            <if test="economicBehaviorDate != null">economic_behavior_date,</if>
+            <if test="economicBehaviorName != null">economic_behavior_name,</if>
+            <if test="policyDecisionDate != null">policy_decision_date,</if>
+            <if test="policyDecisionFile != null">policy_decision_file,</if>
+            <if test="registrationAuthorityCode != null">registration_authority_code,</if>
+            <if test="propertyRightRegistration != null">property_right_registration,</if>
+            <if test="ownedAssetsName != null">owned_assets_name,</if>
+            <if test="ownedAssetsFileName != null">owned_assets_file_name,</if>
+            <if test="ownedAssetsFileCode != null">owned_assets_file_code,</if>
+            <if test="ownedAssetsDescription != null">owned_assets_description,</if>
+            <if test="industryName != null">industry_name,</if>
+            <if test="industryFileName != null">industry_file_name,</if>
+            <if test="industryFileCode != null">industry_file_code,</if>
+            <if test="industryDescription != null">industry_description,</if>
+            <if test="orgName != null">org_name,</if>
+            <if test="orgFileName != null">org_file_name,</if>
+            <if test="orgFileCode != null">org_file_code,</if>
+            <if test="orgDescription != null">org_description,</if>
+            <if test="contributionContent != null">contribution_content,</if>
+            <if test="contributionDescription != null">contribution_description,</if>
+            <if test="receiptContent != null">receipt_content,</if>
+            <if test="receiptDescription != null">receipt_description,</if>
+            <if test="agreementContent != null">agreement_content,</if>
+            <if test="agreementDescription != null">agreement_description,</if>
+            <if test="agencyName != null">agency_name,</if>
+            <if test="reportNo != null">report_no,</if>
+            <if test="approvalName != null">approval_name,</if>
+            <if test="approvalNo != null">approval_no,</if>
+            <if test="approvalDescription != null">approval_description,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">#{infoId},</if>
+            <if test="economicBehaviorDate != null">#{economicBehaviorDate},</if>
+            <if test="economicBehaviorName != null">#{economicBehaviorName},</if>
+            <if test="policyDecisionDate != null">#{policyDecisionDate},</if>
+            <if test="policyDecisionFile != null">#{policyDecisionFile},</if>
+            <if test="registrationAuthorityCode != null">#{registrationAuthorityCode},</if>
+            <if test="propertyRightRegistration != null">#{propertyRightRegistration},</if>
+            <if test="ownedAssetsName != null">#{ownedAssetsName},</if>
+            <if test="ownedAssetsFileName != null">#{ownedAssetsFileName},</if>
+            <if test="ownedAssetsFileCode != null">#{ownedAssetsFileCode},</if>
+            <if test="ownedAssetsDescription != null">#{ownedAssetsDescription},</if>
+            <if test="industryName != null">#{industryName},</if>
+            <if test="industryFileName != null">#{industryFileName},</if>
+            <if test="industryFileCode != null">#{industryFileCode},</if>
+            <if test="industryDescription != null">#{industryDescription},</if>
+            <if test="orgName != null">#{orgName},</if>
+            <if test="orgFileName != null">#{orgFileName},</if>
+            <if test="orgFileCode != null">#{orgFileCode},</if>
+            <if test="orgDescription != null">#{orgDescription},</if>
+            <if test="contributionContent != null">#{contributionContent},</if>
+            <if test="contributionDescription != null">#{contributionDescription},</if>
+            <if test="receiptContent != null">#{receiptContent},</if>
+            <if test="receiptDescription != null">#{receiptDescription},</if>
+            <if test="agreementContent != null">#{agreementContent},</if>
+            <if test="agreementDescription != null">#{agreementDescription},</if>
+            <if test="agencyName != null">#{agencyName},</if>
+            <if test="reportNo != null">#{reportNo},</if>
+            <if test="approvalName != null">#{approvalName},</if>
+            <if test="approvalNo != null">#{approvalNo},</if>
+            <if test="approvalDescription != null">#{approvalDescription},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCatalog" parameterType="Catalog">
+        update catalog
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="infoId != null">info_id = #{infoId},</if>
+            <if test="economicBehaviorDate != null">economic_behavior_date = #{economicBehaviorDate},</if>
+            <if test="economicBehaviorName != null">economic_behavior_name = #{economicBehaviorName},</if>
+            <if test="policyDecisionDate != null">policy_decision_date = #{policyDecisionDate},</if>
+            <if test="policyDecisionFile != null">policy_decision_file = #{policyDecisionFile},</if>
+            <if test="registrationAuthorityCode != null">registration_authority_code = #{registrationAuthorityCode},</if>
+            <if test="propertyRightRegistration != null">property_right_registration = #{propertyRightRegistration},</if>
+            <if test="ownedAssetsName != null">owned_assets_name = #{ownedAssetsName},</if>
+            <if test="ownedAssetsFileName != null">owned_assets_file_name = #{ownedAssetsFileName},</if>
+            <if test="ownedAssetsFileCode != null">owned_assets_file_code = #{ownedAssetsFileCode},</if>
+            <if test="ownedAssetsDescription != null">owned_assets_description = #{ownedAssetsDescription},</if>
+            <if test="industryName != null">industry_name = #{industryName},</if>
+            <if test="industryFileName != null">industry_file_name = #{industryFileName},</if>
+            <if test="industryFileCode != null">industry_file_code = #{industryFileCode},</if>
+            <if test="industryDescription != null">industry_description = #{industryDescription},</if>
+            <if test="orgName != null">org_name = #{orgName},</if>
+            <if test="orgFileName != null">org_file_name = #{orgFileName},</if>
+            <if test="orgFileCode != null">org_file_code = #{orgFileCode},</if>
+            <if test="orgDescription != null">org_description = #{orgDescription},</if>
+            <if test="contributionContent != null">contribution_content = #{contributionContent},</if>
+            <if test="contributionDescription != null">contribution_description = #{contributionDescription},</if>
+            <if test="receiptContent != null">receipt_content = #{receiptContent},</if>
+            <if test="receiptDescription != null">receipt_description = #{receiptDescription},</if>
+            <if test="agreementContent != null">agreement_content = #{agreementContent},</if>
+            <if test="agreementDescription != null">agreement_description = #{agreementDescription},</if>
+            <if test="agencyName != null">agency_name = #{agencyName},</if>
+            <if test="reportNo != null">report_no = #{reportNo},</if>
+            <if test="approvalName != null">approval_name = #{approvalName},</if>
+            <if test="approvalNo != null">approval_no = #{approvalNo},</if>
+            <if test="approvalDescription != null">approval_description = #{approvalDescription},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCatalogById" parameterType="Long">
+        delete from catalog where id = #{id}
+    </delete>
+
+    <delete id="deleteCatalogByIds" parameterType="String">
+        delete from catalog where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
