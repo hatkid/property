@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyjk.system.mapper.JudicialFreezeMapper">
+    
+    <resultMap type="JudicialFreeze" id="JudicialFreezeResult">
+        <result property="id"    column="id"    />
+        <result property="infoId"    column="info_id"    />
+        <result property="judicialOrgan"    column="judicial_organ"    />
+        <result property="frozenAmount"    column="frozen_amount"    />
+        <result property="frozenStartDate"    column="frozen_start_date"    />
+        <result property="frozenEndDate"    column="frozen_end_date"    />
+        <result property="frozenReason"    column="frozen_reason"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+    </resultMap>
+
+    <sql id="selectJudicialFreezeVo">
+        select id, info_id, judicial_organ, frozen_amount, frozen_start_date, frozen_end_date, frozen_reason, remarks, create_time, create_id from judicial_freeze
+    </sql>
+
+    <select id="selectJudicialFreezeList" parameterType="JudicialFreeze" resultMap="JudicialFreezeResult">
+        <include refid="selectJudicialFreezeVo"/>
+        <where>  
+            <if test="infoId != null "> and info_id = #{infoId}</if>
+            <if test="judicialOrgan != null  and judicialOrgan != ''"> and judicial_organ = #{judicialOrgan}</if>
+            <if test="frozenAmount != null "> and frozen_amount = #{frozenAmount}</if>
+            <if test="frozenStartDate != null "> and frozen_start_date = #{frozenStartDate}</if>
+            <if test="frozenEndDate != null "> and frozen_end_date = #{frozenEndDate}</if>
+            <if test="frozenReason != null  and frozenReason != ''"> and frozen_reason = #{frozenReason}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+        </where>
+    </select>
+    
+    <select id="selectJudicialFreezeById" parameterType="Long" resultMap="JudicialFreezeResult">
+        <include refid="selectJudicialFreezeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJudicialFreeze" parameterType="JudicialFreeze" useGeneratedKeys="true" keyProperty="id">
+        insert into judicial_freeze
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">info_id,</if>
+            <if test="judicialOrgan != null and judicialOrgan != ''">judicial_organ,</if>
+            <if test="frozenAmount != null">frozen_amount,</if>
+            <if test="frozenStartDate != null">frozen_start_date,</if>
+            <if test="frozenEndDate != null">frozen_end_date,</if>
+            <if test="frozenReason != null">frozen_reason,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">#{infoId},</if>
+            <if test="judicialOrgan != null and judicialOrgan != ''">#{judicialOrgan},</if>
+            <if test="frozenAmount != null">#{frozenAmount},</if>
+            <if test="frozenStartDate != null">#{frozenStartDate},</if>
+            <if test="frozenEndDate != null">#{frozenEndDate},</if>
+            <if test="frozenReason != null">#{frozenReason},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJudicialFreeze" parameterType="JudicialFreeze">
+        update judicial_freeze
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="infoId != null">info_id = #{infoId},</if>
+            <if test="judicialOrgan != null and judicialOrgan != ''">judicial_organ = #{judicialOrgan},</if>
+            <if test="frozenAmount != null">frozen_amount = #{frozenAmount},</if>
+            <if test="frozenStartDate != null">frozen_start_date = #{frozenStartDate},</if>
+            <if test="frozenEndDate != null">frozen_end_date = #{frozenEndDate},</if>
+            <if test="frozenReason != null">frozen_reason = #{frozenReason},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJudicialFreezeById" parameterType="Long">
+        delete from judicial_freeze where id = #{id}
+    </delete>
+
+    <delete id="deleteJudicialFreezeByIds" parameterType="String">
+        delete from judicial_freeze where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
