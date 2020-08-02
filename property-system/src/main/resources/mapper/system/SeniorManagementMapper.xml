@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyjk.system.mapper.SeniorManagementMapper">
+    
+    <resultMap type="SeniorManagement" id="SeniorManagementResult">
+        <result property="id"    column="id"    />
+        <result property="infoId"    column="info_id"    />
+        <result property="name"    column="name"    />
+        <result property="sex"    column="sex"    />
+        <result property="job"    column="job"    />
+        <result property="appointmentDate"    column="appointment_date"    />
+        <result property="departureDate"    column="departure_date"    />
+        <result property="level"    column="level"    />
+        <result property="remarks"    column="remarks"    />
+    </resultMap>
+
+    <sql id="selectSeniorManagementVo">
+        select id, info_id, name, sex, job, appointment_date, departure_date, level, remarks from senior_management
+    </sql>
+
+    <select id="selectSeniorManagementList" parameterType="SeniorManagement" resultMap="SeniorManagementResult">
+        <include refid="selectSeniorManagementVo"/>
+        <where>  
+            <if test="infoId != null "> and info_id = #{infoId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="sex != null "> and sex = #{sex}</if>
+            <if test="job != null  and job != ''"> and job = #{job}</if>
+            <if test="appointmentDate != null "> and appointment_date = #{appointmentDate}</if>
+            <if test="departureDate != null "> and departure_date = #{departureDate}</if>
+            <if test="level != null  and level != ''"> and level = #{level}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+        </where>
+    </select>
+    
+    <select id="selectSeniorManagementById" parameterType="Long" resultMap="SeniorManagementResult">
+        <include refid="selectSeniorManagementVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSeniorManagement" parameterType="SeniorManagement" useGeneratedKeys="true" keyProperty="id">
+        insert into senior_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">info_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="sex != null">sex,</if>
+            <if test="job != null and job != ''">job,</if>
+            <if test="appointmentDate != null">appointment_date,</if>
+            <if test="departureDate != null">departure_date,</if>
+            <if test="level != null">level,</if>
+            <if test="remarks != null">remarks,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="infoId != null">#{infoId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="job != null and job != ''">#{job},</if>
+            <if test="appointmentDate != null">#{appointmentDate},</if>
+            <if test="departureDate != null">#{departureDate},</if>
+            <if test="level != null">#{level},</if>
+            <if test="remarks != null">#{remarks},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSeniorManagement" parameterType="SeniorManagement">
+        update senior_management
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="infoId != null">info_id = #{infoId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="job != null and job != ''">job = #{job},</if>
+            <if test="appointmentDate != null">appointment_date = #{appointmentDate},</if>
+            <if test="departureDate != null">departure_date = #{departureDate},</if>
+            <if test="level != null">level = #{level},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSeniorManagementById" parameterType="Long">
+        delete from senior_management where id = #{id}
+    </delete>
+
+    <delete id="deleteSeniorManagementByIds" parameterType="String">
+        delete from senior_management where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
