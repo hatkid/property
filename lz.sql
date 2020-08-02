@@ -3,19 +3,153 @@
 
  Source Server         : localhost_3306
  Source Server Type    : MySQL
- Source Server Version : 50728
+ Source Server Version : 50730
  Source Host           : localhost:3306
  Source Schema         : ry
 
  Target Server Type    : MySQL
- Target Server Version : 50728
+ Target Server Version : 50730
  File Encoding         : 65001
 
- Date: 19/07/2020 21:49:21
+ Date: 02/08/2020 17:31:51
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for catalog
+-- ----------------------------
+DROP TABLE IF EXISTS `catalog`;
+CREATE TABLE `catalog`  (
+  `id` int(15) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增主键id',
+  `info_id` int(15) NOT NULL COMMENT '基本信息id',
+  `economic_behavior_date` date NULL DEFAULT NULL COMMENT '经济行为发生时间',
+  `economic_behavior_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '经济行为决策或者批复单位',
+  `policy_decision_date` date NULL DEFAULT NULL COMMENT '决策或批复日期',
+  `policy_decision_file` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '决策或批复文件名称',
+  `registration_authority_code` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产权登记机关标识码',
+  `property_right_registration` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产权登记情形',
+  `owned_assets_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '决策或批复单位名称-国资管理文件',
+  `owned_assets_file_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '决策或批复文件名称-国资管理文件',
+  `owned_assets_file_code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '决策或批复文件号-国资管理文件',
+  `owned_assets_description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '理由描述-国资管理文件',
+  `industry_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '决策或批复单位名称-行业监管部门文件',
+  `industry_file_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '决策或批复文件名称-行业监管部门文件',
+  `industry_file_code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '决策或批复文件号-行业监管部门文件',
+  `industry_description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '理由描述-行业监管部门文件',
+  `org_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '决策或批复单位名称-机构内部文件',
+  `org_file_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '决策或批复文件名称-机构内部文件',
+  `org_file_code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '决策或批复文件号-机构内部文件',
+  `org_description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '理由描述-机构内部文件',
+  `contribution_content` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出资证明文件内容',
+  `contribution_description` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出资证明文件理由描述',
+  `receipt_content` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '交易凭证内容',
+  `receipt_description` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '交易凭证理由描述',
+  `agreement_content` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '转让协议内容',
+  `agreement_description` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '转让协议理由描述',
+  `agency_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '中介机构名称-评估备案表或核准文件',
+  `report_no` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '评估报告号-评估备案表或核准文件',
+  `approval_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备案或核准单位名称-评估备案表或核准文件',
+  `approval_no` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备案号或核准文件号-评估备案表或核准文件',
+  `approval_description` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '理由描述-评估备案表或核准文件',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建者id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '占有登记' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of catalog
+-- ----------------------------
+INSERT INTO `catalog` VALUES (1, 2, '2020-07-11', '1', '2020-07-10', '', '', '11111', '达到', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '打发打发', '2020-08-02 17:22:01', NULL);
+
+-- ----------------------------
+-- Table structure for contribution
+-- ----------------------------
+DROP TABLE IF EXISTS `contribution`;
+CREATE TABLE `contribution`  (
+  `id` int(15) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `info_id` int(15) NOT NULL COMMENT '基本信息id',
+  `investor_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '出资方名称',
+  `investor_code` char(9) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '代码',
+  `identification_code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '统一社会信用代码/境外机构注册号/身份证号码',
+  `category` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别',
+  `capital_paid` decimal(15, 2) NOT NULL COMMENT '实缴资本（元）',
+  `capital_subscribed` decimal(15, 2) NOT NULL COMMENT '认缴资本（元）',
+  `equity_ratio` decimal(6, 4) NOT NULL COMMENT '股权比例',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `create_id` int(15) NOT NULL COMMENT '创建者id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '出资情况表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of contribution
+-- ----------------------------
+INSERT INTO `contribution` VALUES (1, 1, '中原资产', '111111111', '11111', '111', 1.00, 11.00, 1.0000, '2020-08-02 15:31:31', 2);
+INSERT INTO `contribution` VALUES (2, 1, '中原金科', '2', '111', '哈哈', 1.00, 1.00, 1.0000, '2020-08-02 15:46:42', 1);
+
+-- ----------------------------
+-- Table structure for equity_mortgage
+-- ----------------------------
+DROP TABLE IF EXISTS `equity_mortgage`;
+CREATE TABLE `equity_mortgage`  (
+  `id` int(15) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `info_id` int(15) NOT NULL COMMENT '基本信息id',
+  `organization_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '抵质押机构名称',
+  `equity_ratio` decimal(6, 4) NULL DEFAULT NULL COMMENT '持股比例',
+  `mortgagor` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '抵质押权人',
+  `book_value` decimal(15, 2) NULL DEFAULT NULL COMMENT '账面值',
+  `evaluation_value` decimal(15, 2) NULL DEFAULT NULL COMMENT '评估值',
+  `mortgage_ratio` decimal(6, 4) NULL DEFAULT NULL COMMENT '抵质押股权比例（%）',
+  `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `create_id` int(15) NOT NULL COMMENT '创建者id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '股权抵押表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of equity_mortgage
+-- ----------------------------
+INSERT INTO `equity_mortgage` VALUES (000000000000002, 1, '中原金科', 99.2300, '吕智', 1000.00, 12000.00, 20.0230, '111', '2020-08-02 16:12:07', 1);
+
+-- ----------------------------
+-- Table structure for essential_information
+-- ----------------------------
+DROP TABLE IF EXISTS `essential_information`;
+CREATE TABLE `essential_information`  (
+  `id` int(15) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `company_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '公司名称',
+  `is_registration` tinyint(1) UNSIGNED NOT NULL COMMENT '是否工商注册：0-是；1-不是；',
+  `social_code` char(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '统一社会信用代码',
+  `legal_person` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '法人',
+  `place_registration` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '注册地',
+  `residence` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '住所',
+  `registered_capital` decimal(18, 2) UNSIGNED NULL DEFAULT NULL COMMENT '注册资本（元）',
+  `found_date` date NULL DEFAULT NULL COMMENT '成立日期',
+  `organizational_form` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组织形式',
+  `organization_category` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '机构类别',
+  `state_owned_way` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '国有类型（配合机构类别使用）',
+  `investor_code` char(9) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最大国有出资人代码',
+  `investor_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '最大国有出资人名称',
+  `registration_authority_code` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '产权登记机关标识码',
+  `industry_code` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属行业代码',
+  `subjection_code` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '隶属关系标识码',
+  `grade_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '级次标识码',
+  `is_key_subsidiary` tinyint(1) UNSIGNED NULL DEFAULT NULL COMMENT '是否重点子公司：0-是；1-不是；',
+  `is_normal_operation` tinyint(1) UNSIGNED NULL DEFAULT NULL COMMENT '是否正常经营：0-正常；1-不正常；',
+  `operation_description` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '非正常经营说明',
+  `business_scope` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '经营范围',
+  `contribution_remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出资情况备注或者备注',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `create_id` int(15) NOT NULL COMMENT '创建者id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '基础信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of essential_information
+-- ----------------------------
+INSERT INTO `essential_information` VALUES (3, '2', 2, '2', '2', '2', '2', 2.00, '2020-07-08', '2', '2', '2', '2', '2', '2', '2', '2', '2', 0, NULL, '2', '2', '3333', '2020-07-31 17:40:11', 1);
+INSERT INTO `essential_information` VALUES (4, '3', 3, '3', '3', '3', '3', 3.00, '2020-08-02', '3', '3', '3', '3', '3', '3', '3', '3', '3', 3, NULL, '3', '3', '3', '2020-08-02 10:53:37', 1);
 
 -- ----------------------------
 -- Table structure for gen_table
@@ -43,12 +177,17 @@ CREATE TABLE `gen_table`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table
 -- ----------------------------
-INSERT INTO `gen_table` VALUES (2, 'q', '', NULL, NULL, 'Q', 'crud', 'com.ruoyi.system', 'system', 'q', NULL, 'ruoyi', '0', '/', NULL, 'admin', '2020-07-19 17:29:43', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (3, 'essential_information', '', NULL, NULL, 'EssentialInformation', 'crud', 'com.zyjk.system', 'system', 'information', NULL, 'lvzhi', '0', '/', NULL, 'admin', '2020-07-31 15:11:23', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (4, 'senior_management', '管理人员表', NULL, NULL, 'SeniorManagement', 'crud', 'com.zyjk.system', 'system', 'management', '管理人员', 'lvzhi', '0', '/', NULL, 'admin', '2020-08-02 13:43:22', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (5, 'contribution', '出资情况表', NULL, NULL, 'Contribution', 'crud', 'com.zyjk.system', 'system', 'contribution', '出资情况', 'lvzhi', '0', '/', NULL, 'admin', '2020-08-02 15:01:52', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (6, 'equity_mortgage', '股权抵押表', NULL, NULL, 'EquityMortgage', 'crud', 'com.zyjk.system', 'system', 'mortgage', '股权抵押', 'lvzhi', '0', '/', NULL, 'admin', '2020-08-02 15:50:12', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (7, 'judicial_freeze', '司法冻结情况表', NULL, NULL, 'JudicialFreeze', 'crud', 'com.zyjk.system', 'system', 'freeze', '司法冻结情况', 'lvzhi', '0', '/', NULL, 'admin', '2020-08-02 16:16:08', '', NULL, NULL);
+INSERT INTO `gen_table` VALUES (10, 'catalog', '占有登记', NULL, NULL, 'Catalog', 'crud', 'com.zyjk.system', 'system', 'catalog', '占有登记', 'lvzhi', '0', '/', NULL, 'admin', '2020-08-02 17:08:41', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for gen_table_column
@@ -78,227 +217,164 @@ CREATE TABLE `gen_table_column`  (
   `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 180 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table_column
 -- ----------------------------
-INSERT INTO `gen_table_column` VALUES (10, '2', 'q', 'qqq', 'varchar(255)', 'String', 'q', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 1, 'admin', '2020-07-19 17:29:43', '', NULL);
-INSERT INTO `gen_table_column` VALUES (11, '2', 'qq', '就是个测试', 'varchar(255)', 'String', 'qq', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2020-07-19 17:29:43', '', NULL);
+INSERT INTO `gen_table_column` VALUES (12, '3', 'id', '自增主键', 'int(15) unsigned', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (13, '3', 'company_name', '公司名称', 'varchar(20)', 'String', 'companyName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (14, '3', 'is_registration', '是否工商注册', 'tinyint(1) unsigned', 'Integer', 'isRegistration', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (15, '3', 'social_code', '统一社会信用代码', 'char(18)', 'String', 'socialCode', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (16, '3', 'legal_person', '法人', 'varchar(10)', 'String', 'legalPerson', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (17, '3', 'place_registration', '注册地', 'varchar(50)', 'String', 'placeRegistration', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (18, '3', 'residence', '住所', 'varchar(100)', 'String', 'residence', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (19, '3', 'registered_capital', '注册资本（元）', 'decimal(18,2) unsigned', 'BigDecimal', 'registeredCapital', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (20, '3', 'found_date', '成立日期', 'date', 'Date', 'foundDate', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'datetime', '', 9, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (21, '3', 'organizational_form', '组织形式', 'varchar(20)', 'String', 'organizationalForm', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 10, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (22, '3', 'organization_category', '机构类别', 'varchar(20)', 'String', 'organizationCategory', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 11, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (23, '3', 'state_owned_way', '国有类型（配合机构类别使用）', 'varchar(10)', 'String', 'stateOwnedWay', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 12, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (24, '3', 'economic_behavior_date', '经济行为发生时间', 'date', 'Date', 'economicBehaviorDate', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'datetime', '', 13, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (25, '3', 'economic_behavior_name', '经济行为决策或者批复单位', 'varchar(20)', 'String', 'economicBehaviorName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 14, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (26, '3', 'policy_decision_date', '决策或批复日期', 'date', 'Date', 'policyDecisionDate', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'datetime', '', 15, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (27, '3', 'policy_decision_file', '决策或批复文件名称', 'varchar(20)', 'String', 'policyDecisionFile', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'upload', '', 16, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (28, '3', 'investor_code', '最大国有出资人代码', 'char(9)', 'String', 'investorCode', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 17, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (29, '3', 'investor_name', '最大国有出资人名称', 'varchar(20)', 'String', 'investorName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 18, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (30, '3', 'registration_authority_code', '产权登记机关标识码', 'varchar(30)', 'String', 'registrationAuthorityCode', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 19, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (31, '3', 'industry_code', '所属行业代码', 'varchar(100)', 'String', 'industryCode', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 20, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (32, '3', 'subjection_code', '隶属关系标识码', 'varchar(20)', 'String', 'subjectionCode', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 21, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (33, '3', 'grade_code', '级次标识码', 'varchar(20)', 'String', 'gradeCode', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 22, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (34, '3', 'is_key_subsidiary', '是否重点子公司', 'tinyint(1) unsigned', 'Integer', 'isKeySubsidiary', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 23, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (35, '3', 'property_right_registration', '产权登记情形', 'varchar(20)', 'String', 'propertyRightRegistration', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 24, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (36, '3', 'is_normal_operation', '是否正常经营', 'tinyint(1) unsigned', 'Integer', 'isNormalOperation', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 25, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (37, '3', 'operation_description', '非正常经营说明', 'varchar(200)', 'String', 'operationDescription', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 26, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (38, '3', 'business_scope', '经营范围', 'varchar(255)', 'String', 'businessScope', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 27, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (39, '3', 'contribution_remarks', '出资情况备注', 'varchar(255)', 'String', 'contributionRemarks', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 28, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (40, '3', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'datetime', '', 29, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (41, '3', 'create_id', '创建者id', 'int(15)', 'Long', 'createId', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 30, 'admin', '2020-07-31 15:11:23', '', NULL);
+INSERT INTO `gen_table_column` VALUES (42, '4', 'id', '自增id', 'int(15) unsigned', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2020-08-02 13:43:22', '', NULL);
+INSERT INTO `gen_table_column` VALUES (43, '4', 'info_id', '基本信息id', 'int(15)', 'Long', 'infoId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2020-08-02 13:43:22', '', NULL);
+INSERT INTO `gen_table_column` VALUES (44, '4', 'name', '姓名', 'varchar(10)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 3, 'admin', '2020-08-02 13:43:22', '', NULL);
+INSERT INTO `gen_table_column` VALUES (45, '4', 'sex', '性别：1-男；0-女；', 'tinyint(1)', 'Integer', 'sex', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'select', '', 4, 'admin', '2020-08-02 13:43:22', '', NULL);
+INSERT INTO `gen_table_column` VALUES (46, '4', 'job', '职务', 'varchar(10)', 'String', 'job', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2020-08-02 13:43:22', '', NULL);
+INSERT INTO `gen_table_column` VALUES (47, '4', 'appointment_date', '上任时间', 'date', 'Date', 'appointmentDate', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'datetime', '', 6, 'admin', '2020-08-02 13:43:22', '', NULL);
+INSERT INTO `gen_table_column` VALUES (48, '4', 'departure_date', '离任时间', 'date', 'Date', 'departureDate', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'datetime', '', 7, 'admin', '2020-08-02 13:43:22', '', NULL);
+INSERT INTO `gen_table_column` VALUES (49, '4', 'level', '级别', 'varchar(20)', 'String', 'level', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2020-08-02 13:43:22', '', NULL);
+INSERT INTO `gen_table_column` VALUES (50, '4', 'remarks', '备注', 'varchar(100)', 'String', 'remarks', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2020-08-02 13:43:22', '', NULL);
+INSERT INTO `gen_table_column` VALUES (51, '5', 'id', '自增id', 'int(15) unsigned', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2020-08-02 15:01:52', '', NULL);
+INSERT INTO `gen_table_column` VALUES (52, '5', 'info_id', '基本信息id', 'int(15)', 'Long', 'infoId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2020-08-02 15:01:52', '', NULL);
+INSERT INTO `gen_table_column` VALUES (53, '5', 'investor_name', '出资方名称', 'varchar(20)', 'String', 'investorName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 3, 'admin', '2020-08-02 15:01:52', '', NULL);
+INSERT INTO `gen_table_column` VALUES (54, '5', 'investor_code', '代码', 'char(9)', 'String', 'investorCode', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2020-08-02 15:01:52', '', NULL);
+INSERT INTO `gen_table_column` VALUES (55, '5', 'identification_code', '统一社会信用代码/境外机构注册号/身份证号码', 'varchar(20)', 'String', 'identificationCode', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2020-08-02 15:01:52', '', NULL);
+INSERT INTO `gen_table_column` VALUES (56, '5', 'category', '类别', 'varchar(20)', 'String', 'category', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2020-08-02 15:01:52', '', NULL);
+INSERT INTO `gen_table_column` VALUES (57, '5', 'capital_paid', '实缴资本（元）', 'decimal(15,2)', 'BigDecimal', 'capitalPaid', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2020-08-02 15:01:52', '', NULL);
+INSERT INTO `gen_table_column` VALUES (58, '5', 'capital_subscribed', '认缴资本（元）', 'decimal(15,2)', 'BigDecimal', 'capitalSubscribed', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2020-08-02 15:01:52', '', NULL);
+INSERT INTO `gen_table_column` VALUES (59, '5', 'equity_ratio', '股权比例', 'decimal(6,4)', 'BigDecimal', 'equityRatio', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2020-08-02 15:01:52', '', NULL);
+INSERT INTO `gen_table_column` VALUES (60, '5', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', '1', '1', NULL, NULL, NULL, 'EQ', 'datetime', '', 10, 'admin', '2020-08-02 15:01:52', '', NULL);
+INSERT INTO `gen_table_column` VALUES (61, '5', 'create_id', '创建者id', 'int(15)', 'Long', 'createId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 11, 'admin', '2020-08-02 15:01:52', '', NULL);
+INSERT INTO `gen_table_column` VALUES (62, '6', 'id', '自增id', 'int(15) unsigned zerofill', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2020-08-02 15:50:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (63, '6', 'info_id', '基本信息id', 'int(15)', 'Long', 'infoId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2020-08-02 15:50:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (64, '6', 'organization_name', '抵质押机构名称', 'varchar(20)', 'String', 'organizationName', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 3, 'admin', '2020-08-02 15:50:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (65, '6', 'equity_ratio', '持股比例', 'decimal(6,4)', 'BigDecimal', 'equityRatio', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2020-08-02 15:50:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (66, '6', 'mortgagor', '抵质押权人', 'varchar(20)', 'String', 'mortgagor', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2020-08-02 15:50:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (67, '6', 'book_value', '账面值', 'decimal(15,2)', 'BigDecimal', 'bookValue', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2020-08-02 15:50:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (68, '6', 'evaluation_value', '评估值', 'decimal(15,2)', 'BigDecimal', 'evaluationValue', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2020-08-02 15:50:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (69, '6', 'mortgage_ratio', '抵质押股权比例（%）', 'decimal(6,4)', 'BigDecimal', 'mortgageRatio', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2020-08-02 15:50:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (70, '6', 'remarks', '备注', 'varchar(255)', 'String', 'remarks', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 9, 'admin', '2020-08-02 15:50:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (71, '6', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', '1', '1', NULL, NULL, NULL, 'EQ', 'datetime', '', 10, 'admin', '2020-08-02 15:50:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (72, '6', 'create_id', '创建者id', 'int(15)', 'Long', 'createId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 11, 'admin', '2020-08-02 15:50:12', '', NULL);
+INSERT INTO `gen_table_column` VALUES (73, '7', 'id', '自增id', 'int(15) unsigned', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2020-08-02 16:16:08', '', NULL);
+INSERT INTO `gen_table_column` VALUES (74, '7', 'info_id', '基本信息id', 'int(15)', 'Long', 'infoId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2020-08-02 16:16:08', '', NULL);
+INSERT INTO `gen_table_column` VALUES (75, '7', 'judicial_organ', '司法执行机关', 'varchar(20)', 'String', 'judicialOrgan', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2020-08-02 16:16:08', '', NULL);
+INSERT INTO `gen_table_column` VALUES (76, '7', 'frozen_amount', '司法冻结资产数额', 'decimal(15,2) unsigned', 'BigDecimal', 'frozenAmount', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2020-08-02 16:16:08', '', NULL);
+INSERT INTO `gen_table_column` VALUES (77, '7', 'frozen_start_date', '司法冻结起始时间', 'date', 'Date', 'frozenStartDate', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'datetime', '', 5, 'admin', '2020-08-02 16:16:08', '', NULL);
+INSERT INTO `gen_table_column` VALUES (78, '7', 'frozen_end_date', '司法冻结结束时间', 'date', 'Date', 'frozenEndDate', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'datetime', '', 6, 'admin', '2020-08-02 16:16:08', '', NULL);
+INSERT INTO `gen_table_column` VALUES (79, '7', 'frozen_reason', '司法冻结原因', 'varchar(255)', 'String', 'frozenReason', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2020-08-02 16:16:08', '', NULL);
+INSERT INTO `gen_table_column` VALUES (80, '7', 'remarks', '备注', 'varchar(255)', 'String', 'remarks', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2020-08-02 16:16:08', '', NULL);
+INSERT INTO `gen_table_column` VALUES (81, '7', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', '1', '1', NULL, NULL, NULL, 'EQ', 'datetime', '', 9, 'admin', '2020-08-02 16:16:08', '', NULL);
+INSERT INTO `gen_table_column` VALUES (82, '7', 'create_id', '创建者id', 'int(15)', 'Long', 'createId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 10, 'admin', '2020-08-02 16:16:08', '', NULL);
+INSERT INTO `gen_table_column` VALUES (147, '10', 'id', NULL, 'int(15) unsigned', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (148, '10', 'info_id', '基本信息id', 'int(15)', 'Long', 'infoId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (149, '10', 'economic_behavior_date', '经济行为发生时间', 'date', 'Date', 'economicBehaviorDate', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'datetime', '', 3, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (150, '10', 'economic_behavior_name', '经济行为决策或者批复单位', 'varchar(20)', 'String', 'economicBehaviorName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 4, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (151, '10', 'policy_decision_date', '决策或批复日期', 'date', 'Date', 'policyDecisionDate', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'datetime', '', 5, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (152, '10', 'policy_decision_file', '决策或批复文件名称', 'varchar(20)', 'String', 'policyDecisionFile', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'upload', '', 6, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (153, '10', 'registration_authority_code', '产权登记机关标识码', 'varchar(30)', 'String', 'registrationAuthorityCode', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (154, '10', 'property_right_registration', '产权登记情形', 'varchar(20)', 'String', 'propertyRightRegistration', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 8, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (155, '10', 'owned_assets_name', '决策或批复单位名称-国资管理文件', 'varchar(20)', 'String', 'ownedAssetsName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 9, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (156, '10', 'owned_assets_file_name', '决策或批复文件名称-国资管理文件', 'varchar(20)', 'String', 'ownedAssetsFileName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 10, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (157, '10', 'owned_assets_file_code', '决策或批复文件号-国资管理文件', 'varchar(20)', 'String', 'ownedAssetsFileCode', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 11, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (158, '10', 'owned_assets_description', '理由描述-国资管理文件', 'varchar(255)', 'String', 'ownedAssetsDescription', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 12, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (159, '10', 'industry_name', '决策或批复单位名称-行业监管部门文件', 'varchar(20)', 'String', 'industryName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 13, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (160, '10', 'industry_file_name', '决策或批复文件名称-行业监管部门文件', 'varchar(20)', 'String', 'industryFileName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 14, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (161, '10', 'industry_file_code', '决策或批复文件号-行业监管部门文件', 'varchar(20)', 'String', 'industryFileCode', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 15, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (162, '10', 'industry_description', '理由描述-行业监管部门文件', 'varchar(255)', 'String', 'industryDescription', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 16, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (163, '10', 'org_name', '决策或批复单位名称-机构内部文件', 'varchar(20)', 'String', 'orgName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 17, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (164, '10', 'org_file_name', '决策或批复文件名称-机构内部文件', 'varchar(20)', 'String', 'orgFileName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 18, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (165, '10', 'org_file_code', '决策或批复文件号-机构内部文件', 'varchar(20)', 'String', 'orgFileCode', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 19, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (166, '10', 'org_description', '理由描述-机构内部文件', 'varchar(255)', 'String', 'orgDescription', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 20, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (167, '10', 'contribution_content', '出资证明文件内容', 'varchar(50)', 'String', 'contributionContent', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 21, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (168, '10', 'contribution_description', '出资证明文件理由描述', 'varchar(50)', 'String', 'contributionDescription', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 22, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (169, '10', 'receipt_content', '交易凭证内容', 'varchar(50)', 'String', 'receiptContent', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 23, 'admin', '2020-08-02 17:08:41', '', NULL);
+INSERT INTO `gen_table_column` VALUES (170, '10', 'receipt_description', '交易凭证理由描述', 'varchar(50)', 'String', 'receiptDescription', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 24, 'admin', '2020-08-02 17:08:42', '', NULL);
+INSERT INTO `gen_table_column` VALUES (171, '10', 'agreement_content', '转让协议内容', 'varchar(50)', 'String', 'agreementContent', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 25, 'admin', '2020-08-02 17:08:42', '', NULL);
+INSERT INTO `gen_table_column` VALUES (172, '10', 'agreement_description', '转让协议理由描述', 'varchar(50)', 'String', 'agreementDescription', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 26, 'admin', '2020-08-02 17:08:42', '', NULL);
+INSERT INTO `gen_table_column` VALUES (173, '10', 'agency_name', '中介机构名称-评估备案表或核准文件', 'varchar(50)', 'String', 'agencyName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 27, 'admin', '2020-08-02 17:08:42', '', NULL);
+INSERT INTO `gen_table_column` VALUES (174, '10', 'report_no', '评估报告号-评估备案表或核准文件', 'varchar(20)', 'String', 'reportNo', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 28, 'admin', '2020-08-02 17:08:42', '', NULL);
+INSERT INTO `gen_table_column` VALUES (175, '10', 'approval_name', '备案或核准单位名称-评估备案表或核准文件', 'varchar(20)', 'String', 'approvalName', '0', '0', NULL, '1', '1', '1', '1', 'LIKE', 'input', '', 29, 'admin', '2020-08-02 17:08:42', '', NULL);
+INSERT INTO `gen_table_column` VALUES (176, '10', 'approval_no', '备案号或核准文件号-评估备案表或核准文件', 'varchar(20)', 'String', 'approvalNo', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 30, 'admin', '2020-08-02 17:08:42', '', NULL);
+INSERT INTO `gen_table_column` VALUES (177, '10', 'approval_description', '理由描述-评估备案表或核准文件', 'varchar(50)', 'String', 'approvalDescription', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 31, 'admin', '2020-08-02 17:08:42', '', NULL);
+INSERT INTO `gen_table_column` VALUES (178, '10', 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'datetime', '', 32, 'admin', '2020-08-02 17:08:42', '', NULL);
+INSERT INTO `gen_table_column` VALUES (179, '10', 'create_id', '创建者id', 'int(11)', 'Long', 'createId', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 33, 'admin', '2020-08-02 17:08:42', '', NULL);
 
 -- ----------------------------
--- Table structure for q
+-- Table structure for judicial_freeze
 -- ----------------------------
-DROP TABLE IF EXISTS `q`;
-CREATE TABLE `q`  (
-  `q` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'qqq',
-  `qq` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '就是个测试'
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+DROP TABLE IF EXISTS `judicial_freeze`;
+CREATE TABLE `judicial_freeze`  (
+  `id` int(15) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `info_id` int(15) NOT NULL COMMENT '基本信息id',
+  `judicial_organ` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '司法执行机关',
+  `frozen_amount` decimal(15, 2) UNSIGNED NULL DEFAULT NULL COMMENT '司法冻结资产数额',
+  `frozen_start_date` date NULL DEFAULT NULL COMMENT '司法冻结起始时间',
+  `frozen_end_date` date NULL DEFAULT NULL COMMENT '司法冻结结束时间',
+  `frozen_reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '司法冻结原因',
+  `remarks` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
+  `create_id` int(15) NOT NULL COMMENT '创建者id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '司法冻结情况表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for qrtz_blob_triggers
+-- Records of judicial_freeze
 -- ----------------------------
-DROP TABLE IF EXISTS `qrtz_blob_triggers`;
-CREATE TABLE `qrtz_blob_triggers`  (
-  `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_group` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `blob_data` blob NULL,
-  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
-  CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+INSERT INTO `judicial_freeze` VALUES (1, 1, '郑州法院', 1111.00, '2020-08-05', '2020-08-28', '欠钱不还', '哈哈', '2020-08-02 16:26:30', 1);
+INSERT INTO `judicial_freeze` VALUES (2, 1, '中华人民共和国国务院', 100000000000.00, '2020-08-02', '2020-10-31', '没有原因', '李克强交代办理', '2020-08-02 16:27:28', 1);
 
 -- ----------------------------
--- Table structure for qrtz_calendars
+-- Table structure for senior_management
 -- ----------------------------
-DROP TABLE IF EXISTS `qrtz_calendars`;
-CREATE TABLE `qrtz_calendars`  (
-  `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `calendar_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `calendar` blob NOT NULL,
-  PRIMARY KEY (`sched_name`, `calendar_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+DROP TABLE IF EXISTS `senior_management`;
+CREATE TABLE `senior_management`  (
+  `id` int(15) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `info_id` int(15) NOT NULL COMMENT '基本信息id',
+  `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '姓名',
+  `sex` tinyint(1) NOT NULL COMMENT '性别：1-男；0-女；',
+  `job` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '职务',
+  `appointment_date` date NOT NULL COMMENT '上任时间',
+  `departure_date` date NULL DEFAULT NULL COMMENT '离任时间',
+  `level` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '级别',
+  `remarks` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  `create_id` int(15) NOT NULL DEFAULT 1 COMMENT '创建者id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '管理人员表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for qrtz_cron_triggers
+-- Records of senior_management
 -- ----------------------------
-DROP TABLE IF EXISTS `qrtz_cron_triggers`;
-CREATE TABLE `qrtz_cron_triggers`  (
-  `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_group` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `cron_expression` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `time_zone_id` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
-  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of qrtz_cron_triggers
--- ----------------------------
-INSERT INTO `qrtz_cron_triggers` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME1', 'DEFAULT', '0/10 * * * * ?', 'Asia/Shanghai');
-INSERT INTO `qrtz_cron_triggers` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME2', 'DEFAULT', '0/15 * * * * ?', 'Asia/Shanghai');
-INSERT INTO `qrtz_cron_triggers` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME3', 'DEFAULT', '0/20 * * * * ?', 'Asia/Shanghai');
-
--- ----------------------------
--- Table structure for qrtz_fired_triggers
--- ----------------------------
-DROP TABLE IF EXISTS `qrtz_fired_triggers`;
-CREATE TABLE `qrtz_fired_triggers`  (
-  `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `entry_id` varchar(95) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_group` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `instance_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `fired_time` bigint(13) NOT NULL,
-  `sched_time` bigint(13) NOT NULL,
-  `priority` int(11) NOT NULL,
-  `state` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `job_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `job_group` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `is_nonconcurrent` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `requests_recovery` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`sched_name`, `entry_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for qrtz_job_details
--- ----------------------------
-DROP TABLE IF EXISTS `qrtz_job_details`;
-CREATE TABLE `qrtz_job_details`  (
-  `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `job_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `job_group` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `description` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `job_class_name` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `is_durable` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `is_nonconcurrent` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `is_update_data` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `requests_recovery` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `job_data` blob NULL,
-  PRIMARY KEY (`sched_name`, `job_name`, `job_group`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of qrtz_job_details
--- ----------------------------
-INSERT INTO `qrtz_job_details` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME1', 'DEFAULT', NULL, 'com.ruoyi.quartz.util.QuartzDisallowConcurrentExecution', '0', '1', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F504552544945537372001E636F6D2E72756F79692E71756172747A2E646F6D61696E2E5379734A6F6200000000000000010200084C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000E63726F6E45787072657373696F6E71007E00094C000C696E766F6B6554617267657471007E00094C00086A6F6247726F757071007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C00076A6F624E616D6571007E00094C000D6D697366697265506F6C69637971007E00094C000673746174757371007E000978720027636F6D2E72756F79692E636F6D6D6F6E2E636F72652E646F6D61696E2E42617365456E7469747900000000000000010200074C0008637265617465427971007E00094C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C0006706172616D7371007E00034C000672656D61726B71007E00094C000B73656172636856616C756571007E00094C0008757064617465427971007E00094C000A75706461746554696D6571007E000C787074000561646D696E7372000E6A6176612E7574696C2E44617465686A81014B59741903000078707708000001622CDE29E078707400007070707400013174000E302F3130202A202A202A202A203F74001172795461736B2E72794E6F506172616D7374000744454641554C547372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000001740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E697A0E58F82EFBC8974000133740001317800);
-INSERT INTO `qrtz_job_details` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME2', 'DEFAULT', NULL, 'com.ruoyi.quartz.util.QuartzDisallowConcurrentExecution', '0', '1', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F504552544945537372001E636F6D2E72756F79692E71756172747A2E646F6D61696E2E5379734A6F6200000000000000010200084C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000E63726F6E45787072657373696F6E71007E00094C000C696E766F6B6554617267657471007E00094C00086A6F6247726F757071007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C00076A6F624E616D6571007E00094C000D6D697366697265506F6C69637971007E00094C000673746174757371007E000978720027636F6D2E72756F79692E636F6D6D6F6E2E636F72652E646F6D61696E2E42617365456E7469747900000000000000010200074C0008637265617465427971007E00094C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C0006706172616D7371007E00034C000672656D61726B71007E00094C000B73656172636856616C756571007E00094C0008757064617465427971007E00094C000A75706461746554696D6571007E000C787074000561646D696E7372000E6A6176612E7574696C2E44617465686A81014B59741903000078707708000001622CDE29E078707400007070707400013174000E302F3135202A202A202A202A203F74001572795461736B2E7279506172616D7328277279272974000744454641554C547372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000002740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E69C89E58F82EFBC8974000133740001317800);
-INSERT INTO `qrtz_job_details` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME3', 'DEFAULT', NULL, 'com.ruoyi.quartz.util.QuartzDisallowConcurrentExecution', '0', '1', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F504552544945537372001E636F6D2E72756F79692E71756172747A2E646F6D61696E2E5379734A6F6200000000000000010200084C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000E63726F6E45787072657373696F6E71007E00094C000C696E766F6B6554617267657471007E00094C00086A6F6247726F757071007E00094C00056A6F6249647400104C6A6176612F6C616E672F4C6F6E673B4C00076A6F624E616D6571007E00094C000D6D697366697265506F6C69637971007E00094C000673746174757371007E000978720027636F6D2E72756F79692E636F6D6D6F6E2E636F72652E646F6D61696E2E42617365456E7469747900000000000000010200074C0008637265617465427971007E00094C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C0006706172616D7371007E00034C000672656D61726B71007E00094C000B73656172636856616C756571007E00094C0008757064617465427971007E00094C000A75706461746554696D6571007E000C787074000561646D696E7372000E6A6176612E7574696C2E44617465686A81014B59741903000078707708000001622CDE29E078707400007070707400013174000E302F3230202A202A202A202A203F74003872795461736B2E72794D756C7469706C65506172616D7328277279272C20747275652C20323030304C2C203331362E3530442C203130302974000744454641554C547372000E6A6176612E6C616E672E4C6F6E673B8BE490CC8F23DF0200014A000576616C7565787200106A6176612E6C616E672E4E756D62657286AC951D0B94E08B02000078700000000000000003740018E7B3BBE7BB9FE9BB98E8AEA4EFBC88E5A49AE58F82EFBC8974000133740001317800);
-
--- ----------------------------
--- Table structure for qrtz_locks
--- ----------------------------
-DROP TABLE IF EXISTS `qrtz_locks`;
-CREATE TABLE `qrtz_locks`  (
-  `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `lock_name` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`sched_name`, `lock_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of qrtz_locks
--- ----------------------------
-INSERT INTO `qrtz_locks` VALUES ('RuoyiScheduler', 'STATE_ACCESS');
-INSERT INTO `qrtz_locks` VALUES ('RuoyiScheduler', 'TRIGGER_ACCESS');
-
--- ----------------------------
--- Table structure for qrtz_paused_trigger_grps
--- ----------------------------
-DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
-CREATE TABLE `qrtz_paused_trigger_grps`  (
-  `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_group` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`sched_name`, `trigger_group`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for qrtz_scheduler_state
--- ----------------------------
-DROP TABLE IF EXISTS `qrtz_scheduler_state`;
-CREATE TABLE `qrtz_scheduler_state`  (
-  `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `instance_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `last_checkin_time` bigint(13) NOT NULL,
-  `checkin_interval` bigint(13) NOT NULL,
-  PRIMARY KEY (`sched_name`, `instance_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of qrtz_scheduler_state
--- ----------------------------
-INSERT INTO `qrtz_scheduler_state` VALUES ('RuoyiScheduler', 'DESKTOP-NIFMLV31595151342688', 1595151465877, 15000);
-
--- ----------------------------
--- Table structure for qrtz_simple_triggers
--- ----------------------------
-DROP TABLE IF EXISTS `qrtz_simple_triggers`;
-CREATE TABLE `qrtz_simple_triggers`  (
-  `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_group` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `repeat_count` bigint(7) NOT NULL,
-  `repeat_interval` bigint(12) NOT NULL,
-  `times_triggered` bigint(10) NOT NULL,
-  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
-  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for qrtz_simprop_triggers
--- ----------------------------
-DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
-CREATE TABLE `qrtz_simprop_triggers`  (
-  `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_group` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `str_prop_1` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `str_prop_2` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `str_prop_3` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `int_prop_1` int(11) NULL DEFAULT NULL,
-  `int_prop_2` int(11) NULL DEFAULT NULL,
-  `long_prop_1` bigint(20) NULL DEFAULT NULL,
-  `long_prop_2` bigint(20) NULL DEFAULT NULL,
-  `dec_prop_1` decimal(13, 4) NULL DEFAULT NULL,
-  `dec_prop_2` decimal(13, 4) NULL DEFAULT NULL,
-  `bool_prop_1` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `bool_prop_2` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
-  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for qrtz_triggers
--- ----------------------------
-DROP TABLE IF EXISTS `qrtz_triggers`;
-CREATE TABLE `qrtz_triggers`  (
-  `sched_name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_group` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `job_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `job_group` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `description` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `next_fire_time` bigint(13) NULL DEFAULT NULL,
-  `prev_fire_time` bigint(13) NULL DEFAULT NULL,
-  `priority` int(11) NULL DEFAULT NULL,
-  `trigger_state` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `trigger_type` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `start_time` bigint(13) NOT NULL,
-  `end_time` bigint(13) NULL DEFAULT NULL,
-  `calendar_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `misfire_instr` smallint(2) NULL DEFAULT NULL,
-  `job_data` blob NULL,
-  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
-  INDEX `sched_name`(`sched_name`, `job_name`, `job_group`) USING BTREE,
-  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `job_name`, `job_group`) REFERENCES `qrtz_job_details` (`sched_name`, `job_name`, `job_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of qrtz_triggers
--- ----------------------------
-INSERT INTO `qrtz_triggers` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME1', 'DEFAULT', 'TASK_CLASS_NAME1', 'DEFAULT', NULL, 1595151350000, -1, 5, 'PAUSED', 'CRON', 1595151342000, 0, NULL, 2, '');
-INSERT INTO `qrtz_triggers` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME2', 'DEFAULT', 'TASK_CLASS_NAME2', 'DEFAULT', NULL, 1595151345000, -1, 5, 'PAUSED', 'CRON', 1595151342000, 0, NULL, 2, '');
-INSERT INTO `qrtz_triggers` VALUES ('RuoyiScheduler', 'TASK_CLASS_NAME3', 'DEFAULT', 'TASK_CLASS_NAME3', 'DEFAULT', NULL, 1595151360000, -1, 5, 'PAUSED', 'CRON', 1595151342000, 0, NULL, 2, '');
+INSERT INTO `senior_management` VALUES (1, 2, '吕智', 0, '董事长', '2020-08-03', '2020-08-05', '11', '111', '2020-08-02 14:47:39', 1);
+INSERT INTO `senior_management` VALUES (3, 1, 'memcache', 0, '董事长', '2020-08-03', NULL, '', '', '2020-08-02 14:51:30', 1);
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -316,7 +392,7 @@ CREATE TABLE `sys_config`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`config_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '参数配置表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '参数配置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_config
@@ -384,7 +460,7 @@ CREATE TABLE `sys_dict_data`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict_data
@@ -435,7 +511,7 @@ CREATE TABLE `sys_dict_type`  (
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dict_id`) USING BTREE,
   UNIQUE INDEX `dict_type`(`dict_type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict_type
@@ -470,7 +546,7 @@ CREATE TABLE `sys_job`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注信息',
   PRIMARY KEY (`job_id`, `job_name`, `job_group`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_job
@@ -510,7 +586,7 @@ CREATE TABLE `sys_logininfor`  (
   `msg` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '提示消息',
   `login_time` datetime(0) NULL DEFAULT NULL COMMENT '访问时间',
   PRIMARY KEY (`info_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 126 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 160 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -541,6 +617,40 @@ INSERT INTO `sys_logininfor` VALUES (122, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (123, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '退出成功', '2020-07-19 18:53:31');
 INSERT INTO `sys_logininfor` VALUES (124, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-19 18:53:35');
 INSERT INTO `sys_logininfor` VALUES (125, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-19 21:47:12');
+INSERT INTO `sys_logininfor` VALUES (126, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-20 16:07:27');
+INSERT INTO `sys_logininfor` VALUES (127, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-20 16:52:46');
+INSERT INTO `sys_logininfor` VALUES (128, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-20 16:58:33');
+INSERT INTO `sys_logininfor` VALUES (129, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '1', '验证码错误', '2020-07-21 14:49:26');
+INSERT INTO `sys_logininfor` VALUES (130, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-21 14:49:30');
+INSERT INTO `sys_logininfor` VALUES (131, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-21 15:14:04');
+INSERT INTO `sys_logininfor` VALUES (132, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-21 15:48:32');
+INSERT INTO `sys_logininfor` VALUES (133, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-21 16:53:11');
+INSERT INTO `sys_logininfor` VALUES (134, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-22 16:30:10');
+INSERT INTO `sys_logininfor` VALUES (135, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-22 17:54:01');
+INSERT INTO `sys_logininfor` VALUES (136, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-23 09:53:42');
+INSERT INTO `sys_logininfor` VALUES (137, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-25 23:05:09');
+INSERT INTO `sys_logininfor` VALUES (138, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '1', '验证码错误', '2020-07-28 18:15:32');
+INSERT INTO `sys_logininfor` VALUES (139, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-28 18:15:38');
+INSERT INTO `sys_logininfor` VALUES (140, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-28 18:19:54');
+INSERT INTO `sys_logininfor` VALUES (141, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-30 16:00:36');
+INSERT INTO `sys_logininfor` VALUES (142, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '1', '验证码错误', '2020-07-30 16:49:01');
+INSERT INTO `sys_logininfor` VALUES (143, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-30 16:49:05');
+INSERT INTO `sys_logininfor` VALUES (144, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '退出成功', '2020-07-30 16:49:49');
+INSERT INTO `sys_logininfor` VALUES (145, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-30 16:49:52');
+INSERT INTO `sys_logininfor` VALUES (146, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '退出成功', '2020-07-30 16:50:58');
+INSERT INTO `sys_logininfor` VALUES (147, 'lvzhi', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-30 16:51:09');
+INSERT INTO `sys_logininfor` VALUES (148, 'lvzhi', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '退出成功', '2020-07-30 16:51:54');
+INSERT INTO `sys_logininfor` VALUES (149, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-30 16:51:58');
+INSERT INTO `sys_logininfor` VALUES (150, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-30 17:26:24');
+INSERT INTO `sys_logininfor` VALUES (151, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-31 14:38:46');
+INSERT INTO `sys_logininfor` VALUES (152, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-31 15:07:06');
+INSERT INTO `sys_logininfor` VALUES (153, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-31 15:13:57');
+INSERT INTO `sys_logininfor` VALUES (154, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-31 15:56:58');
+INSERT INTO `sys_logininfor` VALUES (155, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '1', '验证码错误', '2020-07-31 17:09:38');
+INSERT INTO `sys_logininfor` VALUES (156, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-07-31 17:09:41');
+INSERT INTO `sys_logininfor` VALUES (157, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-08-02 09:38:00');
+INSERT INTO `sys_logininfor` VALUES (158, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-08-02 10:16:36');
+INSERT INTO `sys_logininfor` VALUES (159, 'admin', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', '0', '登录成功', '2020-08-02 13:42:56');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -563,15 +673,15 @@ CREATE TABLE `sys_menu`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2001 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2054 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 1, '#', '', 'M', '0', '', 'fa fa-gear', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统管理目录');
-INSERT INTO `sys_menu` VALUES (2, '系统监控', 0, 2, '#', '', 'M', '0', '', 'fa fa-video-camera', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统监控目录');
-INSERT INTO `sys_menu` VALUES (3, '系统工具', 0, 3, '#', '', 'M', '0', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '系统工具目录');
-INSERT INTO `sys_menu` VALUES (4, '若依官网', 0, 4, 'http://ruoyi.vip', 'menuBlank', 'C', '0', '', 'fa fa-location-arrow', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '若依官网地址');
+INSERT INTO `sys_menu` VALUES (1, '系统管理', 0, 10, '#', 'menuItem', 'M', '0', '', 'fa fa-gear', 'admin', '2018-03-16 11:33:00', 'admin', '2020-07-23 09:55:46', '系统管理目录');
+INSERT INTO `sys_menu` VALUES (2, '系统监控', 0, 20, '#', 'menuItem', 'M', '1', '', 'fa fa-video-camera', 'admin', '2018-03-16 11:33:00', 'admin', '2020-08-02 16:37:05', '系统监控目录');
+INSERT INTO `sys_menu` VALUES (3, '系统工具', 0, 22, '#', 'menuItem', 'M', '0', '', 'fa fa-bars', 'admin', '2018-03-16 11:33:00', 'admin', '2020-08-02 16:37:43', '系统工具目录');
+INSERT INTO `sys_menu` VALUES (4, '若依官网', 0, 21, 'http://ruoyi.vip', 'menuBlank', 'C', '1', '', 'fa fa-location-arrow', 'admin', '2018-03-16 11:33:00', 'admin', '2020-08-02 16:37:23', '若依官网地址');
 INSERT INTO `sys_menu` VALUES (100, '用户管理', 1, 1, '/system/user', '', 'C', '0', 'system:user:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '用户管理菜单');
 INSERT INTO `sys_menu` VALUES (101, '角色管理', 1, 2, '/system/role', '', 'C', '0', 'system:role:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '角色管理菜单');
 INSERT INTO `sys_menu` VALUES (102, '菜单管理', 1, 3, '/system/menu', '', 'C', '0', 'system:menu:view', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '菜单管理菜单');
@@ -652,7 +762,44 @@ INSERT INTO `sys_menu` VALUES (1058, '生成修改', 114, 2, '#', '', 'F', '0', 
 INSERT INTO `sys_menu` VALUES (1059, '生成删除', 114, 3, '#', '', 'F', '0', 'tool:gen:remove', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu` VALUES (1060, '预览代码', 114, 4, '#', '', 'F', '0', 'tool:gen:preview', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
 INSERT INTO `sys_menu` VALUES (1061, '生成代码', 114, 5, '#', '', 'F', '0', 'tool:gen:code', '#', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '');
-INSERT INTO `sys_menu` VALUES (2000, '债权管理', 0, 1, '#', 'menuItem', 'M', '0', NULL, 'fa fa-database', 'admin', '2020-07-19 16:52:37', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2016, '公司管理', 0, 1, '#', 'menuItem', 'M', '0', '', 'fa fa-address-book', 'admin', '2020-08-02 10:19:12', 'admin', '2020-08-02 10:24:28', '');
+INSERT INTO `sys_menu` VALUES (2017, '基本信息', 2016, 1, '/system/information', '', 'C', '0', 'system:information:view', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '【请填写功能名称】菜单');
+INSERT INTO `sys_menu` VALUES (2018, '基本信息查询', 2017, 1, '#', '', 'F', '0', 'system:information:list', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2019, '基本信息新增', 2017, 2, '#', '', 'F', '0', 'system:information:add', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2020, '基本信息修改', 2017, 3, '#', '', 'F', '0', 'system:information:edit', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2021, '基本信息删除', 2017, 4, '#', '', 'F', '0', 'system:information:remove', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2022, '基本信息导出', 2017, 5, '#', '', 'F', '0', 'system:information:export', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2023, '高管人员', 2016, 1, '/system/management', '', 'C', '0', 'system:management:view', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '高管人员菜单');
+INSERT INTO `sys_menu` VALUES (2024, '高管人员查询', 2023, 1, '#', '', 'F', '0', 'system:management:list', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2025, '高管人员新增', 2023, 2, '#', '', 'F', '0', 'system:management:add', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2026, '高管人员修改', 2023, 3, '#', '', 'F', '0', 'system:management:edit', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2027, '高管人员删除', 2023, 4, '#', '', 'F', '0', 'system:management:remove', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2028, '高管人员导出', 2023, 5, '#', '', 'F', '0', 'system:management:export', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2029, '出资情况', 2016, 1, '/system/contribution', '', 'C', '0', 'system:contribution:view', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '出资情况菜单');
+INSERT INTO `sys_menu` VALUES (2030, '出资情况查询', 2029, 1, '#', '', 'F', '0', 'system:contribution:list', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2031, '出资情况新增', 2029, 2, '#', '', 'F', '0', 'system:contribution:add', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2032, '出资情况修改', 2029, 3, '#', '', 'F', '0', 'system:contribution:edit', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2033, '出资情况删除', 2029, 4, '#', '', 'F', '0', 'system:contribution:remove', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2034, '出资情况导出', 2029, 5, '#', '', 'F', '0', 'system:contribution:export', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2035, '股权抵押', 2016, 1, '/system/mortgage', '', 'C', '0', 'system:mortgage:view', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '股权抵押菜单');
+INSERT INTO `sys_menu` VALUES (2036, '股权抵押查询', 2035, 1, '#', '', 'F', '0', 'system:mortgage:list', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2037, '股权抵押新增', 2035, 2, '#', '', 'F', '0', 'system:mortgage:add', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2038, '股权抵押修改', 2035, 3, '#', '', 'F', '0', 'system:mortgage:edit', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2039, '股权抵押删除', 2035, 4, '#', '', 'F', '0', 'system:mortgage:remove', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2040, '股权抵押导出', 2035, 5, '#', '', 'F', '0', 'system:mortgage:export', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2041, '司法冻结', 2016, 1, '/system/freeze', '', 'C', '0', 'system:freeze:view', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '司法冻结情况菜单');
+INSERT INTO `sys_menu` VALUES (2042, '司法冻结情况查询', 2041, 1, '#', '', 'F', '0', 'system:freeze:list', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2043, '司法冻结情况新增', 2041, 2, '#', '', 'F', '0', 'system:freeze:add', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2044, '司法冻结情况修改', 2041, 3, '#', '', 'F', '0', 'system:freeze:edit', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2045, '司法冻结情况删除', 2041, 4, '#', '', 'F', '0', 'system:freeze:remove', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2046, '司法冻结情况导出', 2041, 5, '#', '', 'F', '0', 'system:freeze:export', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2047, '产权管理', 0, 2, '#', 'menuItem', 'M', '0', NULL, 'fa fa-reorder', 'admin', '2020-08-02 16:36:53', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2048, '占有登记', 2047, 1, '/system/catalog', '', 'C', '0', 'system:catalog:view', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '占有登记菜单');
+INSERT INTO `sys_menu` VALUES (2049, '占有登记查询', 2048, 1, '#', '', 'F', '0', 'system:catalog:list', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2050, '占有登记新增', 2048, 2, '#', '', 'F', '0', 'system:catalog:add', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2051, '占有登记修改', 2048, 3, '#', '', 'F', '0', 'system:catalog:edit', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2052, '占有登记删除', 2048, 4, '#', '', 'F', '0', 'system:catalog:remove', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
+INSERT INTO `sys_menu` VALUES (2053, '占有登记导出', 2048, 5, '#', '', 'F', '0', 'system:catalog:export', '#', 'admin', '2018-03-01 00:00:00', 'ry', '2018-03-01 00:00:00', '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -670,7 +817,7 @@ CREATE TABLE `sys_notice`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`notice_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '通知公告表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '通知公告表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_notice
@@ -700,7 +847,7 @@ CREATE TABLE `sys_oper_log`  (
   `error_msg` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '错误消息',
   `oper_time` datetime(0) NULL DEFAULT NULL COMMENT '操作时间',
   PRIMARY KEY (`oper_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 122 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 229 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -727,6 +874,113 @@ INSERT INTO `sys_oper_log` VALUES (118, '菜单管理', 3, 'com.ruoyi.web.contro
 INSERT INTO `sys_oper_log` VALUES (119, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"110\" ],\r\n  \"parentId\" : [ \"2\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"定时任务\" ],\r\n  \"url\" : [ \"/monitor/job\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"monitor:job:view\" ],\r\n  \"orderNum\" : [ \"2\" ],\r\n  \"icon\" : [ \"#\" ],\r\n  \"visible\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-19 17:36:58');
 INSERT INTO `sys_oper_log` VALUES (120, '用户管理', 2, 'com.zyjk.web.controller.system.SysUserController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/user/edit', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"1\" ],\r\n  \"deptId\" : [ \"103\" ],\r\n  \"userName\" : [ \"吕智\" ],\r\n  \"dept.deptName\" : [ \"研发部门\" ],\r\n  \"phonenumber\" : [ \"15888888888\" ],\r\n  \"email\" : [ \"ry@163.com\" ],\r\n  \"loginName\" : [ \"admin\" ],\r\n  \"sex\" : [ \"1\" ],\r\n  \"role\" : [ \"1\" ],\r\n  \"remark\" : [ \"管理员\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"1\" ],\r\n  \"postIds\" : [ \"1\" ]\r\n}', 'null', 1, '不允许操作超级管理员用户', '2020-07-19 21:47:39');
 INSERT INTO `sys_oper_log` VALUES (121, '用户管理', 2, 'com.zyjk.web.controller.system.SysUserController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/user/edit', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"100\" ],\r\n  \"deptId\" : [ \"108\" ],\r\n  \"userName\" : [ \"lvzhi\" ],\r\n  \"dept.deptName\" : [ \"市场部门\" ],\r\n  \"phonenumber\" : [ \"15981858972\" ],\r\n  \"email\" : [ \"lvzhi1116@126.com\" ],\r\n  \"loginName\" : [ \"lvzhi\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"role\" : [ \"100\" ],\r\n  \"remark\" : [ \"\" ],\r\n  \"status\" : [ \"0\" ],\r\n  \"roleIds\" : [ \"100\" ],\r\n  \"postIds\" : [ \"3\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-19 21:48:19');
+INSERT INTO `sys_oper_log` VALUES (122, '角色管理', 2, 'com.zyjk.web.controller.system.SysRoleController.changeStatus()', 'POST', 1, 'admin', '研发部门', '/system/role/changeStatus', '127.0.0.1', '内网IP', '{\r\n  \"roleId\" : [ \"2\" ],\r\n  \"status\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-21 15:15:57');
+INSERT INTO `sys_oper_log` VALUES (123, '角色管理', 2, 'com.zyjk.web.controller.system.SysRoleController.changeStatus()', 'POST', 1, 'admin', '研发部门', '/system/role/changeStatus', '127.0.0.1', '内网IP', '{\r\n  \"roleId\" : [ \"2\" ],\r\n  \"status\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-21 15:16:00');
+INSERT INTO `sys_oper_log` VALUES (124, '菜单管理', 1, 'com.zyjk.web.controller.system.SysMenuController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/add', '127.0.0.1', '内网IP', '{\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"占有登记\" ],\r\n  \"url\" : [ \"\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"2\" ],\r\n  \"icon\" : [ \"fa fa-address-book\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:54:11');
+INSERT INTO `sys_oper_log` VALUES (125, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2000', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:54:26');
+INSERT INTO `sys_oper_log` VALUES (126, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"2\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"系统监控\" ],\r\n  \"url\" : [ \"#\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"2\" ],\r\n  \"icon\" : [ \"fa fa-video-camera\" ],\r\n  \"visible\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:54:37');
+INSERT INTO `sys_oper_log` VALUES (127, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"3\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"系统工具\" ],\r\n  \"url\" : [ \"#\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"3\" ],\r\n  \"icon\" : [ \"fa fa-bars\" ],\r\n  \"visible\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:55:10');
+INSERT INTO `sys_oper_log` VALUES (128, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/4', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"菜单已分配,不允许删除\",\r\n  \"code\" : 301\r\n}', 0, NULL, '2020-07-23 09:55:21');
+INSERT INTO `sys_oper_log` VALUES (129, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"1\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"系统管理\" ],\r\n  \"url\" : [ \"#\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"10\" ],\r\n  \"icon\" : [ \"fa fa-gear\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:55:46');
+INSERT INTO `sys_oper_log` VALUES (130, '菜单管理', 1, 'com.zyjk.web.controller.system.SysMenuController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/add', '127.0.0.1', '内网IP', '{\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"变动登记\" ],\r\n  \"url\" : [ \"\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"3\" ],\r\n  \"icon\" : [ \"fa fa-address-book-o\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:56:34');
+INSERT INTO `sys_oper_log` VALUES (131, '菜单管理', 1, 'com.zyjk.web.controller.system.SysMenuController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/add', '127.0.0.1', '内网IP', '{\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"注销登记\" ],\r\n  \"url\" : [ \"\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"4\" ],\r\n  \"icon\" : [ \"fa fa-address-card\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:56:51');
+INSERT INTO `sys_oper_log` VALUES (132, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"4\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"若依官网\" ],\r\n  \"url\" : [ \"http://ruoyi.vip\" ],\r\n  \"target\" : [ \"menuBlank\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"4\" ],\r\n  \"icon\" : [ \"fa fa-location-arrow\" ],\r\n  \"visible\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:57:06');
+INSERT INTO `sys_oper_log` VALUES (133, '菜单管理', 1, 'com.zyjk.web.controller.system.SysMenuController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/add', '127.0.0.1', '内网IP', '{\r\n  \"parentId\" : [ \"2001\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"基本信息\" ],\r\n  \"url\" : [ \"\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"1\" ],\r\n  \"icon\" : [ \"\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:57:46');
+INSERT INTO `sys_oper_log` VALUES (134, '菜单管理', 1, 'com.zyjk.web.controller.system.SysMenuController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/add', '127.0.0.1', '内网IP', '{\r\n  \"parentId\" : [ \"2001\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"抵质押信息\" ],\r\n  \"url\" : [ \"\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"2\" ],\r\n  \"icon\" : [ \"\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:58:16');
+INSERT INTO `sys_oper_log` VALUES (135, '菜单管理', 1, 'com.zyjk.web.controller.system.SysMenuController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/add', '127.0.0.1', '内网IP', '{\r\n  \"parentId\" : [ \"2001\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"司法冻结信息\" ],\r\n  \"url\" : [ \"\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"3\" ],\r\n  \"icon\" : [ \"\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:58:34');
+INSERT INTO `sys_oper_log` VALUES (136, '菜单管理', 1, 'com.zyjk.web.controller.system.SysMenuController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/add', '127.0.0.1', '内网IP', '{\r\n  \"parentId\" : [ \"2001\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"合规性信息\" ],\r\n  \"url\" : [ \"\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"4\" ],\r\n  \"icon\" : [ \"\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:58:52');
+INSERT INTO `sys_oper_log` VALUES (137, '菜单管理', 1, 'com.zyjk.web.controller.system.SysMenuController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/add', '127.0.0.1', '内网IP', '{\r\n  \"parentId\" : [ \"2001\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"历史沿革\" ],\r\n  \"url\" : [ \"\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"5\" ],\r\n  \"icon\" : [ \"\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-23 09:59:04');
+INSERT INTO `sys_oper_log` VALUES (138, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2004', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 14:39:13');
+INSERT INTO `sys_oper_log` VALUES (139, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2001', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"存在子菜单,不允许删除\",\r\n  \"code\" : 301\r\n}', 0, NULL, '2020-07-31 14:39:27');
+INSERT INTO `sys_oper_log` VALUES (140, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2005', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 14:39:34');
+INSERT INTO `sys_oper_log` VALUES (141, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2006', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 14:39:38');
+INSERT INTO `sys_oper_log` VALUES (142, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2007', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 14:39:43');
+INSERT INTO `sys_oper_log` VALUES (143, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2008', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 14:39:48');
+INSERT INTO `sys_oper_log` VALUES (144, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2001', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 14:39:52');
+INSERT INTO `sys_oper_log` VALUES (145, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2002', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 14:39:57');
+INSERT INTO `sys_oper_log` VALUES (146, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2003', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 14:45:03');
+INSERT INTO `sys_oper_log` VALUES (147, '菜单管理', 1, 'com.zyjk.web.controller.system.SysMenuController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/add', '127.0.0.1', '内网IP', '{\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"占有登记\" ],\r\n  \"url\" : [ \"/system/dept\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"system:dept:view\" ],\r\n  \"orderNum\" : [ \"1\" ],\r\n  \"icon\" : [ \"fa fa-calculator\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 14:48:29');
+INSERT INTO `sys_oper_log` VALUES (148, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"2009\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"占有登记\" ],\r\n  \"url\" : [ \"/system/post\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"system:post:view\" ],\r\n  \"orderNum\" : [ \"1\" ],\r\n  \"icon\" : [ \"fa fa-calculator\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 14:49:23');
+INSERT INTO `sys_oper_log` VALUES (149, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"3\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"系统工具\" ],\r\n  \"url\" : [ \"#\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"3\" ],\r\n  \"icon\" : [ \"fa fa-bars\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 15:10:25');
+INSERT INTO `sys_oper_log` VALUES (150, '代码生成', 6, 'com.zyjk.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\r\n  \"tables\" : [ \"essential_information\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 15:11:23');
+INSERT INTO `sys_oper_log` VALUES (151, '代码生成', 8, 'com.zyjk.generator.controller.GenController.download()', 'GET', 1, 'admin', '研发部门', '/tool/gen/download/essential_information', '127.0.0.1', '内网IP', '{ }', 'null', 0, NULL, '2020-07-31 15:11:46');
+INSERT INTO `sys_oper_log` VALUES (152, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2009', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 15:25:20');
+INSERT INTO `sys_oper_log` VALUES (153, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"2010\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"占有登记管理\" ],\r\n  \"url\" : [ \"/system/information/list\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"system:information:list\" ],\r\n  \"orderNum\" : [ \"1\" ],\r\n  \"icon\" : [ \"#\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 15:49:16');
+INSERT INTO `sys_oper_log` VALUES (154, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"2010\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"占有登记管理\" ],\r\n  \"url\" : [ \"/system/information\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"system:information\" ],\r\n  \"orderNum\" : [ \"1\" ],\r\n  \"icon\" : [ \"#\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 15:50:16');
+INSERT INTO `sys_oper_log` VALUES (155, '【请填写功能名称】', 2, 'com.zyjk.web.controller.property.EssentialInformationController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/information/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"1\" ],\r\n  \"companyName\" : [ \"1\" ],\r\n  \"isRegistration\" : [ \"1\" ],\r\n  \"socialCode\" : [ \"1\" ],\r\n  \"legalPerson\" : [ \"1\" ],\r\n  \"placeRegistration\" : [ \"3\" ],\r\n  \"residence\" : [ \"2\" ],\r\n  \"registeredCapital\" : [ \"1.00\" ],\r\n  \"foundDate\" : [ \"2020-07-31\" ],\r\n  \"organizationalForm\" : [ \"1\" ],\r\n  \"organizationCategory\" : [ \"\" ],\r\n  \"stateOwnedWay\" : [ \"\" ],\r\n  \"economicBehaviorDate\" : [ \"\" ],\r\n  \"economicBehaviorName\" : [ \"\" ],\r\n  \"policyDecisionDate\" : [ \"\" ],\r\n  \"policyDecisionFile\" : [ \"\" ],\r\n  \"investorCode\" : [ \"\" ],\r\n  \"investorName\" : [ \"\" ],\r\n  \"registrationAuthorityCode\" : [ \"\" ],\r\n  \"industryCode\" : [ \"\" ],\r\n  \"subjectionCode\" : [ \"\" ],\r\n  \"gradeCode\" : [ \"\" ],\r\n  \"isKeySubsidiary\" : [ \"\" ],\r\n  \"propertyRightRegistration\" : [ \"\" ],\r\n  \"isNormalOperation\" : [ \"\" ],\r\n  \"operationDescription\" : [ \"\" ],\r\n  \"businessScope\" : [ \"\" ],\r\n  \"contributionRemarks\" : [ \"\" ],\r\n  \"createId\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 16:27:48');
+INSERT INTO `sys_oper_log` VALUES (156, '【请填写功能名称】', 5, 'com.zyjk.web.controller.property.EssentialInformationController.export()', 'POST', 1, 'admin', '研发部门', '/system/information/export', '127.0.0.1', '内网IP', '{\r\n  \"companyName\" : [ \"\" ],\r\n  \"legalPerson\" : [ \"\" ],\r\n  \"params[beginFoundDate]\" : [ \"\" ],\r\n  \"params[endFoundDate]\" : [ \"\" ],\r\n  \"orderByColumn\" : [ \"\" ],\r\n  \"isAsc\" : [ \"asc\" ]\r\n}', '{\r\n  \"msg\" : \"0360e776-d0fb-4e20-a009-2d41569ac67f_information.xlsx\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 16:27:55');
+INSERT INTO `sys_oper_log` VALUES (157, '【请填写功能名称】', 1, 'com.zyjk.web.controller.property.EssentialInformationController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/information/add', '127.0.0.1', '内网IP', '{\r\n  \"companyName\" : [ \"1\" ],\r\n  \"isRegistration\" : [ \"1\" ],\r\n  \"socialCode\" : [ \"1\" ],\r\n  \"legalPerson\" : [ \"1\" ],\r\n  \"placeRegistration\" : [ \"1\" ],\r\n  \"residence\" : [ \"1\" ],\r\n  \"registeredCapital\" : [ \"1\" ],\r\n  \"foundDate\" : [ \"2020-07-03\" ],\r\n  \"organizationalForm\" : [ \"1\", \"1\" ],\r\n  \"organizationCategory\" : [ \"1\" ],\r\n  \"economicBehaviorDate\" : [ \"2020-07-02\" ],\r\n  \"economicBehaviorName\" : [ \"1\" ],\r\n  \"policyDecisionDate\" : [ \"2020-07-01\" ],\r\n  \"policyDecisionFile\" : [ \"1\" ],\r\n  \"investorCode\" : [ \"1\" ],\r\n  \"registrationAuthorityCode\" : [ \"1\" ],\r\n  \"industryCode\" : [ \"1\" ],\r\n  \"subjectionCode\" : [ \"1\" ],\r\n  \"gradeCode\" : [ \"1\" ],\r\n  \"isKeySubsidiary\" : [ \"1\" ],\r\n  \"propertyRightRegistration\" : [ \"1\" ],\r\n  \"operationDescription\" : [ \"1\" ],\r\n  \"businessScope\" : [ \"1\" ],\r\n  \"contributionRemarks\" : [ \"1\" ]\r\n}', 'null', 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'create_id\' doesn\'t have a default value\r\n### The error may involve com.zyjk.system.mapper.EssentialInformationMapper.insertEssentialInformation-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into essential_information          ( company_name,             is_registration,             social_code,             legal_person,             place_registration,             residence,             registered_capital,             found_date,             organizational_form,             organization_category,                          economic_behavior_date,             economic_behavior_name,             policy_decision_date,             policy_decision_file,             investor_code,                          registration_authority_code,             industry_code,             subjection_code,             grade_code,             is_key_subsidiary,             property_right_registration,                          operation_description,             business_scope,             contribution_remarks,             create_time )           values ( ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ?,             ?,             ?,                          ?,             ?,             ?,             ? )\r\n### Cause: java.sql.SQLException: Field \'create_id\' doesn\'t have a default value\n; Field \'create_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'create_id\' doesn\'t have a default value', '2020-07-31 17:28:51');
+INSERT INTO `sys_oper_log` VALUES (158, '【请填写功能名称】', 1, 'com.zyjk.web.controller.property.EssentialInformationController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/information/add', '127.0.0.1', '内网IP', '{\r\n  \"companyName\" : [ \"1\" ],\r\n  \"isRegistration\" : [ \"1\" ],\r\n  \"socialCode\" : [ \"1\" ],\r\n  \"legalPerson\" : [ \"1\" ],\r\n  \"placeRegistration\" : [ \"1\" ],\r\n  \"residence\" : [ \"1\" ],\r\n  \"registeredCapital\" : [ \"1\" ],\r\n  \"foundDate\" : [ \"2020-07-30\" ],\r\n  \"organizationalForm\" : [ \"1\", \"1\" ],\r\n  \"organizationCategory\" : [ \"1\" ],\r\n  \"economicBehaviorDate\" : [ \"2020-07-30\" ],\r\n  \"economicBehaviorName\" : [ \"1\" ],\r\n  \"policyDecisionDate\" : [ \"2020-07-31\" ],\r\n  \"policyDecisionFile\" : [ \"1\" ],\r\n  \"investorCode\" : [ \"1\" ],\r\n  \"registrationAuthorityCode\" : [ \"1\" ],\r\n  \"industryCode\" : [ \"1\" ],\r\n  \"subjectionCode\" : [ \"1\" ],\r\n  \"gradeCode\" : [ \"1\" ],\r\n  \"isKeySubsidiary\" : [ \"1\" ],\r\n  \"propertyRightRegistration\" : [ \"1\" ],\r\n  \"operationDescription\" : [ \"1\" ],\r\n  \"businessScope\" : [ \"1\" ],\r\n  \"contributionRemarks\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 17:32:55');
+INSERT INTO `sys_oper_log` VALUES (159, '【请填写功能名称】', 3, 'com.zyjk.web.controller.property.EssentialInformationController.remove()', 'POST', 1, 'admin', '研发部门', '/system/information/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 17:33:22');
+INSERT INTO `sys_oper_log` VALUES (160, '【请填写功能名称】', 1, 'com.zyjk.web.controller.property.EssentialInformationController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/information/add', '127.0.0.1', '内网IP', '{\r\n  \"companyName\" : [ \"2\" ],\r\n  \"isRegistration\" : [ \"2\" ],\r\n  \"socialCode\" : [ \"2\" ],\r\n  \"legalPerson\" : [ \"2\" ],\r\n  \"placeRegistration\" : [ \"2\" ],\r\n  \"residence\" : [ \"2\" ],\r\n  \"registeredCapital\" : [ \"2\" ],\r\n  \"foundDate\" : [ \"2020-07-07\" ],\r\n  \"organizationalForm\" : [ \"2\" ],\r\n  \"organizationCategory\" : [ \"2\" ],\r\n  \"stateOwnedWay\" : [ \"2\" ],\r\n  \"economicBehaviorDate\" : [ \"2020-07-30\" ],\r\n  \"economicBehaviorName\" : [ \"2\" ],\r\n  \"policyDecisionDate\" : [ \"2020-07-30\" ],\r\n  \"policyDecisionFile\" : [ \"2\" ],\r\n  \"investorCode\" : [ \"2\" ],\r\n  \"registrationAuthorityCode\" : [ \"2\" ],\r\n  \"industryCode\" : [ \"2\" ],\r\n  \"subjectionCode\" : [ \"2\" ],\r\n  \"gradeCode\" : [ \"2\" ],\r\n  \"isKeySubsidiary\" : [ \"2\" ],\r\n  \"propertyRightRegistration\" : [ \"2\" ],\r\n  \"operationDescription\" : [ \"2\" ],\r\n  \"businessScope\" : [ \"2\" ],\r\n  \"contributionRemarks\" : [ \"2\" ],\r\n  \"investorName\" : [ \"2\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-07-31 17:40:11');
+INSERT INTO `sys_oper_log` VALUES (161, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"2010\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"公司信息管理\" ],\r\n  \"url\" : [ \"\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"system:information\" ],\r\n  \"orderNum\" : [ \"1\" ],\r\n  \"icon\" : [ \"#\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:17:23');
+INSERT INTO `sys_oper_log` VALUES (162, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2010', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"存在子菜单,不允许删除\",\r\n  \"code\" : 301\r\n}', 0, NULL, '2020-08-02 10:18:18');
+INSERT INTO `sys_oper_log` VALUES (163, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2011', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:18:26');
+INSERT INTO `sys_oper_log` VALUES (164, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2012', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:18:31');
+INSERT INTO `sys_oper_log` VALUES (165, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2013', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:18:35');
+INSERT INTO `sys_oper_log` VALUES (166, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2014', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:18:40');
+INSERT INTO `sys_oper_log` VALUES (167, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2015', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:18:44');
+INSERT INTO `sys_oper_log` VALUES (168, '菜单管理', 3, 'com.zyjk.web.controller.system.SysMenuController.remove()', 'GET', 1, 'admin', '研发部门', '/system/menu/remove/2010', '127.0.0.1', '内网IP', '{ }', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:18:49');
+INSERT INTO `sys_oper_log` VALUES (169, '菜单管理', 1, 'com.zyjk.web.controller.system.SysMenuController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/add', '127.0.0.1', '内网IP', '{\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"信息管理\" ],\r\n  \"url\" : [ \"\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"1\" ],\r\n  \"icon\" : [ \"fa fa-address-book\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:19:12');
+INSERT INTO `sys_oper_log` VALUES (170, '【请填写功能名称】', 3, 'com.zyjk.web.controller.property.EssentialInformationController.remove()', 'POST', 1, 'admin', '研发部门', '/system/information/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"2\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:21:10');
+INSERT INTO `sys_oper_log` VALUES (171, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"2016\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"公司管理\" ],\r\n  \"url\" : [ \"#\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"1\" ],\r\n  \"icon\" : [ \"fa fa-address-book\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:24:28');
+INSERT INTO `sys_oper_log` VALUES (172, '【请填写功能名称】', 2, 'com.zyjk.web.controller.property.EssentialInformationController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/information/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"3\" ],\r\n  \"companyName\" : [ \"2\" ],\r\n  \"isRegistration\" : [ \"2\" ],\r\n  \"socialCode\" : [ \"2\" ],\r\n  \"legalPerson\" : [ \"2\" ],\r\n  \"placeRegistration\" : [ \"2\" ],\r\n  \"residence\" : [ \"2\" ],\r\n  \"registeredCapital\" : [ \"2.00\" ],\r\n  \"foundDate\" : [ \"2020-07-08\" ],\r\n  \"organizationalForm\" : [ \"2\" ],\r\n  \"organizationCategory\" : [ \"2\" ],\r\n  \"stateOwnedWay\" : [ \"2\" ],\r\n  \"investorCode\" : [ \"2\" ],\r\n  \"registrationAuthorityCode\" : [ \"2\" ],\r\n  \"industryCode\" : [ \"2\" ],\r\n  \"subjectionCode\" : [ \"2\" ],\r\n  \"gradeCode\" : [ \"2\" ],\r\n  \"isKeySubsidiary\" : [ \"0\" ],\r\n  \"isNormalOperation\" : [ \"\" ],\r\n  \"operationDescription\" : [ \"2\" ],\r\n  \"businessScope\" : [ \"2\" ],\r\n  \"contributionRemarks\" : [ \"222222222\" ],\r\n  \"investorName\" : [ \"2\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:52:50');
+INSERT INTO `sys_oper_log` VALUES (173, '【请填写功能名称】', 1, 'com.zyjk.web.controller.property.EssentialInformationController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/information/add', '127.0.0.1', '内网IP', '{\r\n  \"companyName\" : [ \"3\" ],\r\n  \"isRegistration\" : [ \"3\" ],\r\n  \"socialCode\" : [ \"3\" ],\r\n  \"legalPerson\" : [ \"3\" ],\r\n  \"placeRegistration\" : [ \"3\" ],\r\n  \"residence\" : [ \"3\" ],\r\n  \"registeredCapital\" : [ \"3\" ],\r\n  \"foundDate\" : [ \"2020-08-02\" ],\r\n  \"organizationalForm\" : [ \"3\" ],\r\n  \"organizationCategory\" : [ \"3\" ],\r\n  \"stateOwnedWay\" : [ \"3\" ],\r\n  \"investorCode\" : [ \"3\" ],\r\n  \"registrationAuthorityCode\" : [ \"3\" ],\r\n  \"industryCode\" : [ \"3\" ],\r\n  \"subjectionCode\" : [ \"3\" ],\r\n  \"gradeCode\" : [ \"3\" ],\r\n  \"isKeySubsidiary\" : [ \"3\" ],\r\n  \"propertyRightRegistration\" : [ \"3\" ],\r\n  \"operationDescription\" : [ \"3\" ],\r\n  \"businessScope\" : [ \"3\" ],\r\n  \"contributionRemarks\" : [ \"3\" ],\r\n  \"investorName\" : [ \"3\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 10:53:37');
+INSERT INTO `sys_oper_log` VALUES (174, '【请填写功能名称】', 2, 'com.zyjk.web.controller.property.EssentialInformationController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/information/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"3\" ],\r\n  \"companyName\" : [ \"2\" ],\r\n  \"isRegistration\" : [ \"2\" ],\r\n  \"socialCode\" : [ \"2\" ],\r\n  \"legalPerson\" : [ \"2\" ],\r\n  \"placeRegistration\" : [ \"2\" ],\r\n  \"residence\" : [ \"2\" ],\r\n  \"registeredCapital\" : [ \"2.00\" ],\r\n  \"foundDate\" : [ \"2020-07-08\" ],\r\n  \"organizationalForm\" : [ \"2\" ],\r\n  \"organizationCategory\" : [ \"2\" ],\r\n  \"stateOwnedWay\" : [ \"2\" ],\r\n  \"investorCode\" : [ \"2\" ],\r\n  \"registrationAuthorityCode\" : [ \"2\" ],\r\n  \"industryCode\" : [ \"2\" ],\r\n  \"subjectionCode\" : [ \"2\" ],\r\n  \"gradeCode\" : [ \"2\" ],\r\n  \"isKeySubsidiary\" : [ \"0\" ],\r\n  \"isNormalOperation\" : [ \"\" ],\r\n  \"operationDescription\" : [ \"2\" ],\r\n  \"businessScope\" : [ \"2\" ],\r\n  \"contributionRemarks\" : [ \"3333\" ],\r\n  \"investorName\" : [ \"2\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 11:23:58');
+INSERT INTO `sys_oper_log` VALUES (175, '代码生成', 6, 'com.zyjk.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\r\n  \"tables\" : [ \"senior_management\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 13:43:22');
+INSERT INTO `sys_oper_log` VALUES (176, '代码生成', 8, 'com.zyjk.generator.controller.GenController.download()', 'GET', 1, 'admin', '研发部门', '/tool/gen/download/senior_management', '127.0.0.1', '内网IP', '{ }', 'null', 0, NULL, '2020-08-02 13:43:31');
+INSERT INTO `sys_oper_log` VALUES (177, '管理人员', 1, 'com.zyjk.web.controller.system.SeniorManagementController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/management/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"name\" : [ \"吕智\" ],\r\n  \"sex\" : [ \"1\" ],\r\n  \"job\" : [ \"董事长\" ],\r\n  \"appointmentDate\" : [ \"2020-08-03\" ],\r\n  \"departureDate\" : [ \"2020-08-05\" ],\r\n  \"level\" : [ \"11\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 14:16:10');
+INSERT INTO `sys_oper_log` VALUES (178, '管理人员', 2, 'com.zyjk.web.controller.system.SeniorManagementController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/management/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"1\" ],\r\n  \"infoId\" : [ \"2\" ],\r\n  \"name\" : [ \"吕智\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"job\" : [ \"董事长\" ],\r\n  \"appointmentDate\" : [ \"2020-08-03\" ],\r\n  \"departureDate\" : [ \"2020-08-05\" ],\r\n  \"level\" : [ \"11\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 14:18:21');
+INSERT INTO `sys_oper_log` VALUES (179, '管理人员', 2, 'com.zyjk.web.controller.system.SeniorManagementController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/management/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"1\" ],\r\n  \"infoId\" : [ \"2\" ],\r\n  \"name\" : [ \"吕智\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"job\" : [ \"董事长\" ],\r\n  \"appointmentDate\" : [ \"2020-08-03\" ],\r\n  \"departureDate\" : [ \"2020-08-05\" ],\r\n  \"level\" : [ \"11\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 14:18:26');
+INSERT INTO `sys_oper_log` VALUES (180, '用户管理', 2, 'com.zyjk.web.controller.system.SysUserController.changeStatus()', 'POST', 1, 'admin', '研发部门', '/system/user/changeStatus', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"100\" ],\r\n  \"status\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 14:19:24');
+INSERT INTO `sys_oper_log` VALUES (181, '用户管理', 2, 'com.zyjk.web.controller.system.SysUserController.changeStatus()', 'POST', 1, 'admin', '研发部门', '/system/user/changeStatus', '127.0.0.1', '内网IP', '{\r\n  \"userId\" : [ \"100\" ],\r\n  \"status\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 14:19:28');
+INSERT INTO `sys_oper_log` VALUES (182, '管理人员', 1, 'com.zyjk.web.controller.system.SeniorManagementController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/management/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"name\" : [ \"吕智2\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"job\" : [ \"董事长\" ],\r\n  \"appointmentDate\" : [ \"2020-08-05\" ],\r\n  \"departureDate\" : [ \"2020-08-15\" ],\r\n  \"level\" : [ \"11\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 14:31:33');
+INSERT INTO `sys_oper_log` VALUES (183, '管理人员', 2, 'com.zyjk.web.controller.system.SeniorManagementController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/management/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"2\" ],\r\n  \"infoId\" : [ \"3\" ],\r\n  \"name\" : [ \"吕智2\" ],\r\n  \"sex\" : [ \"1\" ],\r\n  \"job\" : [ \"董事长\" ],\r\n  \"appointmentDate\" : [ \"2020-08-05\" ],\r\n  \"departureDate\" : [ \"2020-08-15\" ],\r\n  \"level\" : [ \"11\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 14:31:57');
+INSERT INTO `sys_oper_log` VALUES (184, '管理人员', 3, 'com.zyjk.web.controller.system.SeniorManagementController.remove()', 'POST', 1, 'admin', '研发部门', '/system/management/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"2\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 14:33:44');
+INSERT INTO `sys_oper_log` VALUES (185, '管理人员', 5, 'com.zyjk.web.controller.system.SeniorManagementController.export()', 'POST', 1, 'admin', '研发部门', '/system/management/export', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"\" ],\r\n  \"name\" : [ \"\" ],\r\n  \"sex\" : [ \"\" ],\r\n  \"orderByColumn\" : [ \"\" ],\r\n  \"isAsc\" : [ \"asc\" ]\r\n}', '{\r\n  \"msg\" : \"8abe1035-c2e6-4388-bd78-092392e55705_management.xlsx\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 14:33:47');
+INSERT INTO `sys_oper_log` VALUES (186, '代码生成', 3, 'com.zyjk.generator.controller.GenController.remove()', 'POST', 1, 'admin', '研发部门', '/tool/gen/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"2\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 14:39:21');
+INSERT INTO `sys_oper_log` VALUES (187, '管理人员', 1, 'com.zyjk.web.controller.system.SeniorManagementController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/management/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"name\" : [ \"memcache\" ],\r\n  \"sex\" : [ \"0\" ],\r\n  \"job\" : [ \"董事长\" ],\r\n  \"appointmentDate\" : [ \"2020-08-03\" ],\r\n  \"departureDate\" : [ \"\" ],\r\n  \"level\" : [ \"\" ],\r\n  \"remarks\" : [ \"\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 14:51:30');
+INSERT INTO `sys_oper_log` VALUES (188, '代码生成', 6, 'com.zyjk.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\r\n  \"tables\" : [ \"contribution\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 15:01:52');
+INSERT INTO `sys_oper_log` VALUES (189, '代码生成', 8, 'com.zyjk.generator.controller.GenController.download()', 'GET', 1, 'admin', '研发部门', '/tool/gen/download/contribution', '127.0.0.1', '内网IP', '{ }', 'null', 0, NULL, '2020-08-02 15:02:37');
+INSERT INTO `sys_oper_log` VALUES (190, '出资情况', 1, 'com.zyjk.web.controller.system.ContributionController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/contribution/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"investorName\" : [ \"中原资产\" ],\r\n  \"investorCode\" : [ \"111111111\" ],\r\n  \"identificationCode\" : [ \"11111\" ],\r\n  \"category\" : [ \"111\" ],\r\n  \"capitalPaid\" : [ \"1\" ],\r\n  \"capitalSubscribed\" : [ \"11\" ],\r\n  \"equityRatio\" : [ \"1\" ],\r\n  \"createId\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 15:31:31');
+INSERT INTO `sys_oper_log` VALUES (191, '出资情况', 2, 'com.zyjk.web.controller.system.ContributionController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/contribution/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"1\" ],\r\n  \"infoId\" : [ \"1\" ],\r\n  \"investorName\" : [ \"中原资产\" ],\r\n  \"investorCode\" : [ \"111111111\" ],\r\n  \"identificationCode\" : [ \"11111\" ],\r\n  \"category\" : [ \"111\" ],\r\n  \"capitalPaid\" : [ \"1.00\" ],\r\n  \"capitalSubscribed\" : [ \"11.00\" ],\r\n  \"equityRatio\" : [ \"1.0000\" ],\r\n  \"createId\" : [ \"2\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 15:31:39');
+INSERT INTO `sys_oper_log` VALUES (192, '出资情况', 2, 'com.zyjk.web.controller.system.ContributionController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/contribution/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"1\" ],\r\n  \"infoId\" : [ \"1\" ],\r\n  \"investorName\" : [ \"中原资产\" ],\r\n  \"investorCode\" : [ \"111111111\" ],\r\n  \"identificationCode\" : [ \"11111\" ],\r\n  \"category\" : [ \"111\" ],\r\n  \"capitalPaid\" : [ \"1.00\" ],\r\n  \"capitalSubscribed\" : [ \"11.00\" ],\r\n  \"equityRatio\" : [ \"1.0000\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 15:46:21');
+INSERT INTO `sys_oper_log` VALUES (193, '出资情况', 1, 'com.zyjk.web.controller.system.ContributionController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/contribution/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"investorName\" : [ \"中原金科\" ],\r\n  \"investorCode\" : [ \"2\" ],\r\n  \"identificationCode\" : [ \"111\" ],\r\n  \"category\" : [ \"1\" ],\r\n  \"capitalPaid\" : [ \"1\" ],\r\n  \"capitalSubscribed\" : [ \"1\" ],\r\n  \"equityRatio\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 15:46:42');
+INSERT INTO `sys_oper_log` VALUES (194, '出资情况', 2, 'com.zyjk.web.controller.system.ContributionController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/contribution/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"2\" ],\r\n  \"infoId\" : [ \"1\" ],\r\n  \"investorName\" : [ \"中原金科\" ],\r\n  \"investorCode\" : [ \"2\" ],\r\n  \"identificationCode\" : [ \"111\" ],\r\n  \"category\" : [ \"哈哈\" ],\r\n  \"capitalPaid\" : [ \"1.00\" ],\r\n  \"capitalSubscribed\" : [ \"1.00\" ],\r\n  \"equityRatio\" : [ \"1.0000\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 15:46:53');
+INSERT INTO `sys_oper_log` VALUES (195, '代码生成', 6, 'com.zyjk.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\r\n  \"tables\" : [ \"equity_mortgage\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 15:50:12');
+INSERT INTO `sys_oper_log` VALUES (196, '代码生成', 8, 'com.zyjk.generator.controller.GenController.download()', 'GET', 1, 'admin', '研发部门', '/tool/gen/download/equity_mortgage', '127.0.0.1', '内网IP', '{ }', 'null', 0, NULL, '2020-08-02 15:50:24');
+INSERT INTO `sys_oper_log` VALUES (197, '股权抵押', 1, 'com.zyjk.web.controller.system.EquityMortgageController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/mortgage/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"organizationName\" : [ \"中国银行\" ],\r\n  \"equityRatio\" : [ \"20\" ],\r\n  \"mortgagor\" : [ \"吕智\" ],\r\n  \"bookValue\" : [ \"100\" ],\r\n  \"evaluationValue\" : [ \"20\" ],\r\n  \"mortgageRatio\" : [ \"20\" ],\r\n  \"remarks\" : [ \"哈哈\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:08:38');
+INSERT INTO `sys_oper_log` VALUES (198, '股权抵押', 1, 'com.zyjk.web.controller.system.EquityMortgageController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/mortgage/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"organizationName\" : [ \"中原金科\" ],\r\n  \"equityRatio\" : [ \"100\" ],\r\n  \"mortgagor\" : [ \"王艳娟\" ],\r\n  \"bookValue\" : [ \"1000\" ],\r\n  \"evaluationValue\" : [ \"12000\" ],\r\n  \"mortgageRatio\" : [ \"120\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', 'null', 1, '\r\n### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column \'equity_ratio\' at row 1\r\n### The error may involve com.zyjk.system.mapper.EquityMortgageMapper.insertEquityMortgage-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into equity_mortgage          ( info_id,             organization_name,             equity_ratio,             mortgagor,             book_value,             evaluation_value,             mortgage_ratio,             remarks,             create_time,             create_id )           values ( ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column \'equity_ratio\' at row 1\n; Data truncation: Out of range value for column \'equity_ratio\' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column \'equity_ratio\' at row 1', '2020-08-02 16:10:10');
+INSERT INTO `sys_oper_log` VALUES (199, '股权抵押', 1, 'com.zyjk.web.controller.system.EquityMortgageController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/mortgage/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"organizationName\" : [ \"中原金科\" ],\r\n  \"equityRatio\" : [ \"100\" ],\r\n  \"mortgagor\" : [ \"王艳娟\" ],\r\n  \"bookValue\" : [ \"1000\" ],\r\n  \"evaluationValue\" : [ \"12000\" ],\r\n  \"mortgageRatio\" : [ \"20\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', 'null', 1, '\r\n### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column \'equity_ratio\' at row 1\r\n### The error may involve com.zyjk.system.mapper.EquityMortgageMapper.insertEquityMortgage-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into equity_mortgage          ( info_id,             organization_name,             equity_ratio,             mortgagor,             book_value,             evaluation_value,             mortgage_ratio,             remarks,             create_time,             create_id )           values ( ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column \'equity_ratio\' at row 1\n; Data truncation: Out of range value for column \'equity_ratio\' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column \'equity_ratio\' at row 1', '2020-08-02 16:10:28');
+INSERT INTO `sys_oper_log` VALUES (200, '股权抵押', 1, 'com.zyjk.web.controller.system.EquityMortgageController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/mortgage/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"organizationName\" : [ \"中原金科\" ],\r\n  \"equityRatio\" : [ \"100\" ],\r\n  \"mortgagor\" : [ \"王艳娟\" ],\r\n  \"bookValue\" : [ \"1000\" ],\r\n  \"evaluationValue\" : [ \"12000\" ],\r\n  \"mortgageRatio\" : [ \"20\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', 'null', 1, '\r\n### Error updating database.  Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column \'equity_ratio\' at row 1\r\n### The error may involve com.zyjk.system.mapper.EquityMortgageMapper.insertEquityMortgage-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into equity_mortgage          ( info_id,             organization_name,             equity_ratio,             mortgagor,             book_value,             evaluation_value,             mortgage_ratio,             remarks,             create_time,             create_id )           values ( ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ? )\r\n### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column \'equity_ratio\' at row 1\n; Data truncation: Out of range value for column \'equity_ratio\' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Out of range value for column \'equity_ratio\' at row 1', '2020-08-02 16:11:09');
+INSERT INTO `sys_oper_log` VALUES (201, '股权抵押', 1, 'com.zyjk.web.controller.system.EquityMortgageController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/mortgage/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"organizationName\" : [ \"中原金科\" ],\r\n  \"equityRatio\" : [ \"99\" ],\r\n  \"mortgagor\" : [ \"王艳娟\" ],\r\n  \"bookValue\" : [ \"1000\" ],\r\n  \"evaluationValue\" : [ \"12000\" ],\r\n  \"mortgageRatio\" : [ \"20\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:12:07');
+INSERT INTO `sys_oper_log` VALUES (202, '股权抵押', 2, 'com.zyjk.web.controller.system.EquityMortgageController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/mortgage/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"2\" ],\r\n  \"infoId\" : [ \"1\" ],\r\n  \"organizationName\" : [ \"中原金科\" ],\r\n  \"equityRatio\" : [ \"99.23\" ],\r\n  \"mortgagor\" : [ \"王艳娟\" ],\r\n  \"bookValue\" : [ \"1000.00\" ],\r\n  \"evaluationValue\" : [ \"12000.00\" ],\r\n  \"mortgageRatio\" : [ \"20.0000\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:12:17');
+INSERT INTO `sys_oper_log` VALUES (203, '股权抵押', 2, 'com.zyjk.web.controller.system.EquityMortgageController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/mortgage/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"2\" ],\r\n  \"infoId\" : [ \"1\" ],\r\n  \"organizationName\" : [ \"中原金科\" ],\r\n  \"equityRatio\" : [ \"99.2300\" ],\r\n  \"mortgagor\" : [ \"吕智\" ],\r\n  \"bookValue\" : [ \"1000.00\" ],\r\n  \"evaluationValue\" : [ \"12000.00\" ],\r\n  \"mortgageRatio\" : [ \"20.0000\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:12:32');
+INSERT INTO `sys_oper_log` VALUES (204, '股权抵押', 2, 'com.zyjk.web.controller.system.EquityMortgageController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/mortgage/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"2\" ],\r\n  \"infoId\" : [ \"1\" ],\r\n  \"organizationName\" : [ \"中原金科\" ],\r\n  \"equityRatio\" : [ \"99.2300\" ],\r\n  \"mortgagor\" : [ \"吕智\" ],\r\n  \"bookValue\" : [ \"1000.00\" ],\r\n  \"evaluationValue\" : [ \"12000.00\" ],\r\n  \"mortgageRatio\" : [ \"20.023\" ],\r\n  \"remarks\" : [ \"111\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:13:29');
+INSERT INTO `sys_oper_log` VALUES (205, '股权抵押', 3, 'com.zyjk.web.controller.system.EquityMortgageController.remove()', 'POST', 1, 'admin', '研发部门', '/system/mortgage/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:13:39');
+INSERT INTO `sys_oper_log` VALUES (206, '代码生成', 6, 'com.zyjk.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\r\n  \"tables\" : [ \"judicial_freeze\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:16:08');
+INSERT INTO `sys_oper_log` VALUES (207, '代码生成', 8, 'com.zyjk.generator.controller.GenController.download()', 'GET', 1, 'admin', '研发部门', '/tool/gen/download/judicial_freeze', '127.0.0.1', '内网IP', '{ }', 'null', 0, NULL, '2020-08-02 16:16:14');
+INSERT INTO `sys_oper_log` VALUES (208, '司法冻结情况', 1, 'com.zyjk.web.controller.system.JudicialFreezeController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/freeze/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"judicialOrgan\" : [ \"郑州法院\" ],\r\n  \"frozenAmount\" : [ \"1111\" ],\r\n  \"frozenStartDate\" : [ \"2020-08-05\" ],\r\n  \"frozenEndDate\" : [ \"2020-08-28\" ],\r\n  \"frozenReason\" : [ \"欠钱不还\" ],\r\n  \"remarks\" : [ \"哈哈\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:26:30');
+INSERT INTO `sys_oper_log` VALUES (209, '司法冻结情况', 1, 'com.zyjk.web.controller.system.JudicialFreezeController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/freeze/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"judicialOrgan\" : [ \"中华人民共和国国务院\" ],\r\n  \"frozenAmount\" : [ \"100000000000\" ],\r\n  \"frozenStartDate\" : [ \"2020-08-01\" ],\r\n  \"frozenEndDate\" : [ \"2020-10-31\" ],\r\n  \"frozenReason\" : [ \"没有原因\" ],\r\n  \"remarks\" : [ \"李克强交代办理\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:27:28');
+INSERT INTO `sys_oper_log` VALUES (210, '司法冻结情况', 2, 'com.zyjk.web.controller.system.JudicialFreezeController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/freeze/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"2\" ],\r\n  \"infoId\" : [ \"1\" ],\r\n  \"judicialOrgan\" : [ \"中华人民共和国国务院\" ],\r\n  \"frozenAmount\" : [ \"100000000000.00\" ],\r\n  \"frozenStartDate\" : [ \"2020-08-02\" ],\r\n  \"frozenEndDate\" : [ \"2020-10-31\" ],\r\n  \"frozenReason\" : [ \"没有原因\" ],\r\n  \"remarks\" : [ \"李克强交代办理\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:27:37');
+INSERT INTO `sys_oper_log` VALUES (211, '司法冻结情况', 1, 'com.zyjk.web.controller.system.JudicialFreezeController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/freeze/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"1\" ],\r\n  \"judicialOrgan\" : [ \"1\" ],\r\n  \"frozenAmount\" : [ \"1\" ],\r\n  \"frozenStartDate\" : [ \"\" ],\r\n  \"frozenEndDate\" : [ \"\" ],\r\n  \"frozenReason\" : [ \"\" ],\r\n  \"remarks\" : [ \"\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:27:48');
+INSERT INTO `sys_oper_log` VALUES (212, '司法冻结情况', 3, 'com.zyjk.web.controller.system.JudicialFreezeController.remove()', 'POST', 1, 'admin', '研发部门', '/system/freeze/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"3\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:27:54');
+INSERT INTO `sys_oper_log` VALUES (213, '菜单管理', 1, 'com.zyjk.web.controller.system.SysMenuController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/add', '127.0.0.1', '内网IP', '{\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"产权管理\" ],\r\n  \"url\" : [ \"\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"2\" ],\r\n  \"icon\" : [ \"fa fa-reorder\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:36:53');
+INSERT INTO `sys_oper_log` VALUES (214, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"2\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"系统监控\" ],\r\n  \"url\" : [ \"#\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"20\" ],\r\n  \"icon\" : [ \"fa fa-video-camera\" ],\r\n  \"visible\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:37:05');
+INSERT INTO `sys_oper_log` VALUES (215, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"4\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"C\" ],\r\n  \"menuName\" : [ \"若依官网\" ],\r\n  \"url\" : [ \"http://ruoyi.vip\" ],\r\n  \"target\" : [ \"menuBlank\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"21\" ],\r\n  \"icon\" : [ \"fa fa-location-arrow\" ],\r\n  \"visible\" : [ \"1\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:37:23');
+INSERT INTO `sys_oper_log` VALUES (216, '菜单管理', 2, 'com.zyjk.web.controller.system.SysMenuController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/menu/edit', '127.0.0.1', '内网IP', '{\r\n  \"menuId\" : [ \"3\" ],\r\n  \"parentId\" : [ \"0\" ],\r\n  \"menuType\" : [ \"M\" ],\r\n  \"menuName\" : [ \"系统工具\" ],\r\n  \"url\" : [ \"#\" ],\r\n  \"target\" : [ \"menuItem\" ],\r\n  \"perms\" : [ \"\" ],\r\n  \"orderNum\" : [ \"22\" ],\r\n  \"icon\" : [ \"fa fa-bars\" ],\r\n  \"visible\" : [ \"0\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:37:43');
+INSERT INTO `sys_oper_log` VALUES (217, '代码生成', 6, 'com.zyjk.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\r\n  \"tables\" : [ \"catalog\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 16:53:03');
+INSERT INTO `sys_oper_log` VALUES (218, '代码生成', 8, 'com.zyjk.generator.controller.GenController.download()', 'GET', 1, 'admin', '研发部门', '/tool/gen/download/catalog', '127.0.0.1', '内网IP', '{ }', 'null', 0, NULL, '2020-08-02 16:53:08');
+INSERT INTO `sys_oper_log` VALUES (219, '代码生成', 3, 'com.zyjk.generator.controller.GenController.remove()', 'POST', 1, 'admin', '研发部门', '/tool/gen/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"8\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 17:00:38');
+INSERT INTO `sys_oper_log` VALUES (220, '代码生成', 6, 'com.zyjk.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\r\n  \"tables\" : [ \"catalog\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 17:00:42');
+INSERT INTO `sys_oper_log` VALUES (221, '代码生成', 8, 'com.zyjk.generator.controller.GenController.download()', 'GET', 1, 'admin', '研发部门', '/tool/gen/download/catalog', '127.0.0.1', '内网IP', '{ }', 'null', 0, NULL, '2020-08-02 17:01:10');
+INSERT INTO `sys_oper_log` VALUES (222, '代码生成', 3, 'com.zyjk.generator.controller.GenController.remove()', 'POST', 1, 'admin', '研发部门', '/tool/gen/remove', '127.0.0.1', '内网IP', '{\r\n  \"ids\" : [ \"9\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 17:08:38');
+INSERT INTO `sys_oper_log` VALUES (223, '代码生成', 6, 'com.zyjk.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\r\n  \"tables\" : [ \"catalog\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 17:08:42');
+INSERT INTO `sys_oper_log` VALUES (224, '代码生成', 8, 'com.zyjk.generator.controller.GenController.download()', 'GET', 1, 'admin', '研发部门', '/tool/gen/download/catalog', '127.0.0.1', '内网IP', '{ }', 'null', 0, NULL, '2020-08-02 17:08:47');
+INSERT INTO `sys_oper_log` VALUES (225, '占有登记', 1, 'com.zyjk.web.controller.system.CatalogController.addSave()', 'POST', 1, 'admin', '研发部门', '/system/catalog/add', '127.0.0.1', '内网IP', '{\r\n  \"infoId\" : [ \"2\" ],\r\n  \"economicBehaviorDate\" : [ \"2020-07-10\" ],\r\n  \"economicBehaviorName\" : [ \"1\" ],\r\n  \"policyDecisionDate\" : [ \"2020-07-03\" ],\r\n  \"policyDecisionFile\" : [ \"\" ],\r\n  \"registrationAuthorityCode\" : [ \"\" ],\r\n  \"propertyRightRegistration\" : [ \"\" ],\r\n  \"ownedAssetsName\" : [ \"达到\" ],\r\n  \"ownedAssetsFileName\" : [ \"\" ],\r\n  \"ownedAssetsFileCode\" : [ \"\" ],\r\n  \"ownedAssetsDescription\" : [ \"\" ],\r\n  \"industryName\" : [ \"\" ],\r\n  \"industryFileName\" : [ \"\" ],\r\n  \"industryFileCode\" : [ \"\" ],\r\n  \"industryDescription\" : [ \"\" ],\r\n  \"orgName\" : [ \"\" ],\r\n  \"orgFileName\" : [ \"\" ],\r\n  \"orgFileCode\" : [ \"\" ],\r\n  \"orgDescription\" : [ \"\" ],\r\n  \"contributionContent\" : [ \"\" ],\r\n  \"contributionDescription\" : [ \"\" ],\r\n  \"receiptContent\" : [ \"\" ],\r\n  \"receiptDescription\" : [ \"\" ],\r\n  \"agreementContent\" : [ \"\" ],\r\n  \"agreementDescription\" : [ \"\" ],\r\n  \"agencyName\" : [ \"\" ],\r\n  \"reportNo\" : [ \"\" ],\r\n  \"approvalName\" : [ \"\" ],\r\n  \"approvalNo\" : [ \"\" ],\r\n  \"approvalDescription\" : [ \"打发打发\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 17:22:00');
+INSERT INTO `sys_oper_log` VALUES (226, '占有登记', 2, 'com.zyjk.web.controller.system.CatalogController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/catalog/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"1\" ],\r\n  \"infoId\" : [ \"2\" ],\r\n  \"economicBehaviorDate\" : [ \"2020-07-10\" ],\r\n  \"economicBehaviorName\" : [ \"1\" ],\r\n  \"policyDecisionDate\" : [ \"2020-07-10\" ],\r\n  \"policyDecisionFile\" : [ \"\" ],\r\n  \"registrationAuthorityCode\" : [ \"\" ],\r\n  \"propertyRightRegistration\" : [ \"\" ],\r\n  \"ownedAssetsName\" : [ \"达到\" ],\r\n  \"ownedAssetsFileName\" : [ \"\" ],\r\n  \"ownedAssetsFileCode\" : [ \"\" ],\r\n  \"ownedAssetsDescription\" : [ \"\" ],\r\n  \"industryName\" : [ \"\" ],\r\n  \"industryFileName\" : [ \"\" ],\r\n  \"industryFileCode\" : [ \"\" ],\r\n  \"industryDescription\" : [ \"\" ],\r\n  \"orgName\" : [ \"\" ],\r\n  \"orgFileName\" : [ \"\" ],\r\n  \"orgFileCode\" : [ \"\" ],\r\n  \"orgDescription\" : [ \"\" ],\r\n  \"contributionContent\" : [ \"\" ],\r\n  \"contributionDescription\" : [ \"\" ],\r\n  \"receiptContent\" : [ \"\" ],\r\n  \"receiptDescription\" : [ \"\" ],\r\n  \"agreementContent\" : [ \"\" ],\r\n  \"agreementDescription\" : [ \"\" ],\r\n  \"agencyName\" : [ \"\" ],\r\n  \"reportNo\" : [ \"\" ],\r\n  \"approvalName\" : [ \"\" ],\r\n  \"approvalNo\" : [ \"\" ],\r\n  \"approvalDescription\" : [ \"打发打发\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 17:22:19');
+INSERT INTO `sys_oper_log` VALUES (227, '占有登记', 2, 'com.zyjk.web.controller.system.CatalogController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/catalog/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"1\" ],\r\n  \"infoId\" : [ \"2\" ],\r\n  \"economicBehaviorDate\" : [ \"2020-07-11\" ],\r\n  \"economicBehaviorName\" : [ \"1\" ],\r\n  \"policyDecisionDate\" : [ \"2020-07-10\" ],\r\n  \"policyDecisionFile\" : [ \"\" ],\r\n  \"registrationAuthorityCode\" : [ \"\" ],\r\n  \"propertyRightRegistration\" : [ \"\" ],\r\n  \"ownedAssetsName\" : [ \"达到\" ],\r\n  \"ownedAssetsFileName\" : [ \"\" ],\r\n  \"ownedAssetsFileCode\" : [ \"\" ],\r\n  \"ownedAssetsDescription\" : [ \"\" ],\r\n  \"industryName\" : [ \"\" ],\r\n  \"industryFileName\" : [ \"\" ],\r\n  \"industryFileCode\" : [ \"\" ],\r\n  \"industryDescription\" : [ \"\" ],\r\n  \"orgName\" : [ \"\" ],\r\n  \"orgFileName\" : [ \"\" ],\r\n  \"orgFileCode\" : [ \"\" ],\r\n  \"orgDescription\" : [ \"\" ],\r\n  \"contributionContent\" : [ \"\" ],\r\n  \"contributionDescription\" : [ \"\" ],\r\n  \"receiptContent\" : [ \"\" ],\r\n  \"receiptDescription\" : [ \"\" ],\r\n  \"agreementContent\" : [ \"\" ],\r\n  \"agreementDescription\" : [ \"\" ],\r\n  \"agencyName\" : [ \"\" ],\r\n  \"reportNo\" : [ \"\" ],\r\n  \"approvalName\" : [ \"\" ],\r\n  \"approvalNo\" : [ \"\" ],\r\n  \"approvalDescription\" : [ \"打发打发\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 17:22:27');
+INSERT INTO `sys_oper_log` VALUES (228, '占有登记', 2, 'com.zyjk.web.controller.system.CatalogController.editSave()', 'POST', 1, 'admin', '研发部门', '/system/catalog/edit', '127.0.0.1', '内网IP', '{\r\n  \"id\" : [ \"1\" ],\r\n  \"infoId\" : [ \"2\" ],\r\n  \"economicBehaviorDate\" : [ \"2020-07-11\" ],\r\n  \"economicBehaviorName\" : [ \"1\" ],\r\n  \"policyDecisionDate\" : [ \"2020-07-10\" ],\r\n  \"policyDecisionFile\" : [ \"\" ],\r\n  \"registrationAuthorityCode\" : [ \"\" ],\r\n  \"propertyRightRegistration\" : [ \"11111\" ],\r\n  \"ownedAssetsName\" : [ \"达到\" ],\r\n  \"ownedAssetsFileName\" : [ \"\" ],\r\n  \"ownedAssetsFileCode\" : [ \"\" ],\r\n  \"ownedAssetsDescription\" : [ \"\" ],\r\n  \"industryName\" : [ \"\" ],\r\n  \"industryFileName\" : [ \"\" ],\r\n  \"industryFileCode\" : [ \"\" ],\r\n  \"industryDescription\" : [ \"\" ],\r\n  \"orgName\" : [ \"\" ],\r\n  \"orgFileName\" : [ \"\" ],\r\n  \"orgFileCode\" : [ \"\" ],\r\n  \"orgDescription\" : [ \"\" ],\r\n  \"contributionContent\" : [ \"\" ],\r\n  \"contributionDescription\" : [ \"\" ],\r\n  \"receiptContent\" : [ \"\" ],\r\n  \"receiptDescription\" : [ \"\" ],\r\n  \"agreementContent\" : [ \"\" ],\r\n  \"agreementDescription\" : [ \"\" ],\r\n  \"agencyName\" : [ \"\" ],\r\n  \"reportNo\" : [ \"\" ],\r\n  \"approvalName\" : [ \"\" ],\r\n  \"approvalNo\" : [ \"\" ],\r\n  \"approvalDescription\" : [ \"打发打发\" ]\r\n}', '{\r\n  \"msg\" : \"操作成功\",\r\n  \"code\" : 0\r\n}', 0, NULL, '2020-08-02 17:22:56');
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -778,7 +1032,7 @@ CREATE TABLE `sys_role`  (
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES (1, '超级管理员', 'admin', 1, '1', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '超级管理员');
-INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '普通角色');
+INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', '0', '0', 'admin', '2018-03-16 11:33:00', 'ry', '2020-07-21 15:16:00', '普通角色');
 INSERT INTO `sys_role` VALUES (100, '经办人角色', 'role_jingbanren', 3, '1', '0', '0', 'admin', '2020-07-19 16:37:23', 'admin', '2020-07-19 17:08:18', '');
 
 -- ----------------------------
@@ -941,9 +1195,9 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '29c67a30398638269fe600f73a054934', '111111', '0', '0', '127.0.0.1', '2020-07-19 21:47:13', 'admin', '2018-03-16 11:33:00', 'ry', '2020-07-19 21:47:12', '管理员');
-INSERT INTO `sys_user` VALUES (2, 105, 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '8e6d98b90472783cc73c17047ddccf36', '222222', '0', '0', '127.0.0.1', '2018-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '测试员');
-INSERT INTO `sys_user` VALUES (100, 108, 'lvzhi', 'lvzhi', '00', 'lvzhi1116@126.com', '15981858972', '0', '', '2ca66f5865c3436b0b82c39ed46a7852', '383fa4', '0', '0', '127.0.0.1', '2020-07-19 16:40:45', 'admin', '2020-07-19 16:36:25', 'admin', '2020-07-19 21:48:19', '');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', '管理员', '00', 'ry@163.com', '15888888888', '1', '', '29c67a30398638269fe600f73a054934', '111111', '0', '0', '127.0.0.1', '2020-08-02 13:42:57', 'admin', '2018-03-16 11:33:00', 'ry', '2020-08-02 13:42:56', '管理员');
+INSERT INTO `sys_user` VALUES (2, 105, 'ry', 'lvzhi1', '00', 'ry@qq.com', '15666666666', '1', '', '8e6d98b90472783cc73c17047ddccf36', '222222', '0', '0', '127.0.0.1', '2018-03-16 11:33:00', 'admin', '2018-03-16 11:33:00', 'ry', '2018-03-16 11:33:00', '测试员');
+INSERT INTO `sys_user` VALUES (100, 108, 'lvzhi', 'lvzhi', '00', 'lvzhi1116@126.com', '15981858972', '0', '', '2ca66f5865c3436b0b82c39ed46a7852', '383fa4', '0', '0', '127.0.0.1', '2020-07-30 16:51:09', 'admin', '2020-07-19 16:36:25', 'admin', '2020-08-02 14:19:27', '');
 
 -- ----------------------------
 -- Table structure for sys_user_online
@@ -967,7 +1221,7 @@ CREATE TABLE `sys_user_online`  (
 -- ----------------------------
 -- Records of sys_user_online
 -- ----------------------------
-INSERT INTO `sys_user_online` VALUES ('c865a265-2cd9-4112-83c0-7ba77e97ec69', 'admin', '研发部门', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', 'on_line', '2020-07-19 21:47:02', '2020-07-19 21:48:13', 1800000);
+INSERT INTO `sys_user_online` VALUES ('3ac34697-fa46-4a7a-a21b-70b84958776d', 'admin', '研发部门', '127.0.0.1', '内网IP', 'Chrome 8', 'Windows 10', 'on_line', '2020-08-02 13:42:52', '2020-08-02 17:28:26', 1800000);
 
 -- ----------------------------
 -- Table structure for sys_user_post
