@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('【请填写功能名称】列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>公司名称：</label>
+                                <input type="text" name="companyName"/>
+                            </li>
+                           <!-- <li>
+                                <label>是否工商注册：</label>
+                                <input type="text" name="isRegistration"/>
+                            </li>
+                            <li>
+                                <label>统一社会信用代码：</label>
+                                <input type="text" name="socialCode"/>
+                            </li>-->
+                            <li>
+                                <label>法人：</label>
+                                <input type="text" name="legalPerson"/>
+                            </li><!--
+                            <li>
+                                <label>注册地：</label>
+                                <input type="text" name="placeRegistration"/>
+                            </li>
+                            <li>
+                                <label>住所：</label>
+                                <input type="text" name="residence"/>
+                            </li>
+                            <li>
+                                <label>注册资本：</label>
+                                <input type="text" name="registeredCapital"/>
+                            </li>-->
+                            <li class="select-time">
+                                <label>成立日期：</label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="beginFoundDate"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="endFoundDate"/>
+                            </li>
+                           <!-- <li>
+                                <label>组织形式：</label>
+                                <input type="text" name="organizationalForm"/>
+                            </li>
+                            <li>
+                                <label>机构类别：</label>
+                                <input type="text" name="organizationCategory"/>
+                            </li>
+                            <li>
+                                <label>国有类型：</label>
+                                <input type="text" name="stateOwnedWay"/>
+                            </li>
+                            <li class="select-time">
+                                <label>经济行为发生时间：</label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginEconomicBehaviorDate]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endEconomicBehaviorDate]"/>
+                            </li>
+                            <li>
+                                <label>经济行为决策或者批复单位：</label>
+                                <input type="text" name="economicBehaviorName"/>
+                            </li>
+                            <li class="select-time">
+                                <label>决策或批复日期：</label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginPolicyDecisionDate]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endPolicyDecisionDate]"/>
+                            </li>
+                            <li>
+                                <label>最大国有出资人代码：</label>
+                                <input type="text" name="investorCode"/>
+                            </li>
+                            <li>
+                                <label>最大国有出资人名称：</label>
+                                <input type="text" name="investorName"/>
+                            </li>
+                            <li>
+                                <label>产权登记机关标识码：</label>
+                                <input type="text" name="registrationAuthorityCode"/>
+                            </li>
+                            <li>
+                                <label>所属行业代码：</label>
+                                <input type="text" name="industryCode"/>
+                            </li>
+                            <li>
+                                <label>隶属关系标识码：</label>
+                                <input type="text" name="subjectionCode"/>
+                            </li>
+                            <li>
+                                <label>级次标识码：</label>
+                                <input type="text" name="gradeCode"/>
+                            </li>
+                            <li>
+                                <label>是否重点子公司：</label>
+                                <input type="text" name="isKeySubsidiary"/>
+                            </li>
+                            <li>
+                                <label>产权登记情形：</label>
+                                <input type="text" name="propertyRightRegistration"/>
+                            </li>
+                            <li>
+                                <label>是否正常经营：</label>
+                                <input type="text" name="isNormalOperation"/>
+                            </li>
+                            <li>
+                                <label>非正常经营说明：</label>
+                                <input type="text" name="operationDescription"/>
+                            </li>
+                            <li>
+                                <label>经营范围：</label>
+                                <input type="text" name="businessScope"/>
+                            </li>
+                            <li>
+                                <label>出资情况备注：</label>
+                                <input type="text" name="contributionRemarks"/>
+                            </li>
+                            <li>
+                                <label>创建者id：</label>
+                                <input type="text" name="createId"/>
+                            </li>-->
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.addTab()" shiro:hasPermission="system:information:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.editTab()" shiro:hasPermission="system:information:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:information:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:information:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:information:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:information:remove')}]];
+        var prefix = ctx + "system/information";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "添加基本信息",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '自增主键',
+                    visible: false
+                },
+                {
+                    field: 'companyName',
+                    title: '公司名称'
+                },
+                {
+                    field: 'isRegistration',
+                    title: '是否工商注册'
+                },
+                {
+                    field: 'socialCode',
+                    title: '统一社会信用代码'
+                },
+                {
+                    field: 'legalPerson',
+                    title: '法人'
+                },
+                {
+                    field: 'placeRegistration',
+                    title: '注册地'
+                },
+                {
+                    field: 'residence',
+                    title: '住所'
+                },
+                {
+                    field: 'registeredCapital',
+                    title: '注册资本'
+                },
+                {
+                    field: 'foundDate',
+                    title: '成立日期'
+                },
+                {
+                    field: 'organizationalForm',
+                    title: '组织形式'
+                },
+                {
+                    field: 'organizationCategory',
+                    title: '机构类别'
+                },
+                {
+                    field: 'stateOwnedWay',
+                    title: '国有类型'
+                },
+                // {
+                //     field: 'economicBehaviorDate',
+                //     title: '经济行为发生时间'
+                // },
+                // {
+                //     field: 'economicBehaviorName',
+                //     title: '经济行为决策或者批复单位'
+                // },
+                // {
+                //     field: 'policyDecisionDate',
+                //     title: '决策或批复日期'
+                // },
+                // {
+                //     field: 'policyDecisionFile',
+                //     title: '决策或批复文件名称'
+                // },
+                // {
+                //     field: 'investorCode',
+                //     title: '最大国有出资人代码'
+                // },
+                // {
+                //     field: 'investorName',
+                //     title: '最大国有出资人名称'
+                // },
+                // {
+                //     field: 'registrationAuthorityCode',
+                //     title: '产权登记机关标识码'
+                // },
+                // {
+                //     field: 'industryCode',
+                //     title: '所属行业代码'
+                // },
+                // {
+                //     field: 'subjectionCode',
+                //     title: '隶属关系标识码'
+                // },
+                // {
+                //     field: 'gradeCode',
+                //     title: '级次标识码'
+                // },
+                // {
+                //     field: 'isKeySubsidiary',
+                //     title: '是否重点子公司'
+                // },
+                // {
+                //     field: 'propertyRightRegistration',
+                //     title: '产权登记情形'
+                // },
+                // {
+                //     field: 'isNormalOperation',
+                //     title: '是否正常经营'
+                // },
+                // {
+                //     field: 'operationDescription',
+                //     title: '非正常经营说明'
+                // },
+                // {
+                //     field: 'businessScope',
+                //     title: '经营范围'
+                // },
+                // {
+                //     field: 'contributionRemarks',
+                //     title: '出资情况备注'
+                // },
+                // {
+                //     field: 'createId',
+                //     title: '创建者id'
+                // },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

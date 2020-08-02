@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyjk.system.mapper.EssentialInformationMapper">
+    
+    <resultMap type="EssentialInformation" id="EssentialInformationResult">
+        <result property="id"    column="id"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="isRegistration"    column="is_registration"    />
+        <result property="socialCode"    column="social_code"    />
+        <result property="legalPerson"    column="legal_person"    />
+        <result property="placeRegistration"    column="place_registration"    />
+        <result property="residence"    column="residence"    />
+        <result property="registeredCapital"    column="registered_capital"    />
+        <result property="foundDate"    column="found_date"    />
+        <result property="organizationalForm"    column="organizational_form"    />
+        <result property="organizationCategory"    column="organization_category"    />
+        <result property="stateOwnedWay"    column="state_owned_way"    />
+        <result property="investorCode"    column="investor_code"    />
+        <result property="investorName"    column="investor_name"    />
+        <result property="registrationAuthorityCode"    column="registration_authority_code"    />
+        <result property="industryCode"    column="industry_code"    />
+        <result property="subjectionCode"    column="subjection_code"    />
+        <result property="gradeCode"    column="grade_code"    />
+        <result property="isKeySubsidiary"    column="is_key_subsidiary"    />
+        <result property="isNormalOperation"    column="is_normal_operation"    />
+        <result property="operationDescription"    column="operation_description"    />
+        <result property="businessScope"    column="business_scope"    />
+        <result property="contributionRemarks"    column="contribution_remarks"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+    </resultMap>
+
+    <sql id="selectEssentialInformationVo">
+        select id, company_name, is_registration, social_code, legal_person, place_registration, residence, registered_capital, found_date, organizational_form, organization_category, state_owned_way, investor_code, investor_name, registration_authority_code, industry_code, subjection_code, grade_code, is_key_subsidiary, is_normal_operation, operation_description, business_scope, contribution_remarks, create_time, create_id from essential_information
+    </sql>
+
+    <select id="selectEssentialInformationList" parameterType="EssentialInformation" resultMap="EssentialInformationResult">
+        <include refid="selectEssentialInformationVo"/>
+        <where>  
+            <if test="companyName != null  and companyName != ''"> and company_name like concat('%', #{companyName}, '%')</if>
+            <if test="isRegistration != null "> and is_registration = #{isRegistration}</if>
+            <if test="socialCode != null  and socialCode != ''"> and social_code = #{socialCode}</if>
+            <if test="legalPerson != null  and legalPerson != ''"> and legal_person = #{legalPerson}</if>
+            <if test="placeRegistration != null  and placeRegistration != ''"> and place_registration = #{placeRegistration}</if>
+            <if test="residence != null  and residence != ''"> and residence = #{residence}</if>
+            <if test="registeredCapital != null "> and registered_capital = #{registeredCapital}</if>
+            <if test="beginFoundDate != null "> and found_date &gt;= #{beginFoundDate}</if>
+            <if test="endFoundDate != null "> and found_date &lt;= #{endFoundDate}</if>
+            <if test="organizationalForm != null  and organizationalForm != ''"> and organizational_form = #{organizationalForm}</if>
+            <if test="organizationCategory != null  and organizationCategory != ''"> and organization_category = #{organizationCategory}</if>
+            <if test="stateOwnedWay != null  and stateOwnedWay != ''"> and state_owned_way = #{stateOwnedWay}</if>
+            <if test="investorCode != null  and investorCode != ''"> and investor_code = #{investorCode}</if>
+            <if test="investorName != null  and investorName != ''"> and investor_name like concat('%', #{investorName}, '%')</if>
+            <if test="registrationAuthorityCode != null  and registrationAuthorityCode != ''"> and registration_authority_code = #{registrationAuthorityCode}</if>
+            <if test="industryCode != null  and industryCode != ''"> and industry_code = #{industryCode}</if>
+            <if test="subjectionCode != null  and subjectionCode != ''"> and subjection_code = #{subjectionCode}</if>
+            <if test="gradeCode != null  and gradeCode != ''"> and grade_code = #{gradeCode}</if>
+            <if test="isKeySubsidiary != null "> and is_key_subsidiary = #{isKeySubsidiary}</if>
+            <if test="isNormalOperation != null "> and is_normal_operation = #{isNormalOperation}</if>
+            <if test="operationDescription != null  and operationDescription != ''"> and operation_description = #{operationDescription}</if>
+            <if test="businessScope != null  and businessScope != ''"> and business_scope = #{businessScope}</if>
+            <if test="contributionRemarks != null  and contributionRemarks != ''"> and contribution_remarks = #{contributionRemarks}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+        </where>
+    </select>
+    
+    <select id="selectEssentialInformationById" parameterType="Long" resultMap="EssentialInformationResult">
+        <include refid="selectEssentialInformationVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertEssentialInformation" parameterType="EssentialInformation" useGeneratedKeys="true" keyProperty="id">
+        insert into essential_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="companyName != null and companyName != ''">company_name,</if>
+            <if test="isRegistration != null">is_registration,</if>
+            <if test="socialCode != null and socialCode != ''">social_code,</if>
+            <if test="legalPerson != null and legalPerson != ''">legal_person,</if>
+            <if test="placeRegistration != null">place_registration,</if>
+            <if test="residence != null">residence,</if>
+            <if test="registeredCapital != null">registered_capital,</if>
+            <if test="foundDate != null">found_date,</if>
+            <if test="organizationalForm != null">organizational_form,</if>
+            <if test="organizationCategory != null">organization_category,</if>
+            <if test="stateOwnedWay != null">state_owned_way,</if>
+            <if test="investorCode != null">investor_code,</if>
+            <if test="investorName != null">investor_name,</if>
+            <if test="registrationAuthorityCode != null">registration_authority_code,</if>
+            <if test="industryCode != null">industry_code,</if>
+            <if test="subjectionCode != null">subjection_code,</if>
+            <if test="gradeCode != null">grade_code,</if>
+            <if test="isKeySubsidiary != null">is_key_subsidiary,</if>
+            <if test="isNormalOperation != null">is_normal_operation,</if>
+            <if test="operationDescription != null">operation_description,</if>
+            <if test="businessScope != null">business_scope,</if>
+            <if test="contributionRemarks != null">contribution_remarks,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="companyName != null and companyName != ''">#{companyName},</if>
+            <if test="isRegistration != null">#{isRegistration},</if>
+            <if test="socialCode != null and socialCode != ''">#{socialCode},</if>
+            <if test="legalPerson != null and legalPerson != ''">#{legalPerson},</if>
+            <if test="placeRegistration != null">#{placeRegistration},</if>
+            <if test="residence != null">#{residence},</if>
+            <if test="registeredCapital != null">#{registeredCapital},</if>
+            <if test="foundDate != null">#{foundDate},</if>
+            <if test="organizationalForm != null">#{organizationalForm},</if>
+            <if test="organizationCategory != null">#{organizationCategory},</if>
+            <if test="stateOwnedWay != null">#{stateOwnedWay},</if>
+            <if test="investorCode != null">#{investorCode},</if>
+            <if test="investorName != null">#{investorName},</if>
+            <if test="registrationAuthorityCode != null">#{registrationAuthorityCode},</if>
+            <if test="industryCode != null">#{industryCode},</if>
+            <if test="subjectionCode != null">#{subjectionCode},</if>
+            <if test="gradeCode != null">#{gradeCode},</if>
+            <if test="isKeySubsidiary != null">#{isKeySubsidiary},</if>
+            <if test="isNormalOperation != null">#{isNormalOperation},</if>
+            <if test="operationDescription != null">#{operationDescription},</if>
+            <if test="businessScope != null">#{businessScope},</if>
+            <if test="contributionRemarks != null">#{contributionRemarks},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEssentialInformation" parameterType="EssentialInformation">
+        update essential_information
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyName != null and companyName != ''">company_name = #{companyName},</if>
+            <if test="isRegistration != null">is_registration = #{isRegistration},</if>
+            <if test="socialCode != null and socialCode != ''">social_code = #{socialCode},</if>
+            <if test="legalPerson != null and legalPerson != ''">legal_person = #{legalPerson},</if>
+            <if test="placeRegistration != null">place_registration = #{placeRegistration},</if>
+            <if test="residence != null">residence = #{residence},</if>
+            <if test="registeredCapital != null">registered_capital = #{registeredCapital},</if>
+            <if test="foundDate != null">found_date = #{foundDate},</if>
+            <if test="organizationalForm != null">organizational_form = #{organizationalForm},</if>
+            <if test="organizationCategory != null">organization_category = #{organizationCategory},</if>
+            <if test="stateOwnedWay != null">state_owned_way = #{stateOwnedWay},</if>
+            <if test="investorCode != null">investor_code = #{investorCode},</if>
+            <if test="investorName != null">investor_name = #{investorName},</if>
+            <if test="registrationAuthorityCode != null">registration_authority_code = #{registrationAuthorityCode},</if>
+            <if test="industryCode != null">industry_code = #{industryCode},</if>
+            <if test="subjectionCode != null">subjection_code = #{subjectionCode},</if>
+            <if test="gradeCode != null">grade_code = #{gradeCode},</if>
+            <if test="isKeySubsidiary != null">is_key_subsidiary = #{isKeySubsidiary},</if>
+            <if test="isNormalOperation != null">is_normal_operation = #{isNormalOperation},</if>
+            <if test="operationDescription != null">operation_description = #{operationDescription},</if>
+            <if test="businessScope != null">business_scope = #{businessScope},</if>
+            <if test="contributionRemarks != null">contribution_remarks = #{contributionRemarks},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEssentialInformationById" parameterType="Long">
+        delete from essential_information where id = #{id}
+    </delete>
+
+    <delete id="deleteEssentialInformationByIds" parameterType="String">
+        delete from essential_information where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

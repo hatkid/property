@@ -3,7 +3,7 @@ property:
   # 名称
   name: lvzhi
   # 版本
-  version: 4.3.1
+  version: 0.0.1
   # 版权年份
   copyrightYear: 2020
   # 实例演示开关
@@ -31,8 +31,8 @@ server:
 # 日志配置
 logging:
   level:
-    com.zyjk: error
-    org.springframework: error
+    com.zyjk: debug
+    org.springframework: debug
 
 # 用户配置
 user:

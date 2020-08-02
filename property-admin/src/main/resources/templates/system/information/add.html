@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增【请填写功能名称】')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: bootstrap-fileinput-css"/>
+</head>
+<body>
+    <div class="main-content">
+        <form class="form-horizontal" id="form-information-add">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">公司名称：</label>
+                        <div class="col-sm-8">
+                            <input name="companyName" placeholder="请输入公司名称" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">是否工商注册：</label>
+                        <div class="col-sm-8">
+                            <input name="isRegistration" placeholder="是否工商注册" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">统一社会信用代码：</label>
+                        <div class="col-sm-8">
+                            <input name="socialCode" placeholder="统一社会信用代码" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">法人：</label>
+                        <div class="col-sm-8">
+                            <input name="legalPerson" placeholder="法人" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">注册地：</label>
+                        <div class="col-sm-8">
+                            <input name="placeRegistration" placeholder="注册地" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">住所：</label>
+                        <div class="col-sm-8">
+                            <input name="residence" placeholder="住所" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">注册资本：</label>
+                        <div class="col-sm-8">
+                            <input name="registeredCapital" placeholder="注册资本" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">成立日期：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group date">
+                                <input name="foundDate" placeholder="yyyy-MM-dd" class="form-control" type="text"  required>
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">组织形式：</label>
+                        <div class="col-sm-8">
+                            <input name="organizationalForm" placeholder="组织形式" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">机构类别：</label>
+                        <div class="col-sm-8">
+                            <input name="organizationCategory" placeholder="机构类别" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">国有类型：</label>
+                        <div class="col-sm-8">
+                            <input name="stateOwnedWay" placeholder="国有类型" class="form-control" type="text" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">最大国有出资人代码：</label>
+                        <div class="col-sm-8">
+                            <input name="investorCode" placeholder="最大国有出资人代码" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">产权登记机关标识码：</label>
+                    <div class="col-sm-8">
+                        <input name="registrationAuthorityCode" placeholder="产权登记机关标识码" class="form-control" type="text"  required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">所属行业代码：</label>
+                    <div class="col-sm-8">
+                        <input name="industryCode" placeholder="所属行业代码" class="form-control" type="text"  required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">隶属关系标识码：</label>
+                    <div class="col-sm-8">
+                        <input name="subjectionCode" placeholder="隶属关系标识码" class="form-control" type="text"  required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">级次标识码：</label>
+                    <div class="col-sm-8">
+                        <input name="gradeCode" placeholder="级次标识码" class="form-control" type="text"  required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">是否重点子公司：</label>
+                    <div class="col-sm-8">
+                        <input name="isKeySubsidiary" placeholder="是否重点子公司" class="form-control" type="text"  required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">产权登记情形：</label>
+                    <div class="col-sm-8">
+                        <input name="propertyRightRegistration" placeholder="产权登记情形" class="form-control" type="text"  required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">非正常经营说明：</label>
+                    <div class="col-sm-8">
+                        <input name="operationDescription" placeholder="非正常经营说明" class="form-control" type="text"  required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">经营范围：</label>
+                    <div class="col-sm-8">
+                        <input name="businessScope" placeholder="经营范围" class="form-control" type="text"  required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">出资情况备注：</label>
+                    <div class="col-sm-8">
+                        <input name="contributionRemarks" placeholder="出资情况备注" class="form-control" type="text"  required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">最大国有出资人名称：</label>
+                    <div class="col-sm-8">
+                        <input name="investorName" placeholder="最大国有出资人名称" class="form-control" type="text"  required>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-sm-offset-5 col-sm-10">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+                    <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/information"
+        $("#form-information-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-information-add').serialize());
+            }
+        }
+
+        $("input[name='foundDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='economicBehaviorDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='policyDecisionDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $(".file-upload").fileinput({
+            uploadUrl: '/common/upload',
+            maxFileCount: 1,
+            autoReplace: true
+        }).on('fileuploaded', function (event, data, previewId, index) {
+            $("input[name='" + event.currentTarget.id + "']").val(data.response.url)
+        }).on('fileremoved', function (event, id, index) {
+            $("input[name='" + event.currentTarget.id + "']").val('')
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增【请填写功能名称】')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: bootstrap-fileinput-css"/>
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-information-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">公司名称：</label>
+                <div class="col-sm-8">
+                    <input name="companyName" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label is-required">是否工商注册：</label>
+                <div class="col-sm-8">
+                    <input name="isRegistration" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">统一社会信用代码：</label>
+                <div class="col-sm-8">
+                    <input name="socialCode" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label is-required">法人：</label>
+                <div class="col-sm-8">
+                    <input name="legalPerson" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">注册地：</label>
+                <div class="col-sm-8">
+                    <input name="placeRegistration" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">住所：</label>
+                <div class="col-sm-8">
+                    <input name="residence" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">注册资本：</label>
+                <div class="col-sm-8">
+                    <input name="registeredCapital" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">成立日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="foundDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">组织形式：</label>
+                <div class="col-sm-8">
+                    <input name="organizationalForm" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">机构类别：</label>
+                <div class="col-sm-8">
+                    <input name="organizationCategory" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">国有类型：</label>
+                <div class="col-sm-8">
+                    <input name="stateOwnedWay" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">经济行为发生时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="economicBehaviorDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">经济行为决策或者批复单位：</label>
+                <div class="col-sm-8">
+                    <input name="economicBehaviorName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">决策或批复日期：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="policyDecisionDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">决策或批复文件名称：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" name="policyDecisionFile">
+                    <div class="file-loading">
+                        <input class="form-control file-upload" id="policyDecisionFile" name="file" type="file">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最大国有出资人代码：</label>
+                <div class="col-sm-8">
+                    <input name="investorCode" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最大国有出资人名称：</label>
+                <div class="col-sm-8">
+                    <input name="investorName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">产权登记机关标识码：</label>
+                <div class="col-sm-8">
+                    <input name="registrationAuthorityCode" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">所属行业代码：</label>
+                <div class="col-sm-8">
+                    <input name="industryCode" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">隶属关系标识码：</label>
+                <div class="col-sm-8">
+                    <input name="subjectionCode" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">级次标识码：</label>
+                <div class="col-sm-8">
+                    <input name="gradeCode" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否重点子公司：</label>
+                <div class="col-sm-8">
+                    <input name="isKeySubsidiary" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">产权登记情形：</label>
+                <div class="col-sm-8">
+                    <input name="propertyRightRegistration" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否正常经营：</label>
+                <div class="col-sm-8">
+                    <input name="isNormalOperation" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">非正常经营说明：</label>
+                <div class="col-sm-8">
+                    <input name="operationDescription" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">经营范围：</label>
+                <div class="col-sm-8">
+                    <input name="businessScope" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">出资情况备注：</label>
+                <div class="col-sm-8">
+                    <input name="contributionRemarks" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">创建者id：</label>
+                <div class="col-sm-8">
+                    <input name="createId" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <th:block th:include="include :: bootstrap-fileinput-js"/>
+    <script th:inline="javascript">
+        var prefix = ctx + "system/information"
+        $("#form-information-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-information-add').serialize());
+            }
+        }
+
+        $("input[name='foundDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='economicBehaviorDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='policyDecisionDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $(".file-upload").fileinput({
+            uploadUrl: '/common/upload',
+            maxFileCount: 1,
+            autoReplace: true
+        }).on('fileuploaded', function (event, data, previewId, index) {
+            $("input[name='" + event.currentTarget.id + "']").val(data.response.url)
+        }).on('fileremoved', function (event, id, index) {
+            $("input[name='" + event.currentTarget.id + "']").val('')
+        })
+    </script>
+</body>
+</html>
