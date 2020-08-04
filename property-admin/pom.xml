@@ -73,6 +73,12 @@
             <artifactId>property-generator</artifactId>
         </dependency>
 
+        <!-- freemarker 引入 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

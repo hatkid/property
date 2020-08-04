@@ -376,6 +376,24 @@ var table = {
 	    			});
     			});
     		},
+			// 导出数据
+			exportTemplateExcel: function(id) {
+				table.set();
+				var dataParam = {"id":id};
+				$.modal.confirm("确定导出数据" + table.options.modalName + "吗？", function() {
+					$.modal.loading("正在导出数据，请稍后...");
+					$.post(table.options.exportTemplateUrl, dataParam, function(result) {
+						if (result.code == web_status.SUCCESS) {
+							window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
+						} else if (result.code == web_status.WARNING) {
+							$.modal.alertWarning(result.msg)
+						} else {
+							$.modal.alertError(result.msg);
+						}
+						$.modal.closeLoading();
+					});
+				});
+			},
     		// 下载模板
     		importTemplate: function() {
     			table.set();

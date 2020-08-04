@@ -1,7 +1,20 @@
 package com.zyjk.web.controller.system;
 
+import java.io.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.zyjk.common.config.Global;
+import com.zyjk.system.domain.EssentialInformation;
+import com.zyjk.system.service.IEssentialInformationService;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.aspectj.weaver.loadtime.Aj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +46,9 @@ public class CatalogController extends BaseController
 
     @Autowired
     private ICatalogService catalogService;
+
+    @Autowired
+    private IEssentialInformationService essentialInformationService;
 
     @RequiresPermissions("system:catalog:view")
     @GetMapping()
@@ -123,4 +139,38 @@ public class CatalogController extends BaseController
     {
         return toAjax(catalogService.deleteCatalogByIds(ids));
     }
+
+    /**
+     * 按所需模板方式导出
+     */
+    @RequiresPermissions("system:catalog:export")
+    @Log(title = "占有登记", businessType = BusinessType.EXPORT)
+    @PostMapping("/exportTemplate")
+    @ResponseBody
+    public AjaxResult exportTemplate(Long id)
+    {
+        // 根据id查询信息
+        Catalog catalog = catalogService.selectCatalogById(id);
+        EssentialInformation essentialInformation = essentialInformationService.selectEssentialInformationById(catalog.getInfoId());
+        try {
+            Configuration configuration = new Configuration();
+            configuration.setDefaultEncoding("utf-8");
+            configuration.setClassForTemplateLoading(this.getClass(), "/templates/exceltemplate");
+            Template template = configuration.getTemplate("info.ftl");
+            Map<String, Object> dataMap = new HashMap<>();
+            dataMap.put("essentialInformation", essentialInformation);
+            File outFile = new File(Global.getDownloadPath() + "/info.xls");
+            FileWriter out = new FileWriter(outFile);
+            template.process(dataMap,out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return AjaxResult.error("异常，稍后再尝试.");
+        } finally {
+
+        }
+        return AjaxResult.success("info.xls");
+    }
+
 }
