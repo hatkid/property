@@ -159,6 +159,7 @@ public class CatalogController extends BaseController
             Template template = configuration.getTemplate("info.ftl");
             Map<String, Object> dataMap = new HashMap<>();
             dataMap.put("essentialInformation", essentialInformation);
+            dataMap.put("catalog", catalog);
             File outFile = new File(Global.getDownloadPath() + "/info.xls");
             FileWriter out = new FileWriter(outFile);
             template.process(dataMap,out);
