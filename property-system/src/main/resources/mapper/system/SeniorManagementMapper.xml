@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="SeniorManagement" id="SeniorManagementResult">
         <result property="id"    column="id"    />
         <result property="infoId"    column="info_id"    />
+        <result property="companyName"    column="company_name"    />
         <result property="name"    column="name"    />
         <result property="sex"    column="sex"    />
         <result property="job"    column="job"    />
@@ -17,12 +18,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectSeniorManagementVo">
-        select id, info_id, name, sex, job, appointment_date, departure_date, level, remarks from senior_management
+        select m.id, info_id, company_name, name, sex, job, appointment_date, departure_date, level, remarks from senior_management m left join essential_information ei on ei.id = info_id
     </sql>
 
     <select id="selectSeniorManagementList" parameterType="SeniorManagement" resultMap="SeniorManagementResult">
         <include refid="selectSeniorManagementVo"/>
-        <where>  
+        <where>
             <if test="infoId != null "> and info_id = #{infoId}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="sex != null "> and sex = #{sex}</if>
@@ -36,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectSeniorManagementById" parameterType="Long" resultMap="SeniorManagementResult">
         <include refid="selectSeniorManagementVo"/>
-        where id = #{id}
+        where m.id = #{id}
     </select>
         
     <insert id="insertSeniorManagement" parameterType="SeniorManagement" useGeneratedKeys="true" keyProperty="id">

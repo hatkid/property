@@ -20,8 +20,11 @@ public class SeniorManagement extends BaseEntity
     private Long id;
 
     /** 基本信息id */
-    @Excel(name = "基本信息id")
+    @Excel(name = "基本信息id", isExport = false)
     private Long infoId;
+
+    @Excel(name = "所属公司")
+    private String companyName;
 
     /** 姓名 */
     @Excel(name = "姓名")
@@ -143,6 +146,14 @@ public class SeniorManagement extends BaseEntity
 
     public void setCreateId(Long createId) {
         this.createId = createId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     @Override
