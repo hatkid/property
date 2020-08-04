@@ -20,8 +20,10 @@ public class Catalog extends BaseEntity
     private Long id;
 
     /** 基本信息id */
-    @Excel(name = "基本信息id")
     private Long infoId;
+
+    @Excel(name = "所属公司")
+    private String companyName;
 
     /** 经济行为发生时间 */
     @Excel(name = "经济行为发生时间", width = 30, dateFormat = "yyyy-MM-dd")
@@ -140,7 +142,6 @@ public class Catalog extends BaseEntity
     private String approvalDescription;
 
     /** 创建者id */
-    @Excel(name = "创建者id")
     private Long createId;
 
     public void setId(Long id) 
@@ -430,6 +431,14 @@ public class Catalog extends BaseEntity
     public Long getCreateId() 
     {
         return createId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     @Override

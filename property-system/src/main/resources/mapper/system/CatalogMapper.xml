@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="Catalog" id="CatalogResult">
         <result property="id"    column="id"    />
         <result property="infoId"    column="info_id"    />
+        <result property="companyName"    column="company_name"    />
         <result property="economicBehaviorDate"    column="economic_behavior_date"    />
         <result property="economicBehaviorName"    column="economic_behavior_name"    />
         <result property="policyDecisionDate"    column="policy_decision_date"    />
@@ -41,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCatalogVo">
-        select id, info_id, economic_behavior_date, economic_behavior_name, policy_decision_date, policy_decision_file, registration_authority_code, property_right_registration, owned_assets_name, owned_assets_file_name, owned_assets_file_code, owned_assets_description, industry_name, industry_file_name, industry_file_code, industry_description, org_name, org_file_name, org_file_code, org_description, contribution_content, contribution_description, receipt_content, receipt_description, agreement_content, agreement_description, agency_name, report_no, approval_name, approval_no, approval_description, create_time, create_id from catalog
+        select t.id, info_id, company_name, economic_behavior_date, economic_behavior_name, policy_decision_date, policy_decision_file, t.registration_authority_code, property_right_registration, owned_assets_name, owned_assets_file_name, owned_assets_file_code, owned_assets_description, industry_name, industry_file_name, industry_file_code, industry_description, org_name, org_file_name, org_file_code, org_description, contribution_content, contribution_description, receipt_content, receipt_description, agreement_content, agreement_description, agency_name, report_no, approval_name, approval_no, approval_description, t.create_time, t.create_id from catalog t left join essential_information ei on ei.id = info_id
     </sql>
 
     <select id="selectCatalogList" parameterType="Catalog" resultMap="CatalogResult">
@@ -77,13 +78,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="approvalName != null  and approvalName != ''"> and approval_name like concat('%', #{approvalName}, '%')</if>
             <if test="approvalNo != null  and approvalNo != ''"> and approval_no = #{approvalNo}</if>
             <if test="approvalDescription != null  and approvalDescription != ''"> and approval_description = #{approvalDescription}</if>
-            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="createId != null "> and t.create_id = #{createId}</if>
         </where>
     </select>
     
     <select id="selectCatalogById" parameterType="Long" resultMap="CatalogResult">
         <include refid="selectCatalogVo"/>
-        where id = #{id}
+        where t.id = #{id}
     </select>
         
     <insert id="insertCatalog" parameterType="Catalog" useGeneratedKeys="true" keyProperty="id">
