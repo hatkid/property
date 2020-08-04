@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="JudicialFreeze" id="JudicialFreezeResult">
         <result property="id"    column="id"    />
         <result property="infoId"    column="info_id"    />
+        <result property="companyName"    column="company_name"    />
         <result property="judicialOrgan"    column="judicial_organ"    />
         <result property="frozenAmount"    column="frozen_amount"    />
         <result property="frozenStartDate"    column="frozen_start_date"    />
@@ -18,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectJudicialFreezeVo">
-        select id, info_id, judicial_organ, frozen_amount, frozen_start_date, frozen_end_date, frozen_reason, remarks, create_time, create_id from judicial_freeze
+        select t.id, info_id, company_name,  judicial_organ, frozen_amount, frozen_start_date, frozen_end_date, frozen_reason, remarks, t.create_time, t.create_id from judicial_freeze t left join essential_information ei on ei.id = info_id
     </sql>
 
     <select id="selectJudicialFreezeList" parameterType="JudicialFreeze" resultMap="JudicialFreezeResult">
@@ -31,13 +32,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="frozenEndDate != null "> and frozen_end_date = #{frozenEndDate}</if>
             <if test="frozenReason != null  and frozenReason != ''"> and frozen_reason = #{frozenReason}</if>
             <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
-            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="createId != null "> and t.create_id = #{createId}</if>
         </where>
     </select>
     
     <select id="selectJudicialFreezeById" parameterType="Long" resultMap="JudicialFreezeResult">
         <include refid="selectJudicialFreezeVo"/>
-        where id = #{id}
+        where t.id = #{id}
     </select>
         
     <insert id="insertJudicialFreeze" parameterType="JudicialFreeze" useGeneratedKeys="true" keyProperty="id">

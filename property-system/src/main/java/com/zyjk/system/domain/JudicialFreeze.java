@@ -21,8 +21,10 @@ public class JudicialFreeze extends BaseEntity
     private Long id;
 
     /** 基本信息id */
-    @Excel(name = "基本信息id")
     private Long infoId;
+
+    @Excel(name = "所属公司")
+    private String companyName;
 
     /** 司法执行机关 */
     @Excel(name = "司法执行机关")
@@ -49,7 +51,6 @@ public class JudicialFreeze extends BaseEntity
     private String remarks;
 
     /** 创建者id */
-    @Excel(name = "创建者id")
     private Long createId;
 
     public void setId(Long id) 
@@ -132,6 +133,14 @@ public class JudicialFreeze extends BaseEntity
     public Long getCreateId() 
     {
         return createId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     @Override

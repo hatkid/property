@@ -12,7 +12,10 @@
                         <ul>
                             <li>
                                 <label>所属公司：</label>
-                                <input type="text" name="infoId"/>
+                                <select name="infoId" th:with="infos=${@essentialInformationServiceImpl.selectEssentialInformationList(null)}" class="form-control m-b" required>
+                                    <option value="">所有</option>
+                                    <option th:each="info : ${infos}" th:text="${info.companyName}" th:value="${info.id}"></option>
+                                </select>
                             </li>
                             <li>
                                 <label>司法机关：</label>
@@ -97,8 +100,8 @@
                     visible: false
                 },
                 {
-                    field: 'infoId',
-                    title: '基本信息id'
+                    field: 'companyName',
+                    title: '所属公司'
                 },
                 {
                     field: 'judicialOrgan',
