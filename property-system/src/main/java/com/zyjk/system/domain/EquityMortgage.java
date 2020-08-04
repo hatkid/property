@@ -20,8 +20,10 @@ public class EquityMortgage extends BaseEntity
     private Long id;
 
     /** 基本信息id */
-    @Excel(name = "基本信息id")
     private Long infoId;
+
+    @Excel(name = "所属公司")
+    private String companyName;
 
     /** 抵质押机构名称 */
     @Excel(name = "抵质押机构名称")
@@ -52,7 +54,6 @@ public class EquityMortgage extends BaseEntity
     private String remarks;
 
     /** 创建者id */
-    @Excel(name = "创建者id")
     private Long createId;
 
     public void setId(Long id) 
@@ -144,6 +145,14 @@ public class EquityMortgage extends BaseEntity
     public Long getCreateId() 
     {
         return createId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     @Override

@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="EquityMortgage" id="EquityMortgageResult">
         <result property="id"    column="id"    />
         <result property="infoId"    column="info_id"    />
+        <result property="companyName"    column="company_name"    />
         <result property="organizationName"    column="organization_name"    />
         <result property="equityRatio"    column="equity_ratio"    />
         <result property="mortgagor"    column="mortgagor"    />
@@ -19,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectEquityMortgageVo">
-        select id, info_id, organization_name, equity_ratio, mortgagor, book_value, evaluation_value, mortgage_ratio, remarks, create_time, create_id from equity_mortgage
+        select t.id, info_id, company_name, organization_name, equity_ratio, mortgagor, book_value, evaluation_value, mortgage_ratio, remarks, t.create_time, t.create_id from equity_mortgage t left join essential_information ei on ei.id = info_id
     </sql>
 
     <select id="selectEquityMortgageList" parameterType="EquityMortgage" resultMap="EquityMortgageResult">
@@ -33,13 +34,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="evaluationValue != null "> and evaluation_value = #{evaluationValue}</if>
             <if test="mortgageRatio != null "> and mortgage_ratio = #{mortgageRatio}</if>
             <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
-            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="createId != null "> and t.create_id = #{createId}</if>
         </where>
     </select>
     
     <select id="selectEquityMortgageById" parameterType="Long" resultMap="EquityMortgageResult">
         <include refid="selectEquityMortgageVo"/>
-        where id = #{id}
+        where t.id = #{id}
     </select>
         
     <insert id="insertEquityMortgage" parameterType="EquityMortgage" useGeneratedKeys="true" keyProperty="id">
