@@ -209,6 +209,24 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">所属集团部门标识码：</label>
+                    <div class="col-sm-8">
+                        <input name="groupCode" th:field="*{groupCode}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">所属集团单位名称：</label>
+                    <div class="col-sm-8">
+                        <input name="groupName" th:field="*{groupName}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
                     <label class="col-sm-4 control-label is-required">公司名称：</label>
                     <div class="col-sm-8">
                         <input name="companyName" th:field="*{companyName}" class="form-control" type="text" required>
@@ -413,6 +431,16 @@
                     <label class="col-sm-4 control-label is-required">最大国有出资人名称：</label>
                     <div class="col-sm-8">
                         <input name="investorName" th:field="*{investorName}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">邮政编码：</label>
+                    <div class="col-sm-8">
+                        <input name="postcode" th:field="*{postcode}" class="form-control" type="text">
                     </div>
                 </div>
             </div>

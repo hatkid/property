@@ -7,6 +7,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="EssentialInformation" id="EssentialInformationResult">
         <result property="id"    column="id"    />
         <result property="companyName"    column="company_name"    />
+        <result property="groupCode"    column="group_code"    />
+        <result property="groupName"    column="group_name"    />
+        <result property="postcode"    column="postcode"    />
         <result property="isRegistration"    column="is_registration"    />
         <result property="socialCode"    column="social_code"    />
         <result property="legalPerson"    column="legal_person"    />
@@ -33,13 +36,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectEssentialInformationVo">
-        select id, company_name, is_registration, social_code, legal_person, place_registration, residence, registered_capital, found_date, organizational_form, organization_category, state_owned_way, investor_code, investor_name, registration_authority_code, industry_code, subjection_code, grade_code, is_key_subsidiary, is_normal_operation, operation_description, business_scope, contribution_remarks, create_time, create_id from essential_information
+        select id, group_code, group_name, postcode, company_name, is_registration, social_code, legal_person, place_registration, residence, registered_capital, found_date, organizational_form, organization_category, state_owned_way, investor_code, investor_name, registration_authority_code, industry_code, subjection_code, grade_code, is_key_subsidiary, is_normal_operation, operation_description, business_scope, contribution_remarks, create_time, create_id from essential_information
     </sql>
 
     <select id="selectEssentialInformationList" parameterType="EssentialInformation" resultMap="EssentialInformationResult">
         <include refid="selectEssentialInformationVo"/>
         <where>  
             <if test="companyName != null  and companyName != ''"> and company_name like concat('%', #{companyName}, '%')</if>
+            <if test="groupCode != null  and groupCode != ''"> and group_code = #{companyName}</if>
+            <if test="groupName != null  and groupName != ''"> and group_name = #{groupName}</if>
+            <if test="postcode != null  and postcode != ''"> and postcode = #{postcode}</if>
             <if test="isRegistration != null "> and is_registration = #{isRegistration}</if>
             <if test="socialCode != null  and socialCode != ''"> and social_code = #{socialCode}</if>
             <if test="legalPerson != null  and legalPerson != ''"> and legal_person = #{legalPerson}</if>
@@ -74,6 +80,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertEssentialInformation" parameterType="EssentialInformation" useGeneratedKeys="true" keyProperty="id">
         insert into essential_information
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupCode != null  and groupCode != ''">group_code,</if>
+            <if test="groupName != null  and groupName != ''">group_name,</if>
+            <if test="postcode != null  and postcode != ''">postcode,</if>
             <if test="companyName != null and companyName != ''">company_name,</if>
             <if test="isRegistration != null">is_registration,</if>
             <if test="socialCode != null and socialCode != ''">social_code,</if>
@@ -100,6 +109,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createId != null">create_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupCode != null  and groupCode != ''">#{companyName},</if>
+            <if test="groupName != null  and groupName != ''">#{groupName},</if>
+            <if test="postcode != null  and postcode != ''">#{postcode},</if>
             <if test="companyName != null and companyName != ''">#{companyName},</if>
             <if test="isRegistration != null">#{isRegistration},</if>
             <if test="socialCode != null and socialCode != ''">#{socialCode},</if>
@@ -130,6 +142,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateEssentialInformation" parameterType="EssentialInformation">
         update essential_information
         <trim prefix="SET" suffixOverrides=",">
+            <if test="groupCode != null  and groupCode != ''">group_code = #{companyName},</if>
+            <if test="groupName != null  and groupName != ''">group_name = #{groupName},</if>
+            <if test="postcode != null  and postcode != ''">postcode = #{postcode},</if>
             <if test="companyName != null and companyName != ''">company_name = #{companyName},</if>
             <if test="isRegistration != null">is_registration = #{isRegistration},</if>
             <if test="socialCode != null and socialCode != ''">social_code = #{socialCode},</if>

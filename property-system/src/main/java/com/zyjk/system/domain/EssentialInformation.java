@@ -24,6 +24,15 @@ public class EssentialInformation extends BaseEntity
     @Excel(name = "公司名称")
     private String companyName;
 
+    @Excel(name = "所属集团部门标识码")
+    private String groupCode;
+
+    @Excel(name = "所属集团单位名称")
+    private String groupName;
+
+    @Excel(name = "邮政编码")
+    private String postcode;
+
     /** 是否工商注册 */
     @Excel(name = "是否工商注册")
     private Integer isRegistration;
@@ -351,6 +360,30 @@ public class EssentialInformation extends BaseEntity
 
     public void setEndFoundDate(Date endFoundDate) {
         this.endFoundDate = endFoundDate;
+    }
+
+    public String getGroupCode() {
+        return groupCode;
+    }
+
+    public void setGroupCode(String groupCode) {
+        this.groupCode = groupCode;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
     }
 
     @Override

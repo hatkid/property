@@ -1,20 +1,22 @@
 package com.zyjk.web.controller.system;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.zyjk.common.config.Global;
+import com.zyjk.system.domain.Contribution;
 import com.zyjk.system.domain.EssentialInformation;
-import com.zyjk.system.service.IEssentialInformationService;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.zyjk.system.domain.SeniorManagement;
+import com.zyjk.system.service.IContributionService;
+import com.zyjk.system.service.IEssentialInformationService;;
+import com.zyjk.system.service.ISeniorManagementService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.aspectj.weaver.loadtime.Aj;
+import org.jxls.expression.JexlExpressionEvaluator;
+import org.jxls.transform.Transformer;
+import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -49,6 +51,12 @@ public class CatalogController extends BaseController
 
     @Autowired
     private IEssentialInformationService essentialInformationService;
+
+    @Autowired
+    private ISeniorManagementService seniorManagementService;
+
+    @Autowired
+    private IContributionService contributionService;
 
     @RequiresPermissions("system:catalog:view")
     @GetMapping()
@@ -149,21 +157,62 @@ public class CatalogController extends BaseController
     @ResponseBody
     public AjaxResult exportTemplate(Long id)
     {
-        // 根据id查询信息
+        // 查询合规目录信息
         Catalog catalog = catalogService.selectCatalogById(id);
+        // 查询基本信息
         EssentialInformation essentialInformation = essentialInformationService.selectEssentialInformationById(catalog.getInfoId());
+        // 查询高管信息
+        SeniorManagement seniorManagement = new SeniorManagement();
+        seniorManagement.setInfoId(catalog.getInfoId());
+        List<SeniorManagement> seniorManagementList = seniorManagementService.selectSeniorManagementList(seniorManagement);
+        // 出资情况
+        Contribution contribution = new Contribution();
+        contribution.setInfoId(catalog.getInfoId());
+        List<Contribution> contributionList = contributionService.selectContributionList(contribution);
+        // 计算实缴资本总和
+        BigDecimal capitalPaidTotal = new BigDecimal("0.00");
+        for (Contribution con : contributionList) {
+            capitalPaidTotal = capitalPaidTotal.add(con.getCapitalPaid());
+        }
+        // 计算认缴资本总和
+        BigDecimal capitalSubscribedTotal = new BigDecimal("0.00");
+        for (Contribution con : contributionList) {
+            capitalSubscribedTotal = capitalSubscribedTotal.add(con.getCapitalSubscribed());
+        }
+        // 股权比例总和
+        BigDecimal equityRatioTotal = new BigDecimal("0.00");
+        for (Contribution con : contributionList) {
+            equityRatioTotal = equityRatioTotal.add(con.getEquityRatio());
+        }
+
+
         try {
-            Configuration configuration = new Configuration();
-            configuration.setDefaultEncoding("utf-8");
-            configuration.setClassForTemplateLoading(this.getClass(), "/templates/exceltemplate");
-            Template template = configuration.getTemplate("info.ftl");
-            Map<String, Object> dataMap = new HashMap<>();
-            dataMap.put("essentialInformation", essentialInformation);
-            File outFile = new File(Global.getDownloadPath() + "/info.xls");
-            FileWriter out = new FileWriter(outFile);
-            template.process(dataMap,out);
-            out.flush();
-            out.close();
+//            InputStream in = this.getClass().getClassLoader().getResourceAsStream("/templates/exceltemplate/info.xls");   //得到文档的路径
+            InputStream in = new FileInputStream("E:\\code\\property\\property-admin\\src\\main\\resources\\templates\\exceltemplate\\info.xls");
+            FileOutputStream out = new FileOutputStream(Global.getDownloadPath() + "info.xls");
+            org.jxls.common.Context context = new org.jxls.common.Context();
+            //将列表参数放入context中
+            // 基本信息
+            context.putVar("essentialInformation", essentialInformation);
+            // 合规目录信息
+            context.putVar("catalog", catalog);
+            // 高管信息
+            context.putVar("seniorManagementList", seniorManagementList);
+            // 出资信息
+            context.putVar("contributionList", contributionList);
+            // 实缴资本总和
+            context.putVar("capitalPaidTotal", capitalPaidTotal);
+            // 认缴资本总和
+            context.putVar("capitalSubscribedTotal", capitalSubscribedTotal);
+            // 股权比例总和
+            context.putVar("equityRatioTotal", equityRatioTotal);
+            JxlsHelper jxlsHelper = JxlsHelper.getInstance();
+            Transformer transformer = jxlsHelper.createTransformer(in, out);
+            JexlExpressionEvaluator evaluator = (JexlExpressionEvaluator) transformer.getTransformationConfig()
+                    .getExpressionEvaluator();
+//		evaluator.getJexlEngine().setFunctions(funcs);
+            jxlsHelper.processTemplate(context, transformer);
+
         } catch (Exception e) {
             e.printStackTrace();
             return AjaxResult.error("异常，稍后再尝试.");

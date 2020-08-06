@@ -12,6 +12,25 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">所属集团部门标识码：</label>
+                        <div class="col-sm-8">
+                            <input name="groupCode" placeholder="所属集团部门标识码" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">所属集团单位名称：</label>
+                        <div class="col-sm-8">
+                            <input name="groupName" placeholder="所属集团单位名称" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
                         <label class="col-sm-4 control-label is-required">公司名称：</label>
                         <div class="col-sm-8">
                             <input name="companyName" placeholder="请输入公司名称" class="form-control" type="text"  required>
@@ -220,12 +239,22 @@
                 </div>
             </div>
         </div>
-            <div class="row">
-                <div class="col-sm-offset-5 col-sm-10">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
-                    <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">邮政编码：</label>
+                    <div class="col-sm-8">
+                        <input name="postcode" placeholder="邮政编码" class="form-control" type="text"  required>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-5 col-sm-10">
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+            </div>
+        </div>
 
         </form>
     </div>
