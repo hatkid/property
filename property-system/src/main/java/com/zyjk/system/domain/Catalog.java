@@ -53,6 +53,10 @@ public class Catalog extends BaseEntity
     @Excel(name = "决策或批复单位名称-国资管理文件")
     private String ownedAssetsName;
 
+    /** 决策或批复单位类型-国资管理文件 */
+    @Excel(name = "决策或批复单位类型-国资管理文件")
+    private String ownedAssetsType;
+
     /** 决策或批复文件名称-国资管理文件 */
     @Excel(name = "决策或批复文件名称-国资管理文件")
     private String ownedAssetsFileName;
@@ -68,6 +72,10 @@ public class Catalog extends BaseEntity
     /** 决策或批复单位名称-行业监管部门文件 */
     @Excel(name = "决策或批复单位名称-行业监管部门文件")
     private String industryName;
+
+    /** 决策或批复单位类型-行业监管部门文件 */
+    @Excel(name = "决策或批复单位类型-行业监管部门文件")
+    private String industryType;
 
     /** 决策或批复文件名称-行业监管部门文件 */
     @Excel(name = "决策或批复文件名称-行业监管部门文件")
@@ -143,6 +151,9 @@ public class Catalog extends BaseEntity
 
     /** 创建者id */
     private Long createId;
+
+    // 导出excel模板的辅助字段
+    //
 
     public void setId(Long id) 
     {
@@ -439,6 +450,22 @@ public class Catalog extends BaseEntity
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getOwnedAssetsType() {
+        return ownedAssetsType;
+    }
+
+    public void setOwnedAssetsType(String ownedAssetsType) {
+        this.ownedAssetsType = ownedAssetsType;
+    }
+
+    public String getIndustryType() {
+        return industryType;
+    }
+
+    public void setIndustryType(String industryType) {
+        this.industryType = industryType;
     }
 
     @Override

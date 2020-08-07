@@ -2,17 +2,19 @@ package com.zyjk.web.controller.system;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.zyjk.common.config.Global;
-import com.zyjk.system.domain.Contribution;
-import com.zyjk.system.domain.EssentialInformation;
-import com.zyjk.system.domain.SeniorManagement;
-import com.zyjk.system.service.IContributionService;
-import com.zyjk.system.service.IEssentialInformationService;;
-import com.zyjk.system.service.ISeniorManagementService;
+import com.zyjk.common.utils.poi.JexlCustomFunction;
+import com.zyjk.framework.util.ShiroUtils;
+import com.zyjk.system.domain.*;
+import com.zyjk.system.service.*;
+;
+import org.apache.commons.jexl3.JexlBuilder;
+import org.apache.commons.jexl3.JexlEngine;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jxls.expression.JexlExpressionEvaluator;
 import org.jxls.transform.Transformer;
@@ -27,8 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.zyjk.common.annotation.Log;
 import com.zyjk.common.enums.BusinessType;
-import com.zyjk.system.domain.Catalog;
-import com.zyjk.system.service.ICatalogService;
 import com.zyjk.common.core.controller.BaseController;
 import com.zyjk.common.core.domain.AjaxResult;
 import com.zyjk.common.utils.poi.ExcelUtil;
@@ -57,6 +57,12 @@ public class CatalogController extends BaseController
 
     @Autowired
     private IContributionService contributionService;
+
+    @Autowired
+    private IEquityMortgageService equityMortgageService;
+
+    @Autowired
+    private IJudicialFreezeService judicialFreezeService;
 
     @RequiresPermissions("system:catalog:view")
     @GetMapping()
@@ -110,6 +116,8 @@ public class CatalogController extends BaseController
     @ResponseBody
     public AjaxResult addSave(Catalog catalog)
     {
+        catalog.setCreateTime(new Date());
+        catalog.setCreateId(ShiroUtils.getUserId());
         return toAjax(catalogService.insertCatalog(catalog));
     }
 
@@ -157,6 +165,7 @@ public class CatalogController extends BaseController
     @ResponseBody
     public AjaxResult exportTemplate(Long id)
     {
+        // 第一个sheet页信息
         // 查询合规目录信息
         Catalog catalog = catalogService.selectCatalogById(id);
         // 查询基本信息
@@ -185,6 +194,27 @@ public class CatalogController extends BaseController
             equityRatioTotal = equityRatioTotal.add(con.getEquityRatio());
         }
 
+        // 第二个sheet页信息
+        // 股权比例信息
+        EquityMortgage equityMortgage = new EquityMortgage();
+        equityMortgage.setInfoId(catalog.getInfoId());
+        List<EquityMortgage> equityMortgageList = equityMortgageService.selectEquityMortgageList(equityMortgage);
+
+        // 第三个sheet页信息
+        // 冻结信息
+        JudicialFreeze judicialFreeze = new JudicialFreeze();
+        judicialFreeze.setInfoId(catalog.getInfoId());
+        List<JudicialFreeze> judicialFreezeList = judicialFreezeService.selectJudicialFreezeList(judicialFreeze);
+        // 司法冻结资产数额总和
+        BigDecimal frozenAmountTotal = new BigDecimal("0.00");
+        for (JudicialFreeze jf : judicialFreezeList) {
+            frozenAmountTotal = frozenAmountTotal.add(jf.getFrozenAmount());
+        }
+
+        // 第四个sheet信息
+        // 国有金融资本产权占有登记合规性资料目录, 已经查询过了
+
+
 
         try {
 //            InputStream in = this.getClass().getClassLoader().getResourceAsStream("/templates/exceltemplate/info.xls");   //得到文档的路径
@@ -192,6 +222,7 @@ public class CatalogController extends BaseController
             FileOutputStream out = new FileOutputStream(Global.getDownloadPath() + "info.xls");
             org.jxls.common.Context context = new org.jxls.common.Context();
             //将列表参数放入context中
+            // 以下为第一个信息
             // 基本信息
             context.putVar("essentialInformation", essentialInformation);
             // 合规目录信息
@@ -206,13 +237,28 @@ public class CatalogController extends BaseController
             context.putVar("capitalSubscribedTotal", capitalSubscribedTotal);
             // 股权比例总和
             context.putVar("equityRatioTotal", equityRatioTotal);
+
+            // 以下为第二个sheet页信息
+            // 股权比例信息
+            context.putVar("equityMortgageList", equityMortgageList);
+
+            // 以下为第三个sheet页信息
+            // 冻结信息
+            context.putVar("judicialFreezeList", judicialFreezeList);
+            // 司法冻结资产数额总和
+            context.putVar("frozenAmountTotal", frozenAmountTotal);
+
             JxlsHelper jxlsHelper = JxlsHelper.getInstance();
             Transformer transformer = jxlsHelper.createTransformer(in, out);
             JexlExpressionEvaluator evaluator = (JexlExpressionEvaluator) transformer.getTransformationConfig()
                     .getExpressionEvaluator();
-//		evaluator.getJexlEngine().setFunctions(funcs);
+            Map<String, Object> functionMap = new HashMap<String, Object>();
+            functionMap.put("jexlUtils", new JexlCustomFunction()); //添加自定义功能
+            JexlBuilder jb = new JexlBuilder();
+            jb.namespaces(functionMap);
+            JexlEngine je = jb.create();
+            evaluator.setJexlEngine(je);
             jxlsHelper.processTemplate(context, transformer);
-
         } catch (Exception e) {
             e.printStackTrace();
             return AjaxResult.error("异常，稍后再尝试.");
