@@ -2,6 +2,8 @@ package com.zyjk.web.controller.system;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +24,8 @@ import org.jxls.util.JxlsHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -213,13 +217,30 @@ public class CatalogController extends BaseController
 
         // 第四个sheet信息
         // 国有金融资本产权占有登记合规性资料目录, 已经查询过了
+        // 以下值选项都是：“有”和“无”，在第四个sheet页的[B6:B32]区域
+        Map<String, String> valueMap = new HashMap<>();
+        // 判断国资管理文
+        valueMap.put("ownAseetSummary", StringUtils.isEmpty(catalog.getOwnedAssetsDescription())?"有":"无");
+        // 判断行业监管部门文件
+        valueMap.put("industrySummary", StringUtils.isEmpty(catalog.getIndustryDescription())?"有":"无");
+        // 判断机构内部文件
+        valueMap.put("orgSummary", StringUtils.isEmpty(catalog.getOrgDescription())?"有":"无");
+        // 判断出资证明文件
+        valueMap.put("contributionSummary", StringUtils.isEmpty(catalog.getContributionDescription())?"有":"无");
+        // 判断产权交易描述
+        valueMap.put("receiptSummary", StringUtils.isEmpty(catalog.getReceiptDescription())?"有":"无");
+        // 判断转让协议
+        valueMap.put("agreementSummary", StringUtils.isEmpty(catalog.getAgreementDescription())?"有":"无");
+        // 判断核准文件
+        valueMap.put("agencySummary", StringUtils.isEmpty(catalog.getAgreementDescription())?"有":"无");
 
-
-
+        // 返回下载文件的名字
+        String fileName = null;
         try {
-//            InputStream in = this.getClass().getClassLoader().getResourceAsStream("/templates/exceltemplate/info.xls");   //得到文档的路径
-            InputStream in = new FileInputStream("E:\\code\\property\\property-admin\\src\\main\\resources\\templates\\exceltemplate\\info.xls");
-            FileOutputStream out = new FileOutputStream(Global.getDownloadPath() + "info.xls");
+            InputStream in = this.getClass().getResourceAsStream("/templates/exceltemplate/info.xls");   //得到文档的路径
+            String strDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy年MM月dd日")).toString();
+            fileName = "金融司产权_" + essentialInformation.getCompanyName() + "_" + strDate + ".xls";
+            FileOutputStream out = new FileOutputStream(Global.getDownloadPath() + fileName);
             org.jxls.common.Context context = new org.jxls.common.Context();
             //将列表参数放入context中
             // 以下为第一个信息
@@ -248,12 +269,17 @@ public class CatalogController extends BaseController
             // 司法冻结资产数额总和
             context.putVar("frozenAmountTotal", frozenAmountTotal);
 
+            // 以下为第四个sheet页的信息
+            // 国有金融资本产权占有登记合规性资料目录, 已经查询过了
+            // 以下值选项都是：“有”和“无”，在第四个sheet页的[B6:B32]区域
+            context.putVar("exist", valueMap);
+
             JxlsHelper jxlsHelper = JxlsHelper.getInstance();
             Transformer transformer = jxlsHelper.createTransformer(in, out);
             JexlExpressionEvaluator evaluator = (JexlExpressionEvaluator) transformer.getTransformationConfig()
                     .getExpressionEvaluator();
-            Map<String, Object> functionMap = new HashMap<String, Object>();
-            functionMap.put("jexlUtils", new JexlCustomFunction()); //添加自定义功能
+            Map<String, Object> functionMap = new HashMap<>();
+            functionMap.put("jexlUtils", new JexlCustomFunction());
             JexlBuilder jb = new JexlBuilder();
             jb.namespaces(functionMap);
             JexlEngine je = jb.create();
@@ -265,7 +291,7 @@ public class CatalogController extends BaseController
         } finally {
 
         }
-        return AjaxResult.success("info.xls");
+        return AjaxResult.success(fileName);
     }
 
 }
