@@ -31,8 +31,8 @@ server:
 # 日志配置
 logging:
   level:
-    com.zyjk: debug
-    org.springframework: debug
+    com.zyjk: error
+    org.springframework: error
 
 # 用户配置
 user:
