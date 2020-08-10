@@ -76,8 +76,8 @@ public class EssentialInformation extends BaseEntity
     private String organizationCategory;
 
     /** 国有类型（配合机构类别使用） */
-    @Excel(name = "国有类型", readConverterExp = "配=合机构类别使用")
-    private String stateOwnedWay;
+    @Excel(name = "国有类型", readConverterExp = "配合机构类别使用")
+    private Integer stateOwnedWay;
 
     /** 最大国有出资人代码 */
     @Excel(name = "最大国有出资人代码")
@@ -226,12 +226,12 @@ public class EssentialInformation extends BaseEntity
     {
         return organizationCategory;
     }
-    public void setStateOwnedWay(String stateOwnedWay) 
+    public void setStateOwnedWay(Integer stateOwnedWay)
     {
         this.stateOwnedWay = stateOwnedWay;
     }
 
-    public String getStateOwnedWay() 
+    public Integer getStateOwnedWay()
     {
         return stateOwnedWay;
     }
