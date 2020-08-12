@@ -1,6 +1,8 @@
 package com.zyjk.system.domain;
 
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zyjk.common.annotation.Excel;
 import com.zyjk.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -27,6 +29,7 @@ public class Catalog extends BaseEntity
 
     /** 经济行为发生时间 */
     @Excel(name = "经济行为发生时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date economicBehaviorDate;
 
     /** 经济行为决策或者批复单位 */
@@ -35,6 +38,7 @@ public class Catalog extends BaseEntity
 
     /** 决策或批复日期 */
     @Excel(name = "决策或批复日期", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date policyDecisionDate;
 
     /** 决策或批复文件名称 */

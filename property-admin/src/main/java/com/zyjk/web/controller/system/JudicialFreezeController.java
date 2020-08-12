@@ -91,7 +91,11 @@ public class JudicialFreezeController extends BaseController
     {
         judicialFreeze.setCreateId(ShiroUtils.getUserId());
         judicialFreeze.setCreateTime(new Date());
-        return toAjax(judicialFreezeService.insertJudicialFreeze(judicialFreeze));
+        if (-1 == judicialFreezeService.insertJudicialFreeze(judicialFreeze)) {
+            return AjaxResult.error("司法执行机关已经存在");
+        } else {
+            return AjaxResult.success();
+        }
     }
 
     /**
@@ -114,7 +118,11 @@ public class JudicialFreezeController extends BaseController
     @ResponseBody
     public AjaxResult editSave(JudicialFreeze judicialFreeze)
     {
-        return toAjax(judicialFreezeService.updateJudicialFreeze(judicialFreeze));
+        if (-1 == judicialFreezeService.updateJudicialFreeze(judicialFreeze)) {
+            return AjaxResult.error("司法执行机关已经存在");
+        } else {
+            return AjaxResult.success();
+        }
     }
 
     /**

@@ -2,6 +2,10 @@ package com.zyjk.system.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zyjk.common.annotation.Excel;
 import com.zyjk.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -59,6 +63,7 @@ public class EssentialInformation extends BaseEntity
 
     /** 成立日期 */
     @Excel(name = "成立日期", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date foundDate;
 
     /** 成立日期查询 */
@@ -127,7 +132,15 @@ public class EssentialInformation extends BaseEntity
     @Excel(name = "创建者id")
     private Long createId;
 
-    public void setId(Long id) 
+    @Override
+    public void setParams(Map<String, Object> params) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("idSearch", "");
+        map.put("companyNameSearch", "");
+        super.setParams(map);
+    }
+
+    public void setId(Long id)
     {
         this.id = id;
     }

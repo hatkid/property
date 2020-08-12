@@ -1,6 +1,8 @@
 package com.zyjk.system.mapper;
 
 import java.util.List;
+
+import com.zyjk.system.domain.BusinessData;
 import com.zyjk.system.domain.EssentialInformation;
 
 /**
@@ -58,4 +60,12 @@ public interface EssentialInformationMapper
      * @return 结果
      */
     public int deleteEssentialInformationByIds(String[] ids);
+
+    /**
+     * 获取企业组织形式树
+     *
+     * @param id
+     * @return
+     */
+    List<BusinessData> getBusinessDateLevel(Integer id);
 }

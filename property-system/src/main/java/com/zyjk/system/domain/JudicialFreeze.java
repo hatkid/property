@@ -2,6 +2,8 @@ package com.zyjk.system.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zyjk.common.annotation.Excel;
 import com.zyjk.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -36,10 +38,12 @@ public class JudicialFreeze extends BaseEntity
 
     /** 司法冻结起始时间 */
     @Excel(name = "司法冻结起始时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date frozenStartDate;
 
     /** 司法冻结结束时间 */
     @Excel(name = "司法冻结结束时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date frozenEndDate;
 
     /** 司法冻结原因 */

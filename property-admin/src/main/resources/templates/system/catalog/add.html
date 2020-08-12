@@ -16,37 +16,37 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">经济行为发生时间：</label>
+                <label class="col-sm-3 control-label  is-required">经济行为发生时间：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="economicBehaviorDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input name="economicBehaviorDate" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">经济行为决策或者批复单位：</label>
+                <label class="col-sm-3 control-label  is-required">经济行为决策或者批复单位：</label>
                 <div class="col-sm-8">
-                    <input name="economicBehaviorName" class="form-control" type="text">
+                    <input name="economicBehaviorName" class="form-control" type="text" required>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">决策或批复日期：</label>
+                <label class="col-sm-3 control-label  is-required">决策或批复日期：</label>
                 <div class="col-sm-8">
                     <div class="input-group date">
-                        <input name="policyDecisionDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <input name="policyDecisionDate" class="form-control" placeholder="yyyy-MM-dd" type="text" required>
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">决策或批复文件名称：</label>
+                <label class="col-sm-3 control-label  is-required">决策或批复文件名称：</label>
                 <div class="col-sm-8">
-                    <input name="policyDecisionFile"  class="form-control" type="text">
+                    <input name="policyDecisionFile"  class="form-control" type="text" required>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">产权登记机关标识码：</label>
+                <label class="col-sm-3 control-label  is-required">产权登记机关标识码：</label>
                 <div class="col-sm-8">
                     <select name="registrationAuthorityCode" th:with="type=${@dict.getType('registration_authority_code')}" required class="form-control">
                         <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
@@ -54,159 +54,159 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">产权登记情形：</label>
+                <label class="col-sm-3 control-label  is-required">产权登记情形：</label>
                 <div class="col-sm-8">
-                    <input name="propertyRightRegistration" class="form-control" type="text">
+                    <input name="propertyRightRegistration" class="form-control" type="text"  is-required>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">决策或批复单位名称-国资管理文件：</label>
+                <label class="col-sm-3 control-label">国资管理文件-决策或批复单位名称：</label>
                 <div class="col-sm-8">
                     <input name="ownedAssetsName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">决策或批复单位类型-国资管理文件：</label>
+                <label class="col-sm-3 control-label">国资管理文件-决策或批复单位类型：</label>
                 <div class="col-sm-8">
                     <input name="ownedAssetsType" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">决策或批复文件名称-国资管理文件：</label>
+                <label class="col-sm-3 control-label">国资管理文件-决策或批复文件名称：</label>
                 <div class="col-sm-8">
                     <input name="ownedAssetsFileName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">决策或批复文件号-国资管理文件：</label>
+                <label class="col-sm-3 control-label">国资管理文件-决策或批复文件号：</label>
                 <div class="col-sm-8">
                     <input name="ownedAssetsFileCode" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">理由描述-国资管理文件：</label>
+                <label class="col-sm-3 control-label">国资管理文件-理由描述：</label>
                 <div class="col-sm-8">
-                    <input name="ownedAssetsDescription" class="form-control" type="text">
+                    <textarea name="ownedAssetsDescription" class="form-control" type="text"></textarea>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">决策或批复单位名称-行业监管部门文件：</label>
+                <label class="col-sm-3 control-label">行业监管部门文件-决策或批复单位名称：</label>
                 <div class="col-sm-8">
                     <input name="industryName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">决策或批复单位类型-行业监管部门文件：</label>
+                <label class="col-sm-3 control-label">行业监管部门文件-决策或批复单位类型：</label>
                 <div class="col-sm-8">
                     <input name="industryType" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">决策或批复文件名称-行业监管部门文件：</label>
+                <label class="col-sm-3 control-label">行业监管部门文件-决策或批复文件名称：</label>
                 <div class="col-sm-8">
                     <input name="industryFileName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">决策或批复文件号-行业监管部门文件：</label>
+                <label class="col-sm-3 control-label">行业监管部门文件-决策或批复文件号：</label>
                 <div class="col-sm-8">
                     <input name="industryFileCode" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">理由描述-行业监管部门文件：</label>
+                <label class="col-sm-3 control-label">行业监管部门文件-理由描述：</label>
                 <div class="col-sm-8">
-                    <input name="industryDescription" class="form-control" type="text">
+                    <textarea name="industryDescription" class="form-control" type="text"></textarea>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">决策或批复单位名称-机构内部文件：</label>
+                <label class="col-sm-3 control-label">机构内部文件-决策或批复单位名称：</label>
                 <div class="col-sm-8">
                     <input name="orgName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">决策或批复文件名称-机构内部文件：</label>
+                <label class="col-sm-3 control-label">机构内部文件-决策或批复文件名称：</label>
                 <div class="col-sm-8">
                     <input name="orgFileName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">决策或批复文件号-机构内部文件：</label>
+                <label class="col-sm-3 control-label">机构内部文件-决策或批复文件号：</label>
                 <div class="col-sm-8">
                     <input name="orgFileCode" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">理由描述-机构内部文件：</label>
+                <label class="col-sm-3 control-label">机构内部文件-理由描述：</label>
                 <div class="col-sm-8">
-                    <input name="orgDescription" class="form-control" type="text">
+                    <textarea name="orgDescription" class="form-control" type="text"></textarea>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">出资证明文件内容：</label>
                 <div class="col-sm-8">
-                    <input name="contributionContent" class="form-control" type="text">
+                    <textarea name="contributionContent" class="form-control" type="text"></textarea>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">出资证明文件理由描述：</label>
                 <div class="col-sm-8">
-                    <input name="contributionDescription" class="form-control" type="text">
+                    <textarea name="contributionDescription" class="form-control" type="text"></textarea>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">交易凭证内容：</label>
                 <div class="col-sm-8">
-                    <input name="receiptContent" class="form-control" type="text">
+                    <textarea name="receiptContent" class="form-control" type="text"></textarea>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">交易凭证理由描述：</label>
                 <div class="col-sm-8">
-                    <input name="receiptDescription" class="form-control" type="text">
+                    <textarea name="receiptDescription" class="form-control" type="text"></textarea>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">转让协议内容：</label>
                 <div class="col-sm-8">
-                    <input name="agreementContent" class="form-control" type="text">
+                    <textarea name="agreementContent" class="form-control" type="text"></textarea>
                 </div>
             </div>
             <div class="form-group">    
                 <label class="col-sm-3 control-label">转让协议理由描述：</label>
                 <div class="col-sm-8">
-                    <input name="agreementDescription" class="form-control" type="text">
+                    <textarea name="agreementDescription" class="form-control" type="text"></textarea>
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">中介机构名称-评估备案表或核准文件：</label>
+                <label class="col-sm-3 control-label">评估备案表或核准文件-中介机构名称：</label>
                 <div class="col-sm-8">
                     <input name="agencyName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">评估报告号-评估备案表或核准文件：</label>
+                <label class="col-sm-3 control-label">评估备案表或核准文件-评估报告号：</label>
                 <div class="col-sm-8">
                     <input name="reportNo" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">备案或核准单位名称-评估备案表或核准文件：</label>
+                <label class="col-sm-3 control-label">评估备案表或核准文件-备案或核准单位名称：</label>
                 <div class="col-sm-8">
                     <input name="approvalName" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">备案号或核准文件号-评估备案表或核准文件：</label>
+                <label class="col-sm-3 control-label">评估备案表或核准文件-备案号或核准文件号：</label>
                 <div class="col-sm-8">
                     <input name="approvalNo" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">理由描述-评估备案表或核准文件：</label>
+                <label class="col-sm-3 control-label">评估备案表或核准文件-理由描述：</label>
                 <div class="col-sm-8">
-                    <input name="approvalDescription" class="form-control" type="text">
+                    <textarea name="approvalDescription" class="form-control" type="text"></textarea>
                 </div>
             </div>
         </form>
@@ -220,7 +220,83 @@
         });
 
         function submitHandler() {
+            var formData = {};
+            var t = $('#form-catalog-add').serializeArray();
+            $.each(t, function() {
+                formData[this.name] = this.value;
+            });
+            console.log(JSON.stringify(formData));
             if ($.validate.form()) {
+                // 以下为规则校验
+                // 国资管理文件判断
+                if (formData.ownedAssetsName == "" && formData.ownedAssetsType == "" && formData.ownedAssetsFileName == "" && formData.ownedAssetsFileCode == "" && formData.ownedAssetsDescription == "" ) {
+                    layer.alert("国资管理文件相关信息不能全为空")
+                    return;
+                }
+                if ((formData.ownedAssetsName != "" || formData.ownedAssetsType != "" || formData.ownedAssetsFileName != "" || formData.ownedAssetsFileCode != "") && formData.ownedAssetsDescription != "" ) {
+                    layer.alert("国资管理文件相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 行业监管部门文件判断
+                if (formData.industryName == "" && formData.industryType == "" && formData.industryFileName == "" && formData.industryFileCode == "" && formData.industryDescription == "" ) {
+                    layer.alert("行业监管部门文件相关信息不能全为空")
+                    return;
+                }
+                if ((formData.industryName != "" || formData.industryType != "" || formData.industryName != "" || formData.industryFileCode != "") && formData.industryDescription != "" ) {
+                    layer.alert("行业监管部门文件相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 机构内部文件判断
+                if (formData.orgName == "" && formData.orgFileName == "" && formData.orgFileCode == "" && formData.orgDescription == "" ) {
+                    layer.alert("机构内部文件相关信息不能全为空")
+                    return;
+                }
+                if ((formData.orgName != "" || formData.orgName != "" || formData.orgFileCode != "") && formData.orgDescription != "" ) {
+                    layer.alert("机构内部文件相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 出资证明文件判断
+                if (formData.contributionContent == "" && formData.contributionDescription == "" ) {
+                    layer.alert("出资证明文件相关信息不能全为空")
+                    return;
+                }
+                if (formData.contributionContent != "" && formData.contributionDescription != "" ) {
+                    layer.alert("出资证明文件相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 交易凭证判断
+                if (formData.receiptContent == "" && formData.receiptDescription == "" ) {
+                    layer.alert("交易凭证相关信息不能全为空")
+                    return;
+                }
+                if (formData.receiptContent != "" && formData.receiptDescription != "" ) {
+                    layer.alert("交易凭证相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 转让协议判断
+                if (formData.agreementContent == "" && formData.agreementDescription == "" ) {
+                    layer.alert("转让协议相关信息不能全为空")
+                    return;
+                }
+                if (formData.agreementContent != "" && formData.agreementDescription != "" ) {
+                    layer.alert("转让协议相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 评估备案表或核准文件判断
+                if (formData.agencyName == "" && formData.reportNo == "" && formData.approvalName == "" && formData.approvalNo == "" && formData.approvalDescription == "" ) {
+                    layer.alert("评估备案表或核准文件相关信息不能全为空")
+                    return;
+                }
+                if ((formData.agencyName != "" || formData.reportNo != "" || formData.approvalName != "" || formData.approvalNo == "") && formData.approvalDescription != "" ) {
+                    layer.alert("评估备案表或核准文件相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
                 $.operate.save(prefix + "/add", $('#form-catalog-add').serialize());
             }
         }

@@ -62,8 +62,24 @@
     <th:block th:include="include :: datetimepicker-js" />
     <script th:inline="javascript">
         var prefix = ctx + "system/freeze";
+        jQuery.validator.addMethod("isMyNumber", function(value, element) {
+            var num = /^\d{1,16}(\.\d{1,2})?$/
+            return this.optional(element) || (num.test(value));
+        }, "数字不能大于16位整数,两位小数");
         $("#form-freeze-edit").validate({
-            focusCleanup: true
+            focusCleanup: true,
+            rules: {
+                frozenAmount: {
+                    required: true,
+                    isMyNumber: true
+                }
+            },
+            messages: {
+                frozenAmount: {
+                    required: "请输入实缴资本",
+                    isMyNumber: "数字不能大于16位整数，2位小数"
+                }
+            }
         });
 
         function submitHandler() {

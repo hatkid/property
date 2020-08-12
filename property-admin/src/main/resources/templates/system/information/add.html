@@ -4,6 +4,9 @@
     <th:block th:include="include :: header('新增【请填写功能名称】')" />
     <th:block th:include="include :: datetimepicker-css" />
     <th:block th:include="include :: bootstrap-fileinput-css"/>
+    <link rel="stylesheet" href="https://wujiawei0926.gitee.io/treeselect/assets/layui/css/layui.css">
+    <script src="https://wujiawei0926.gitee.io/treeselect/assets/layui/layui.js"></script>
+    <script src="https://wujiawei0926.gitee.io/treeselect/module/common.js"></script>
 </head>
 <body>
     <div class="main-content">
@@ -39,14 +42,12 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label is-required">是否工商注册：</label>
+                        <label class="col-sm-4 control-label is-required">法定代表人：</label>
                         <div class="col-sm-8">
-                            <select name="isRegistration"  class="form-control">
-                                <option value="0">是</option>
-                                <option value="1">否</option>
-                            </select>
+                            <input name="legalPerson" placeholder="法定代表人" class="form-control" type="text"  required>
                         </div>
                     </div>
                 </div>
@@ -63,14 +64,34 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label is-required">法人：</label>
+                        <label class="col-sm-4 control-label is-required">组织形式：</label>
                         <div class="col-sm-8">
-                            <input name="legalPerson" placeholder="法人" class="form-control" type="text"  required>
+                            <input name="organizationalForm" type="text" id="organizationalForm" lay-filter="organizationalForm" class="layui-input" required>
                         </div>
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">是否工商注册：</label>
+                        <div class="col-sm-8">
+                            <select name="isRegistration"  class="form-control">
+                                <option value="0">是</option>
+                                <option value="1">否</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">邮政编码：</label>
+                        <div class="col-sm-8">
+                            <input name="postcode" placeholder="邮政编码" class="form-control" type="text"  required>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
@@ -95,7 +116,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label is-required">注册资本：</label>
                         <div class="col-sm-8">
-                            <input name="registeredCapital" placeholder="注册资本" class="form-control" type="text"  required>
+                            <input id="registeredCapital" name="registeredCapital" placeholder="注册资本" class="form-control" type="text"  required number="true">
                         </div>
                     </div>
                 </div>
@@ -113,25 +134,16 @@
             </div>
 
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label is-required">组织形式：</label>
-                        <div class="col-sm-8">
-                            <input name="organizationalForm" placeholder="组织形式" class="form-control" type="text"  required>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label is-required">机构类别：</label>
                         <div class="col-sm-8">
-                            <input name="organizationCategory" placeholder="机构类别" class="form-control" type="text"  required>
+                            <!--<input name="organizationCategory" placeholder="机构类别" class="form-control" type="text"  required>-->
+                            <input name="organizationCategory" type="text" id="organizationCategory" lay-filter="organizationCategory" class="layui-input" required>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label is-required">国有类型：</label>
@@ -142,6 +154,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="row">
+
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label is-required">最大国有出资人代码：</label>
@@ -150,26 +166,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-        <div class="row">
-<!--            <div class="col-sm-6">-->
-<!--                <div class="form-group">-->
-<!--                    <label class="col-sm-4 control-label is-required">产权登记机关标识码：</label>-->
-<!--                    <div class="col-sm-8">-->
-<!--                        <input name="registrationAuthorityCode" placeholder="产权登记机关标识码" class="form-control" type="text"  required>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label is-required">所属行业代码：</label>
-                    <div class="col-sm-8">
-                        <input name="industryCode" placeholder="所属行业代码" class="form-control" type="text"  required>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">所属行业代码：</label>
+                        <div class="col-sm-8">
+                            <!--<input name="industryCode" placeholder="所属行业代码" class="form-control" type="text"  required>-->
+                            <input name="industryCode" type="text" id="industryCode" lay-filter="industryCode" class="layui-input" required>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
         <div class="row">
             <div class="col-sm-6">
@@ -204,62 +210,6 @@
                     </div>
                 </div>
             </div>
-           <!-- <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label is-required">产权登记情形：</label>
-                    <div class="col-sm-8">
-                        <input name="propertyRightRegistration" placeholder="产权登记情形" class="form-control" type="text"  required>
-                    </div>
-                </div>
-            </div>-->
-        </div>
-
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label is-required">非正常经营说明：</label>
-                    <div class="col-sm-8">
-                        <input name="operationDescription" placeholder="非正常经营说明" class="form-control" type="text"  required>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label is-required">经营范围：</label>
-                    <div class="col-sm-8">
-                        <input name="businessScope" placeholder="经营范围" class="form-control" type="text"  required>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label is-required">出资情况备注：</label>
-                    <div class="col-sm-8">
-                        <input name="contributionRemarks" placeholder="出资情况备注" class="form-control" type="text"  required>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label is-required">最大国有出资人名称：</label>
-                    <div class="col-sm-8">
-                        <input name="investorName" placeholder="最大国有出资人名称" class="form-control" type="text"  required>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-4 control-label is-required">邮政编码：</label>
-                    <div class="col-sm-8">
-                        <input name="postcode" placeholder="邮政编码" class="form-control" type="text"  required>
-                    </div>
-                </div>
-            </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="col-sm-4 control-label is-required">是否正常经营：</label>
@@ -272,6 +222,38 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">非正常经营说明：</label>
+                    <div class="col-sm-8">
+                        <textarea name="operationDescription" placeholder="非正常经营说明" class="form-control"  required></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">出资情况备注：</label>
+                    <div class="col-sm-8">
+                        <textarea name="contributionRemarks" placeholder="出资情况备注" class="form-control" required></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label is-required">经营范围：</label>
+                        <div class="col-sm-8">
+                            <textarea name="businessScope" placeholder="经营范围" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         <div class="row">
             <div class="col-sm-offset-5 col-sm-10">
                 <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
@@ -284,9 +266,25 @@
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: datetimepicker-js" />
     <script th:inline="javascript">
-        var prefix = ctx + "system/information"
-        $("#form-information-add").validate({
-            focusCleanup: true
+        var prefix = ctx + "system/information";
+        jQuery.validator.addMethod("isMyNumber", function(value, element) {
+            var num = /^\d{1,16}(\.\d{1,2})?$/
+            return this.optional(element) || (num.test(value));
+        }, "数字不能大于16位整数,两位小数");
+        $("#form").validate({
+            focusCleanup: true,
+            rules: {
+                registeredCapital: {
+                    required: true,
+                    isMyNumber: true
+                }
+            },
+            messages: {
+                registeredCapital: {
+                    required: "请输入注册资本",
+                    isMyNumber: "数字不能大于16位整数，2位小数"
+                }
+            }
         });
 
         function submitHandler() {
@@ -313,15 +311,108 @@
             autoclose: true
         });
 
-        $(".file-upload").fileinput({
-            uploadUrl: '/common/upload',
-            maxFileCount: 1,
-            autoReplace: true
-        }).on('fileuploaded', function (event, data, previewId, index) {
-            $("input[name='" + event.currentTarget.id + "']").val(data.response.url)
-        }).on('fileremoved', function (event, id, index) {
-            $("input[name='" + event.currentTarget.id + "']").val('')
-        })
+    </script>
+    <script>
+        var prefix = ctx + "system/information"
+        layui.use(['treeSelect','form'], function () {
+            var treeSelect= layui.treeSelect;
+            treeSelect.render({
+                // 选择器
+                elem: '#organizationalForm',
+                // 异步加载方式：get/post，默认get
+                type: 'get',
+                // 数据
+                data: prefix + "/getBusinessDateLevel/2/1",
+                // 占位符
+                placeholder: '组织形式',
+                // 是否开启搜索功能：true/false，默认false
+                search: true,
+                // 点击回调
+                click: function(d){
+                    console.log(d.current.name);
+                    $("#organizationalForm").val(d.current.name);
+                },
+                // 加载完成后的回调函数
+                success: function (d) {
+                    console.log(d);
+//                选中节点，根据id筛选
+//                treeSelect.checkNode('tree', 3);
+
+//                获取zTree对象，可以调用zTree方法
+//                var treeObj = treeSelect.zTree('tree');
+//                console.log(treeObj);
+
+//                刷新树结构
+//                treeSelect.refresh();
+                }
+            });
+
+            treeSelect.render({
+                // 选择器
+                elem: '#organizationCategory',
+                // 异步加载方式：get/post，默认get
+                type: 'get',
+                // 数据
+                data: prefix + "/getBusinessDateLevel/2/1",
+                // 占位符
+                placeholder: '机构类别',
+                // 是否开启搜索功能：true/false，默认false
+                search: true,
+                // 点击回调
+                click: function(d){
+                    console.log(d.current.name);
+                    $("#organizationCategory").val(d.current.name);
+                },
+                // 加载完成后的回调函数
+                success: function (d) {
+                    console.log(d);
+//                选中节点，根据id筛选
+//                treeSelect.checkNode('tree', 3);
+
+//                获取zTree对象，可以调用zTree方法
+//                var treeObj = treeSelect.zTree('tree');
+//                console.log(treeObj);
+
+//                刷新树结构
+//                treeSelect.refresh();
+                }
+            });
+
+            treeSelect.render({
+                // 选择器
+                elem: '#industryCode',
+                // 异步加载方式：get/post，默认get
+                type: 'get',
+                // 数据
+                data: prefix + "/getBusinessDateLevel/3/1",
+                // 占位符
+                placeholder: '所属行业代码',
+                // 是否开启搜索功能：true/false，默认false
+                search: true,
+                // 点击回调
+                click: function(d){
+                    console.log(d.current.name);
+                    $("#industryCode").val(d.current.name);
+                },
+                // 加载完成后的回调函数
+                success: function (d) {
+                    console.log(d);
+//                选中节点，根据id筛选
+//                treeSelect.checkNode('tree', 3);
+
+//                获取zTree对象，可以调用zTree方法
+//                var treeObj = treeSelect.zTree('tree');
+//                console.log(treeObj);
+
+//                刷新树结构
+//                treeSelect.refresh();
+                }
+            });
+
+
+
+
+        });
     </script>
 </body>
 </html>

@@ -41,9 +41,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectEssentialInformationList" parameterType="EssentialInformation" resultMap="EssentialInformationResult">
         <include refid="selectEssentialInformationVo"/>
-        <where>  
+        <where>
+            <if test="params != null and params.idSearch != null  and params.idSearch != ''"> and id != #{params.idSearch}</if>
+            <if test="params != null and params.companyNameSearch != null  and params.companyNameSearch != ''"> and company_name = #{params.companyNameSearch}</if>
             <if test="companyName != null  and companyName != ''"> and company_name like concat('%', #{companyName}, '%')</if>
-            <if test="groupCode != null  and groupCode != ''"> and group_code = #{companyName}</if>
+            <if test="groupCode != null  and groupCode != ''"> and group_code = #{groupCode}</if>
             <if test="groupName != null  and groupName != ''"> and group_name = #{groupName}</if>
             <if test="postcode != null  and postcode != ''"> and postcode = #{postcode}</if>
             <if test="isRegistration != null "> and is_registration = #{isRegistration}</if>
@@ -109,7 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createId != null">create_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="groupCode != null  and groupCode != ''">#{companyName},</if>
+            <if test="groupCode != null  and groupCode != ''">#{groupCode},</if>
             <if test="groupName != null  and groupName != ''">#{groupName},</if>
             <if test="postcode != null  and postcode != ''">#{postcode},</if>
             <if test="companyName != null and companyName != ''">#{companyName},</if>
@@ -142,7 +144,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateEssentialInformation" parameterType="EssentialInformation">
         update essential_information
         <trim prefix="SET" suffixOverrides=",">
-            <if test="groupCode != null  and groupCode != ''">group_code = #{companyName},</if>
+            <if test="groupCode != null  and groupCode != ''">group_code = #{groupCode},</if>
             <if test="groupName != null  and groupName != ''">group_name = #{groupName},</if>
             <if test="postcode != null  and postcode != ''">postcode = #{postcode},</if>
             <if test="companyName != null and companyName != ''">company_name = #{companyName},</if>
@@ -183,5 +185,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="getBusinessDateLevel" parameterType="Integer" resultType="BusinessData">
+        select * from business_data t where t.parentid = #{id} order by t.order asc
+    </select>
 
 </mapper>

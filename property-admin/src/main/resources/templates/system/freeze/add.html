@@ -54,7 +54,7 @@
             <div class="form-group">    
                 <label class="col-sm-3 control-label">备注：</label>
                 <div class="col-sm-8">
-                    <input name="remarks" class="form-control" type="text">
+                    <textarea name="remarks" class="form-control" type="text"></textarea>
                 </div>
             </div>
         </form>
@@ -63,8 +63,24 @@
     <th:block th:include="include :: datetimepicker-js" />
     <script th:inline="javascript">
         var prefix = ctx + "system/freeze"
+        jQuery.validator.addMethod("isMyNumber", function(value, element) {
+            var num = /^\d{1,16}(\.\d{1,2})?$/
+            return this.optional(element) || (num.test(value));
+        }, "数字不能大于16位整数,两位小数");
         $("#form-freeze-add").validate({
-            focusCleanup: true
+            focusCleanup: true,
+            rules: {
+                frozenAmount: {
+                    required: true,
+                    isMyNumber: true
+                }
+            },
+            messages: {
+                frozenAmount: {
+                    required: "请输入实缴资本",
+                    isMyNumber: "数字不能大于16位整数，2位小数"
+                }
+            }
         });
 
         function submitHandler() {

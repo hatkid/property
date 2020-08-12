@@ -91,7 +91,11 @@ public class ContributionController extends BaseController
     {
         contribution.setCreateTime(new Date());
         contribution.setCreateId(ShiroUtils.getUserId());
-        return toAjax(contributionService.insertContribution(contribution));
+        if (-1 == contributionService.insertContribution(contribution)) {
+            return AjaxResult.error("出资方名称已经存在");
+        } else {
+            return AjaxResult.success();
+        }
     }
 
     /**
@@ -114,7 +118,11 @@ public class ContributionController extends BaseController
     @ResponseBody
     public AjaxResult editSave(Contribution contribution)
     {
-        return toAjax(contributionService.updateContribution(contribution));
+        if (-1 == contributionService.updateContribution(contribution)) {
+            return AjaxResult.error("出资方名称已经存在");
+        } else {
+            return AjaxResult.success();
+        }
     }
 
     /**

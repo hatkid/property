@@ -24,6 +24,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectSeniorManagementList" parameterType="SeniorManagement" resultMap="SeniorManagementResult">
         <include refid="selectSeniorManagementVo"/>
         <where>
+            <if test="params != null and params.nameSearch != null  and params.nameSearch != ''"> and name = #{params.nameSearch}</if>
+            <if test="params != null and params.infoIdSearch != null  and params.infoIdSearch != ''"> and info_id = #{params.infoIdSearch}</if>
+            <if test="params != null and params.idSearch != null  and params.idSearch != ''"> and m.id != #{params.idSearch}</if>
             <if test="infoId != null "> and info_id = #{infoId}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="sex != null "> and sex = #{sex}</if>

@@ -92,7 +92,11 @@ public class SeniorManagementController extends BaseController
     @ResponseBody
     public AjaxResult addSave(SeniorManagement seniorManagement)
     {
-        return toAjax(seniorManagementService.insertSeniorManagement(seniorManagement));
+        if (-1 == seniorManagementService.insertSeniorManagement(seniorManagement)) {
+            return AjaxResult.error("姓名已经存在");
+        } else {
+            return AjaxResult.success();
+        }
     }
 
     /**
@@ -115,7 +119,11 @@ public class SeniorManagementController extends BaseController
     @ResponseBody
     public AjaxResult editSave(SeniorManagement seniorManagement)
     {
-        return toAjax(seniorManagementService.updateSeniorManagement(seniorManagement));
+        if (-1 == seniorManagementService.updateSeniorManagement(seniorManagement)) {
+            return AjaxResult.error("姓名已经存在");
+        } else {
+            return AjaxResult.success();
+        }
     }
 
     /**
