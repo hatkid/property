@@ -32,7 +32,7 @@ public class SeniorManagement extends BaseEntity
     private String name;
 
     /** 性别：1-男；0-女； */
-    @Excel(name = "性别：1-男；0-女；")
+    @Excel(name = "性别",readConverterExp="0=女,1=男")
     private Integer sex;
 
     /** 职务 */

@@ -38,7 +38,7 @@ public class EssentialInformation extends BaseEntity
     private String postcode;
 
     /** 是否工商注册 */
-    @Excel(name = "是否工商注册")
+    @Excel(name = "是否工商注册",readConverterExp="0=是,1=否")
     private Integer isRegistration;
 
     /** 统一社会信用代码 */
@@ -109,11 +109,11 @@ public class EssentialInformation extends BaseEntity
     private String gradeCode;
 
     /** 是否重点子公司 */
-    @Excel(name = "是否重点子公司")
+    @Excel(name = "是否重点子公司",readConverterExp="0=是,1=否")
     private Integer isKeySubsidiary;
 
     /** 是否正常经营 */
-    @Excel(name = "是否正常经营")
+    @Excel(name = "是否正常经营",readConverterExp="0=是,1=否")
     private Integer isNormalOperation;
 
     /** 非正常经营说明 */
@@ -129,16 +129,7 @@ public class EssentialInformation extends BaseEntity
     private String contributionRemarks;
 
     /** 创建者id */
-    @Excel(name = "创建者id")
     private Long createId;
-
-    @Override
-    public void setParams(Map<String, Object> params) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("idSearch", "");
-        map.put("companyNameSearch", "");
-        super.setParams(map);
-    }
 
     public void setId(Long id)
     {

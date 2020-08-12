@@ -192,6 +192,42 @@ public class CatalogController extends BaseController
         for (Contribution con : contributionList) {
             capitalSubscribedTotal = capitalSubscribedTotal.add(con.getCapitalSubscribed());
         }
+
+        // 计算国家资本总和
+        BigDecimal stateCapitalTotal = new BigDecimal("0.00");
+        for (Contribution con : contributionList) {
+            if (con.getCategory().equals("国家资本出资人"))
+                stateCapitalTotal = stateCapitalTotal.add(con.getCapitalSubscribed());
+        }
+
+        // 计算国家出资总和
+        BigDecimal stateInvestmentTotal = new BigDecimal("0.00");
+        for (Contribution con : contributionList) {
+            if (con.getCategory().equals("国有出资人"))
+                stateInvestmentTotal = stateInvestmentTotal.add(con.getCapitalSubscribed());
+        }
+
+        // 计算国有绝对控股出资总和
+        BigDecimal absoluteStateHoldingTotal = new BigDecimal("0.00");
+        for (Contribution con : contributionList) {
+            if (con.getCategory().equals("国有绝对控股出资"))
+                absoluteStateHoldingTotal = absoluteStateHoldingTotal.add(con.getCapitalSubscribed());
+        }
+
+        // 计算国有实际控制出资总和
+        BigDecimal actualControlInvestmentTotal = new BigDecimal("0.00");
+        for (Contribution con : contributionList) {
+            if (con.getCategory().equals("国有实际控制出资"))
+                actualControlInvestmentTotal = actualControlInvestmentTotal.add(con.getCapitalSubscribed());
+        }
+
+        // 计算其他出资总和
+        BigDecimal otherTotal = new BigDecimal("0.00");
+        for (Contribution con : contributionList) {
+            if (con.getCategory().equals("其他出资") || con.getCategory().equals("国有参股出资人"))
+                otherTotal = otherTotal.add(con.getCapitalSubscribed());
+        }
+
         // 股权比例总和
         BigDecimal equityRatioTotal = new BigDecimal("0.00");
         for (Contribution con : contributionList) {
@@ -258,6 +294,16 @@ public class CatalogController extends BaseController
             context.putVar("capitalSubscribedTotal", capitalSubscribedTotal);
             // 股权比例总和
             context.putVar("equityRatioTotal", equityRatioTotal);
+            // 国家资本出资人
+            context.putVar("stateCapitalTotal", stateCapitalTotal);
+            // 国有出资人
+            context.putVar("stateInvestmentTotal", stateInvestmentTotal);
+            // 国有绝对控股出资
+            context.putVar("absoluteStateHoldingTotal", absoluteStateHoldingTotal);
+            // 国有实际控制出资
+            context.putVar("actualControlInvestmentTotal", actualControlInvestmentTotal);
+            // 其他出资
+            context.putVar("otherTotal", otherTotal);
 
             // 以下为第二个sheet页信息
             // 股权比例信息
