@@ -293,7 +293,7 @@
                     layer.alert("评估备案表或核准文件相关信息不能全为空")
                     return;
                 }
-                if ((formData.agencyName != "" || formData.reportNo != "" || formData.approvalName != "" || formData.approvalNo == "") && formData.approvalDescription != "" ) {
+                if ((formData.agencyName != "" || formData.reportNo != "" || formData.approvalName != "" || formData.approvalNo != "") && formData.approvalDescription != "" ) {
                     layer.alert("评估备案表或核准文件相关信息:描述信息和其它信息不能同时出现")
                     return;
                 }

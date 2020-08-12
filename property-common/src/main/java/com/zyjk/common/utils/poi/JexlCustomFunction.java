@@ -72,4 +72,30 @@ public class JexlCustomFunction {
         }
     }
 
+    /**
+     * @param desc:
+     * @return java.lang.String
+     * @Description: 根据传入的字段判断“是”“否”，
+     */
+    public String yesOrNo(Integer desc) {
+        if (0 == desc) {
+            return "是";
+        } else {
+            return "否";
+        }
+    }
+
+    /**
+     * @param desc:
+     * @return java.lang.String
+     * @Description: 根据传入的字段判断“是”“否”，
+     */
+    public String sex(Integer desc) {
+        if (0 == desc) {
+            return "女";
+        } else {
+            return "男";
+        }
+    }
+
 }

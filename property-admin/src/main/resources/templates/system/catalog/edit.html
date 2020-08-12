@@ -218,6 +218,76 @@
 
         function submitHandler() {
             if ($.validate.form()) {
+                // 以下为规则校验
+                // 国资管理文件判断
+                if (formData.ownedAssetsName == "" && formData.ownedAssetsType == "" && formData.ownedAssetsFileName == "" && formData.ownedAssetsFileCode == "" && formData.ownedAssetsDescription == "" ) {
+                    layer.alert("国资管理文件相关信息不能全为空")
+                    return;
+                }
+                if ((formData.ownedAssetsName != "" || formData.ownedAssetsType != "" || formData.ownedAssetsFileName != "" || formData.ownedAssetsFileCode != "") && formData.ownedAssetsDescription != "" ) {
+                    layer.alert("国资管理文件相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 行业监管部门文件判断
+                if (formData.industryName == "" && formData.industryType == "" && formData.industryFileName == "" && formData.industryFileCode == "" && formData.industryDescription == "" ) {
+                    layer.alert("行业监管部门文件相关信息不能全为空")
+                    return;
+                }
+                if ((formData.industryName != "" || formData.industryType != "" || formData.industryName != "" || formData.industryFileCode != "") && formData.industryDescription != "" ) {
+                    layer.alert("行业监管部门文件相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 机构内部文件判断
+                if (formData.orgName == "" && formData.orgFileName == "" && formData.orgFileCode == "" && formData.orgDescription == "" ) {
+                    layer.alert("机构内部文件相关信息不能全为空")
+                    return;
+                }
+                if ((formData.orgName != "" || formData.orgName != "" || formData.orgFileCode != "") && formData.orgDescription != "" ) {
+                    layer.alert("机构内部文件相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 出资证明文件判断
+                if (formData.contributionContent == "" && formData.contributionDescription == "" ) {
+                    layer.alert("出资证明文件相关信息不能全为空")
+                    return;
+                }
+                if (formData.contributionContent != "" && formData.contributionDescription != "" ) {
+                    layer.alert("出资证明文件相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 交易凭证判断
+                if (formData.receiptContent == "" && formData.receiptDescription == "" ) {
+                    layer.alert("交易凭证相关信息不能全为空")
+                    return;
+                }
+                if (formData.receiptContent != "" && formData.receiptDescription != "" ) {
+                    layer.alert("交易凭证相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 转让协议判断
+                if (formData.agreementContent == "" && formData.agreementDescription == "" ) {
+                    layer.alert("转让协议相关信息不能全为空")
+                    return;
+                }
+                if (formData.agreementContent != "" && formData.agreementDescription != "" ) {
+                    layer.alert("转让协议相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
+
+                // 评估备案表或核准文件判断
+                if (formData.agencyName == "" && formData.reportNo == "" && formData.approvalName == "" && formData.approvalNo == "" && formData.approvalDescription == "" ) {
+                    layer.alert("评估备案表或核准文件相关信息不能全为空")
+                    return;
+                }
+                if ((formData.agencyName != "" || formData.reportNo != "" || formData.approvalName != "" || formData.approvalNo != "") && formData.approvalDescription != "" ) {
+                    layer.alert("评估备案表或核准文件相关信息:描述信息和其它信息不能同时出现")
+                    return;
+                }
                 $.operate.save(prefix + "/edit", $('#form-catalog-edit').serialize());
             }
         }

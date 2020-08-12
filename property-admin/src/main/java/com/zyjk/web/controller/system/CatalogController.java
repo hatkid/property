@@ -210,21 +210,21 @@ public class CatalogController extends BaseController
         // 计算国有绝对控股出资总和
         BigDecimal absoluteStateHoldingTotal = new BigDecimal("0.00");
         for (Contribution con : contributionList) {
-            if (con.getCategory().equals("国有绝对控股出资"))
+            if (con.getCategory().equals("国有绝对控股出资人"))
                 absoluteStateHoldingTotal = absoluteStateHoldingTotal.add(con.getCapitalSubscribed());
         }
 
         // 计算国有实际控制出资总和
         BigDecimal actualControlInvestmentTotal = new BigDecimal("0.00");
         for (Contribution con : contributionList) {
-            if (con.getCategory().equals("国有实际控制出资"))
+            if (con.getCategory().equals("国有实际控股出资人"))
                 actualControlInvestmentTotal = actualControlInvestmentTotal.add(con.getCapitalSubscribed());
         }
 
         // 计算其他出资总和
         BigDecimal otherTotal = new BigDecimal("0.00");
         for (Contribution con : contributionList) {
-            if (con.getCategory().equals("其他出资") || con.getCategory().equals("国有参股出资人"))
+            if (con.getCategory().equals("其他") || con.getCategory().equals("国有参股出资人"))
                 otherTotal = otherTotal.add(con.getCapitalSubscribed());
         }
 
