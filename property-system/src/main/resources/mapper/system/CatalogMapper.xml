@@ -15,10 +15,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="registrationAuthorityCode"    column="registration_authority_code"    />
         <result property="propertyRightRegistration"    column="property_right_registration"    />
         <result property="ownedAssetsName"    column="owned_assets_name"    />
+        <result property="ownedAssetsType"    column="owned_assets_type"    />
         <result property="ownedAssetsFileName"    column="owned_assets_file_name"    />
         <result property="ownedAssetsFileCode"    column="owned_assets_file_code"    />
         <result property="ownedAssetsDescription"    column="owned_assets_description"    />
         <result property="industryName"    column="industry_name"    />
+        <result property="industryType"    column="industry_type"    />
         <result property="industryFileName"    column="industry_file_name"    />
         <result property="industryFileCode"    column="industry_file_code"    />
         <result property="industryDescription"    column="industry_description"    />
@@ -42,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCatalogVo">
-        select t.id, info_id, company_name, economic_behavior_date, economic_behavior_name, policy_decision_date, policy_decision_file, t.registration_authority_code, property_right_registration, owned_assets_name, owned_assets_file_name, owned_assets_file_code, owned_assets_description, industry_name, industry_file_name, industry_file_code, industry_description, org_name, org_file_name, org_file_code, org_description, contribution_content, contribution_description, receipt_content, receipt_description, agreement_content, agreement_description, agency_name, report_no, approval_name, approval_no, approval_description, t.create_time, t.create_id from catalog t left join essential_information ei on ei.id = info_id
+        select t.id, info_id, company_name, economic_behavior_date, economic_behavior_name, policy_decision_date, policy_decision_file, t.registration_authority_code, property_right_registration, owned_assets_name, owned_assets_type, owned_assets_file_name, owned_assets_file_code, owned_assets_description, industry_name, industry_type, industry_file_name, industry_file_code, industry_description, org_name, org_file_name, org_file_code, org_description, contribution_content, contribution_description, receipt_content, receipt_description, agreement_content, agreement_description, agency_name, report_no, approval_name, approval_no, approval_description, t.create_time, t.create_id from catalog t left join essential_information ei on ei.id = info_id
     </sql>
 
     <select id="selectCatalogList" parameterType="Catalog" resultMap="CatalogResult">
@@ -56,10 +58,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="registrationAuthorityCode != null  and registrationAuthorityCode != ''"> and registration_authority_code = #{registrationAuthorityCode}</if>
             <if test="propertyRightRegistration != null  and propertyRightRegistration != ''"> and property_right_registration = #{propertyRightRegistration}</if>
             <if test="ownedAssetsName != null  and ownedAssetsName != ''"> and owned_assets_name like concat('%', #{ownedAssetsName}, '%')</if>
+            <if test="ownedAssetsType != null  and ownedAssetsType != ''"> and owned_assets_type = #{ownedAssetsType}</if>
             <if test="ownedAssetsFileName != null  and ownedAssetsFileName != ''"> and owned_assets_file_name like concat('%', #{ownedAssetsFileName}, '%')</if>
             <if test="ownedAssetsFileCode != null  and ownedAssetsFileCode != ''"> and owned_assets_file_code = #{ownedAssetsFileCode}</if>
             <if test="ownedAssetsDescription != null  and ownedAssetsDescription != ''"> and owned_assets_description = #{ownedAssetsDescription}</if>
             <if test="industryName != null  and industryName != ''"> and industry_name like concat('%', #{industryName}, '%')</if>
+            <if test="industryType != null  and industryType != ''"> and industry_type = #{industryType}</if>
             <if test="industryFileName != null  and industryFileName != ''"> and industry_file_name like concat('%', #{industryFileName}, '%')</if>
             <if test="industryFileCode != null  and industryFileCode != ''"> and industry_file_code = #{industryFileCode}</if>
             <if test="industryDescription != null  and industryDescription != ''"> and industry_description = #{industryDescription}</if>
@@ -98,10 +102,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="registrationAuthorityCode != null">registration_authority_code,</if>
             <if test="propertyRightRegistration != null">property_right_registration,</if>
             <if test="ownedAssetsName != null">owned_assets_name,</if>
+            <if test="ownedAssetsType != null">owned_assets_type,</if>
             <if test="ownedAssetsFileName != null">owned_assets_file_name,</if>
             <if test="ownedAssetsFileCode != null">owned_assets_file_code,</if>
             <if test="ownedAssetsDescription != null">owned_assets_description,</if>
             <if test="industryName != null">industry_name,</if>
+            <if test="industryType != null">industry_type,</if>
             <if test="industryFileName != null">industry_file_name,</if>
             <if test="industryFileCode != null">industry_file_code,</if>
             <if test="industryDescription != null">industry_description,</if>
@@ -132,10 +138,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="registrationAuthorityCode != null">#{registrationAuthorityCode},</if>
             <if test="propertyRightRegistration != null">#{propertyRightRegistration},</if>
             <if test="ownedAssetsName != null">#{ownedAssetsName},</if>
+            <if test="ownedAssetsType != null">#{ownedAssetsType},</if>
             <if test="ownedAssetsFileName != null">#{ownedAssetsFileName},</if>
             <if test="ownedAssetsFileCode != null">#{ownedAssetsFileCode},</if>
             <if test="ownedAssetsDescription != null">#{ownedAssetsDescription},</if>
             <if test="industryName != null">#{industryName},</if>
+            <if test="industryType != null">#{industryType},</if>
             <if test="industryFileName != null">#{industryFileName},</if>
             <if test="industryFileCode != null">#{industryFileCode},</if>
             <if test="industryDescription != null">#{industryDescription},</if>
@@ -170,10 +178,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="registrationAuthorityCode != null">registration_authority_code = #{registrationAuthorityCode},</if>
             <if test="propertyRightRegistration != null">property_right_registration = #{propertyRightRegistration},</if>
             <if test="ownedAssetsName != null">owned_assets_name = #{ownedAssetsName},</if>
+            <if test="ownedAssetsType != null">owned_assets_type = #{ownedAssetsType},</if>
             <if test="ownedAssetsFileName != null">owned_assets_file_name = #{ownedAssetsFileName},</if>
             <if test="ownedAssetsFileCode != null">owned_assets_file_code = #{ownedAssetsFileCode},</if>
             <if test="ownedAssetsDescription != null">owned_assets_description = #{ownedAssetsDescription},</if>
             <if test="industryName != null">industry_name = #{industryName},</if>
+            <if test="industryType != null">industry_type = #{industryType},</if>
             <if test="industryFileName != null">industry_file_name = #{industryFileName},</if>
             <if test="industryFileCode != null">industry_file_code = #{industryFileCode},</if>
             <if test="industryDescription != null">industry_description = #{industryDescription},</if>

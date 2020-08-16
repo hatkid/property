@@ -2,6 +2,10 @@ package com.zyjk.system.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zyjk.common.annotation.Excel;
 import com.zyjk.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -24,8 +28,17 @@ public class EssentialInformation extends BaseEntity
     @Excel(name = "公司名称")
     private String companyName;
 
+    @Excel(name = "所属集团部门标识码")
+    private String groupCode;
+
+    @Excel(name = "所属集团单位名称")
+    private String groupName;
+
+    @Excel(name = "邮政编码")
+    private String postcode;
+
     /** 是否工商注册 */
-    @Excel(name = "是否工商注册")
+    @Excel(name = "是否工商注册",readConverterExp="0=是,1=否")
     private Integer isRegistration;
 
     /** 统一社会信用代码 */
@@ -50,6 +63,7 @@ public class EssentialInformation extends BaseEntity
 
     /** 成立日期 */
     @Excel(name = "成立日期", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date foundDate;
 
     /** 成立日期查询 */
@@ -67,8 +81,8 @@ public class EssentialInformation extends BaseEntity
     private String organizationCategory;
 
     /** 国有类型（配合机构类别使用） */
-    @Excel(name = "国有类型", readConverterExp = "配=合机构类别使用")
-    private String stateOwnedWay;
+    @Excel(name = "国有类型", readConverterExp = "配合机构类别使用")
+    private Integer stateOwnedWay;
 
     /** 最大国有出资人代码 */
     @Excel(name = "最大国有出资人代码")
@@ -95,11 +109,11 @@ public class EssentialInformation extends BaseEntity
     private String gradeCode;
 
     /** 是否重点子公司 */
-    @Excel(name = "是否重点子公司")
+    @Excel(name = "是否重点子公司",readConverterExp="0=是,1=否")
     private Integer isKeySubsidiary;
 
     /** 是否正常经营 */
-    @Excel(name = "是否正常经营")
+    @Excel(name = "是否正常经营",readConverterExp="0=是,1=否")
     private Integer isNormalOperation;
 
     /** 非正常经营说明 */
@@ -115,10 +129,9 @@ public class EssentialInformation extends BaseEntity
     private String contributionRemarks;
 
     /** 创建者id */
-    @Excel(name = "创建者id")
     private Long createId;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
@@ -217,12 +230,12 @@ public class EssentialInformation extends BaseEntity
     {
         return organizationCategory;
     }
-    public void setStateOwnedWay(String stateOwnedWay) 
+    public void setStateOwnedWay(Integer stateOwnedWay)
     {
         this.stateOwnedWay = stateOwnedWay;
     }
 
-    public String getStateOwnedWay() 
+    public Integer getStateOwnedWay()
     {
         return stateOwnedWay;
     }
@@ -351,6 +364,30 @@ public class EssentialInformation extends BaseEntity
 
     public void setEndFoundDate(Date endFoundDate) {
         this.endFoundDate = endFoundDate;
+    }
+
+    public String getGroupCode() {
+        return groupCode;
+    }
+
+    public void setGroupCode(String groupCode) {
+        this.groupCode = groupCode;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
     }
 
     @Override

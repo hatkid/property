@@ -1,6 +1,8 @@
 package com.zyjk.system.domain;
 
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zyjk.common.annotation.Excel;
 import com.zyjk.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -30,7 +32,7 @@ public class SeniorManagement extends BaseEntity
     private String name;
 
     /** 性别：1-男；0-女； */
-    @Excel(name = "性别：1-男；0-女；")
+    @Excel(name = "性别",readConverterExp="0=女,1=男")
     private Integer sex;
 
     /** 职务 */
@@ -39,10 +41,12 @@ public class SeniorManagement extends BaseEntity
 
     /** 上任时间 */
     @Excel(name = "上任时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date appointmentDate;
 
     /** 离任时间 */
     @Excel(name = "离任时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date departureDate;
 
     /** 级别 */

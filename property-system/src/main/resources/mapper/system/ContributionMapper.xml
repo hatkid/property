@@ -25,7 +25,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectContributionList" parameterType="Contribution" resultMap="ContributionResult">
         <include refid="selectContributionVo"/>
-        <where>  
+        <where>
+            <if test="params != null and params.investorName != null  and params.investorName != ''"> and t.investor_name = #{params.investorName}</if>
+            <if test="params != null and params.infoIdSearch != null  and params.infoIdSearch != ''"> and t.info_id = #{params.infoIdSearch}</if>
+            <if test="params != null and params.idSearch != null  and params.idSearch != ''"> and t.id != #{params.idSearch}</if>
             <if test="infoId != null "> and info_id = #{infoId}</if>
             <if test="investorName != null  and investorName != ''"> and t.investor_name like concat('%', #{investorName}, '%')</if>
             <if test="investorCode != null  and investorCode != ''"> and t.investor_code = #{investorCode}</if>

@@ -1,6 +1,8 @@
 package com.zyjk.system.service;
 
 import java.util.List;
+
+import com.zyjk.system.domain.BusinessData;
 import com.zyjk.system.domain.EssentialInformation;
 
 /**
@@ -58,4 +60,11 @@ public interface IEssentialInformationService
      * @return 结果
      */
     public int deleteEssentialInformationById(Long id);
+
+    /**
+     * 获取企业组织形式树
+     * @param id
+     * @return
+     */
+    List<BusinessData> getBusinessDateLevel(Integer id, Integer level);
 }

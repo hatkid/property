@@ -91,7 +91,11 @@ public class EquityMortgageController extends BaseController
     {
         equityMortgage.setCreateId(ShiroUtils.getUserId());
         equityMortgage.setCreateTime(new Date());
-        return toAjax(equityMortgageService.insertEquityMortgage(equityMortgage));
+        if (-1 == equityMortgageService.insertEquityMortgage(equityMortgage)) {
+            return AjaxResult.error("抵质押机构名称已经存在");
+        } else {
+            return AjaxResult.success();
+        }
     }
 
     /**
@@ -114,7 +118,11 @@ public class EquityMortgageController extends BaseController
     @ResponseBody
     public AjaxResult editSave(EquityMortgage equityMortgage)
     {
-        return toAjax(equityMortgageService.updateEquityMortgage(equityMortgage));
+        if (-1 == equityMortgageService.updateEquityMortgage(equityMortgage)) {
+            return AjaxResult.error("抵质押机构名称已经存在");
+        } else {
+            return AjaxResult.success();
+        }
     }
 
     /**

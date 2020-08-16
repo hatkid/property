@@ -175,12 +175,31 @@
                     visible: false
                 },
                 {
+                    field: 'groupCode',
+                    title: '集团部门标识码'
+                },
+                {
+                    field: 'groupName',
+                    title: '集团单位名称'
+                },
+                {
+                    field: 'postcode',
+                    title: '邮政编码'
+                },
+                {
                     field: 'companyName',
                     title: '公司名称'
                 },
                 {
                     field: 'isRegistration',
-                    title: '是否工商注册'
+                    title: '是否工商注册',
+                    formatter: function(value, row, index) {
+                        if (value == 0) {
+                            return "是";
+                        } else {
+                            return "否";
+                        }
+                    }
                 },
                 {
                     field: 'socialCode',

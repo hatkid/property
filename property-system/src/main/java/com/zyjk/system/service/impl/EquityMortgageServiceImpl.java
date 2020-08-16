@@ -1,6 +1,9 @@
 package com.zyjk.system.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.zyjk.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +11,7 @@ import com.zyjk.system.mapper.EquityMortgageMapper;
 import com.zyjk.system.domain.EquityMortgage;
 import com.zyjk.system.service.IEquityMortgageService;
 import com.zyjk.common.core.text.Convert;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 股权抵押Service业务层处理
@@ -55,7 +59,17 @@ public class EquityMortgageServiceImpl implements IEquityMortgageService
     public int insertEquityMortgage(EquityMortgage equityMortgage)
     {
         equityMortgage.setCreateTime(DateUtils.getNowDate());
-        return equityMortgageMapper.insertEquityMortgage(equityMortgage);
+        EquityMortgage param = new EquityMortgage();
+        Map<String, Object> map = new HashMap<>();
+        map.put("organizationName", equityMortgage.getOrganizationName());
+        map.put("infoIdSearch", equityMortgage.getInfoId());
+        param.setParams(map);
+        if (CollectionUtils.isEmpty(this.selectEquityMortgageList(param))) {
+            return equityMortgageMapper.insertEquityMortgage(equityMortgage);
+        } else {
+            return -1;
+        }
+
     }
 
     /**
@@ -67,7 +81,18 @@ public class EquityMortgageServiceImpl implements IEquityMortgageService
     @Override
     public int updateEquityMortgage(EquityMortgage equityMortgage)
     {
-        return equityMortgageMapper.updateEquityMortgage(equityMortgage);
+        EquityMortgage param = new EquityMortgage();
+        Map<String, Object> map = new HashMap<>();
+        map.put("organizationName", equityMortgage.getOrganizationName());
+        map.put("infoIdSearch", equityMortgage.getInfoId());
+        map.put("idSearch", equityMortgage.getId());
+        param.setParams(map);
+        if (CollectionUtils.isEmpty(this.selectEquityMortgageList(param))) {
+            return equityMortgageMapper.updateEquityMortgage(equityMortgage);
+        } else {
+            return -1;
+        }
+
     }
 
     /**

@@ -1,6 +1,9 @@
 package com.zyjk.system.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.zyjk.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +11,7 @@ import com.zyjk.system.mapper.ContributionMapper;
 import com.zyjk.system.domain.Contribution;
 import com.zyjk.system.service.IContributionService;
 import com.zyjk.common.core.text.Convert;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 出资情况Service业务层处理
@@ -55,7 +59,17 @@ public class ContributionServiceImpl implements IContributionService
     public int insertContribution(Contribution contribution)
     {
         contribution.setCreateTime(DateUtils.getNowDate());
-        return contributionMapper.insertContribution(contribution);
+        Contribution param = new Contribution();
+        Map<String, Object> map = new HashMap<>();
+        map.put("investorName", contribution.getInvestorName());
+        map.put("infoIdSearch", contribution.getInfoId());
+        param.setParams(map);
+        if (CollectionUtils.isEmpty(this.selectContributionList(param))) {
+            return contributionMapper.insertContribution(contribution);
+        } else {
+            return -1;
+        }
+
     }
 
     /**
@@ -67,7 +81,18 @@ public class ContributionServiceImpl implements IContributionService
     @Override
     public int updateContribution(Contribution contribution)
     {
-        return contributionMapper.updateContribution(contribution);
+        Contribution param = new Contribution();
+        Map<String, Object> map = new HashMap<>();
+        map.put("investorName", contribution.getInvestorName());
+        map.put("infoIdSearch", contribution.getInfoId());
+        map.put("idSearch", contribution.getId());
+        param.setParams(map);
+        if (CollectionUtils.isEmpty(this.selectContributionList(param))) {
+            return contributionMapper.updateContribution(contribution);
+        } else {
+            return -1;
+        }
+
     }
 
     /**

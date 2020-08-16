@@ -1,12 +1,16 @@
 package com.zyjk.system.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.zyjk.system.mapper.SeniorManagementMapper;
 import com.zyjk.system.domain.SeniorManagement;
 import com.zyjk.system.service.ISeniorManagementService;
 import com.zyjk.common.core.text.Convert;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 管理人员Service业务层处理
@@ -53,7 +57,17 @@ public class SeniorManagementServiceImpl implements ISeniorManagementService
     @Override
     public int insertSeniorManagement(SeniorManagement seniorManagement)
     {
-        return seniorManagementMapper.insertSeniorManagement(seniorManagement);
+        SeniorManagement param = new SeniorManagement();
+        Map<String, Object> map = new HashMap<>();
+        map.put("nameSearch", seniorManagement.getName());
+        map.put("infoIdSearch", seniorManagement.getInfoId());
+        param.setParams(map);
+        if (CollectionUtils.isEmpty(this.selectSeniorManagementList(param))) {
+            return seniorManagementMapper.insertSeniorManagement(seniorManagement);
+        } else {
+            return -1;
+        }
+
     }
 
     /**
@@ -65,7 +79,17 @@ public class SeniorManagementServiceImpl implements ISeniorManagementService
     @Override
     public int updateSeniorManagement(SeniorManagement seniorManagement)
     {
-        return seniorManagementMapper.updateSeniorManagement(seniorManagement);
+        SeniorManagement param = new SeniorManagement();
+        Map<String, Object> map = new HashMap<>();
+        map.put("nameSearch", seniorManagement.getName());
+        map.put("infoIdSearch", seniorManagement.getInfoId());
+        map.put("idSearch", seniorManagement.getId());
+        param.setParams(map);
+        if (CollectionUtils.isEmpty(this.selectSeniorManagementList(param))) {
+            return seniorManagementMapper.updateSeniorManagement(seniorManagement);
+        } else {
+            return -1;
+        }
     }
 
     /**

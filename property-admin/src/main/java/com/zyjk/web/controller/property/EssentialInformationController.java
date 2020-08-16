@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zyjk.common.utils.DateUtils;
 import com.zyjk.framework.util.ShiroUtils;
+import com.zyjk.system.domain.BusinessData;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -91,7 +92,11 @@ public class EssentialInformationController extends BaseController
     {
         essentialInformation.setCreateId(ShiroUtils.getUserId());
         essentialInformation.setCreateTime(DateUtils.getNowDate());
-        return toAjax(essentialInformationService.insertEssentialInformation(essentialInformation));
+        if (-1 == essentialInformationService.insertEssentialInformation(essentialInformation)) {
+            return AjaxResult.error("公司名称已经存在");
+        } else {
+            return AjaxResult.success();
+        }
     }
 
     /**
@@ -114,7 +119,11 @@ public class EssentialInformationController extends BaseController
     @ResponseBody
     public AjaxResult editSave(EssentialInformation essentialInformation)
     {
-        return toAjax(essentialInformationService.updateEssentialInformation(essentialInformation));
+        if (-1 == essentialInformationService.updateEssentialInformation(essentialInformation)) {
+            return AjaxResult.error("公司名称已经存在");
+        } else {
+            return AjaxResult.success();
+        }
     }
 
     /**
@@ -128,4 +137,15 @@ public class EssentialInformationController extends BaseController
     {
         return toAjax(essentialInformationService.deleteEssentialInformationByIds(ids));
     }
+
+    /**
+     * 删除【请填写功能名称】
+     */
+    @GetMapping( "/getBusinessDateLevel/{level}/{id}")
+    @ResponseBody
+    public List<BusinessData> getBusinessDateLevel(@PathVariable("level") Integer level, @PathVariable("id") Integer id)
+    {
+        return essentialInformationService.getBusinessDateLevel(id, level);
+    }
+
 }
